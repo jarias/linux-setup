@@ -82,6 +82,18 @@
     - name: Symlink ~/.ssh to ~/Dropbox/ssh
       file: state=link src="~/Dropbox/ssh" dest="~/.ssh" force=true
 
+    - name: Disable empty password login
+      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitEmptyPasswords" line="PermitEmptyPasswords no"
+      sudo: True
+
+    - name: Disable remote root login
+      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitRootLogin" line="PermitRootLogin no"
+      sudo: True
+
+    - name: Disable password login
+      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PasswordAuthentication" line="PasswordAuthentication no"
+      sudo: True
+
     # Chef config
     - name: Clear ~/.chef if exists
       file: path=~/.chef state=absent
