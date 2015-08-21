@@ -67,6 +67,11 @@
       apt_repository: repo='deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_15.04/ /' state=present
       sudo: True
 
+    # LibreOffice
+    - name: Install LibreOffice repo
+      apt_repository: repo='ppa:libreoffice/ppa'
+      sudo: True
+
     # Base packages
     - name: Install base system packages
       apt: name={{ item }} state=latest install_recommends=no
@@ -106,6 +111,7 @@
         - unity-tweak-tool
         - arc-theme
         - openssh-server
+        - libreoffice
 
     - name: Install Python pip
       easy_install: name=pip
