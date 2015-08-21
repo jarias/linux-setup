@@ -7,4 +7,4 @@ sudo apt-get update
 sudo apt-get install ansible
 
 #Run Ansible
-PYTHONIOENCODING='utf-8' ansible-playbook desktop.yml
+PYTHONIOENCODING='utf-8' ansible-playbook desktop.yml --ask-sudo-pass
