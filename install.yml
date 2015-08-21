@@ -59,6 +59,14 @@
       apt_repository: repo='ppa:numix/ppa'
       sudo: True
 
+    # Arc
+    - name: Install Arc Theme repo key
+      apt_key: url=http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_15.04/Release.key state=present
+      sudo: True
+    - name: Install Arc Theme repo
+      apt_repository: repo='deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_15.04/ /' state=present
+      sudo: True
+
     # Base packages
     - name: Install base system packages
       apt: name={{ item }} state=latest install_recommends=no
@@ -96,6 +104,7 @@
         - numix-icon-theme-circle
         - numix-wallpaper-notd
         - unity-tweak-tool
+        - arc-theme
 
     - name: Install Python pip
       easy_install: name=pip
@@ -148,13 +157,18 @@
              creates=/usr/bin/docker
       sudo: True
 
+    - name: Create downloads directory
+      file: path=/usr/local/downloads state=directory
+      sudo: True
+
     # Go
     - name: Download Go
       get_url: url=https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
-               dest=/tmp/go1.5.linux-amd64.tar.gz
+               dest=/usr/local/downloads/go1.5.linux-amd64.tar.gz
+      sudo: True
 
     - name: Unarchive Go
-      unarchive: src=/tmp/go1.5.linux-amd64.tar.gz
+      unarchive: src=/usr/local/downloads/go1.5.linux-amd64.tar.gz
                  dest=/usr/local/
                  creates=/usr/local/bin/go
                  copy=no
@@ -179,17 +193,19 @@
 
     # Direnv
     - name: Download direnv
-      git: repo=https://github.com/direnv/direnv.git dest=/tmp/direnv
+      git: repo=https://github.com/direnv/direnv.git dest=/usr/local/downloads/direnv
+      sudo: True
     - name: Install direnv
-      command: make install chdir=/tmp/direnv creates=/usr/local/bin/direnv
+      command: make install chdir=/usr/local/downloads/direnv creates=/usr/local/bin/direnv
       sudo: True
 
     # Maven
     - name: Download Maven
       get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz
-               dest=/tmp/apache-maven-3.3.1-bin.tar.gz
+               dest=/usr/local/downloads/apache-maven-3.3.1-bin.tar.gz
+      sudo: True
     - name: Unarchive Maven
-      unarchive: src=/tmp/apache-maven-3.3.1-bin.tar.gz
+      unarchive: src=/usr/local/downloads/apache-maven-3.3.1-bin.tar.gz
                  dest=/usr/local/
                  creates=/usr/local/apache-maven-3.3.1
                  copy=no
@@ -204,9 +220,10 @@
     # Gradle
     - name: Download Gradle
       get_url: url=https://downloads.gradle.org/distributions/gradle-2.6-all.zip
-               dest=/tmp/gradle-2.6-all.zip
+               dest=/usr/local/downloads/gradle-2.6-all.zip
+      sudo: True
     - name: Unarchive Gradle
-      unarchive: src=/tmp/gradle-2.6-all.zip
+      unarchive: src=/usr/local/downloads/gradle-2.6-all.zip
                  dest=/usr/local/
                  creates=/usr/local/gradle-2.6
                  copy=no
@@ -220,25 +237,28 @@
     # Virtualbox
     - name: Download Virtualbox deb package
       get_url: url=http://download.virtualbox.org/virtualbox/5.0.2/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
-               dest=/tmp/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+               dest=/usr/local/downloads/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+      sudo: True
     - name: Install Virtualbox
-      apt: deb=/tmp/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+      apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
       sudo: True
 
     # Vagrant
     - name: Download Vagrant deb package
       get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
-               dest=/tmp/vagrant_1.7.4_x86_64.deb
+               dest=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
+      sudo: True
     - name: Install Vagrant
-      apt: deb=/tmp/vagrant_1.7.4_x86_64.deb
+      apt: deb=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
       sudo: True
 
     # Packer
     - name: Download Packer
       get_url: url=https://dl.bintray.com/mitchellh/packer/packer_0.8.5_linux_amd64.zip
-               dest=/tmp/packer_0.8.5_linux_amd64.zip
+               dest=/usr/local/downloads/packer_0.8.5_linux_amd64.zip
+      sudo: True
     - name: Install Packer
-      unarchive: src=/tmp/packer_0.8.5_linux_amd64.zip
+      unarchive: src=/usr/local/downloads/packer_0.8.5_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/packer
                  copy=no
@@ -247,9 +267,10 @@
     # Terraform
     - name: Download Terraform
       get_url: url=https://dl.bintray.com/mitchellh/terraform/terraform_0.6.3_linux_amd64.zip
-               dest=/tmp/terraform_0.6.3_linux_amd64.zip
+               dest=/usr/local/downloads/terraform_0.6.3_linux_amd64.zip
+      sudo: True
     - name: Install Terraform
-      unarchive: src=/tmp/terraform_0.6.3_linux_amd64.zip
+      unarchive: src=/usr/local/downloads/terraform_0.6.3_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/terraform
                  copy=no
@@ -258,9 +279,10 @@
     # Ngrok
     - name: Download Ngrok
       get_url: url=https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip
-               dest=/tmp/ngrok_2.0.19_linux_amd64.zip
+               dest=/usr/local/downloads/ngrok_2.0.19_linux_amd64.zip
+      sudo: True
     - name: Install Ngrok
-      unarchive: src=/tmp/ngrok_2.0.19_linux_amd64.zip
+      unarchive: src=/usr/local/downloads/ngrok_2.0.19_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/ngrok
                  copy=no
@@ -269,9 +291,10 @@
     # IntelliJ IDEA
     - name: Download IntelliJ
       get_url: url=https://d1opms6zj7jotq.cloudfront.net/idea/ideaIU-14.1.4.tar.gz
-               dest=/tmp/ideaIU-14.1.4.tar.gz
+               dest=/usr/local/downloads/ideaIU-14.1.4.tar.gz
+      sudo: True
     - name: Unarchive IntelliJ
-      unarchive: src=/tmp/ideaIU-14.1.4.tar.gz
+      unarchive: src=/usr/local/downloads/ideaIU-14.1.4.tar.gz
                  dest=/usr/local
                  creates=/usr/local/idea-IU-141.1532.4
                  copy=no
@@ -285,25 +308,28 @@
     # Sublime Text 3
     - name: Download Sublime Text 3
       get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
-               dest=/tmp/sublime-text_build-3083_amd64.deb
+               dest=/usr/local/downloads/sublime-text_build-3083_amd64.deb
+      sudo: True
     - name: Install Sublime Text 3
-      apt: deb=/tmp/sublime-text_build-3083_amd64.deb
+      apt: deb=/usr/local/downloads/sublime-text_build-3083_amd64.deb
       sudo: True
 
     # Atom
     - name: Download Atom
       get_url: url=https://github.com/atom/atom/releases/download/v1.0.7/atom-amd64.deb
-               dest=/tmp/atom-amd64.deb
+               dest=/usr/local/downloads/atom-amd64.deb
+      sudo: True
     - name: Install Atom
-      apt: deb=/tmp/atom-amd64.deb
+      apt: deb=/usr/local/downloads/atom-amd64.deb
       sudo: True
 
     # Arduino IDE
     - name: Download Arduino IDE
       get_url: url=http://downloads.arduino.cc/arduino-1.6.5-linux64.tar.xz
-               dest=/tmp/arduino-1.6.5-linux64.tar.xz
+               dest=/usr/local/downloads/arduino-1.6.5-linux64.tar.xz
+      sudo: True
     - name: Install Arduino IDE
-      unarchive: src=/tmp/arduino-1.6.5-linux64.tar.xz
+      unarchive: src=/usr/local/downloads/arduino-1.6.5-linux64.tar.xz
                  dest=/usr/local
                  creates=/usr/local/arduino-1.6.5
                  copy=no
@@ -319,17 +345,19 @@
     # Google Chrome
     - name: Download Google Chrome
       get_url: url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-               dest=/tmp/google-chrome-stable_current_amd64.deb
+               dest=/usr/local/downloads/google-chrome-stable_current_amd64.deb
+      sudo: True
     - name: Install Google Chrome
-      apt: deb=/tmp/google-chrome-stable_current_amd64.deb
+      apt: deb=/usr/local/downloads/google-chrome-stable_current_amd64.deb
       sudo: True
 
     # Dropbox
     - name: Download Dropbox
       get_url: url='https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.02.12_amd64.deb'
-               dest=/tmp/dropbox_2015.02.12_amd64.deb
+               dest=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
+      sudo: True
     - name: Install Dropbox
-      apt: deb=/tmp/dropbox_2015.02.12_amd64.deb
+      apt: deb=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
       sudo: True
 
     # Heroku plugins
@@ -348,20 +376,23 @@
 
     # Fonts
     - name: Clone powerline fonts repo
-      git: repo=https://github.com/powerline/fonts dest=/tmp/powerline-fonts
+      git: repo=https://github.com/powerline/fonts dest=/usr/local/downloads/powerline-fonts
+      sudo: True
     - name: Install powerline fonts
-      command: /tmp/powerline-fonts/install.sh chdir=/tmp/powerline-fonts
+      command: /usr/local/downloads/powerline-fonts/install.sh chdir=/usr/local/downloads/powerline-fonts
 
     - name: Download source code pro fonts
       get_url: url=https://github.com/adobe-fonts/source-code-pro/archive/2.010R-ro/1.030R-it.tar.gz
-               dest=/tmp/1.030R-it.tar.gz
+               dest=/usr/local/downloads/1.030R-it.tar.gz
+      sudo: True
     - name: Unarchive source code pro fonts
-      unarchive: src=/tmp/1.030R-it.tar.gz
-                 dest=/tmp
-                 creates=/tmp/source-code-pro-2.010R-ro-1.030R-it
+      unarchive: src=/usr/local/downloads/1.030R-it.tar.gz
+                 dest=/usr/local/downloads
+                 creates=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it
                  copy=no
+      sudo: True
     - name: Install source code pro fonts
-      copy: src=/tmp/source-code-pro-2.010R-ro-1.030R-it/OTF/* dest=~/fonts/
+      synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/fonts/
     - name: Update font cache
       command: fc-cache -f -v
       sudo: True
