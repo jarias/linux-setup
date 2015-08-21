@@ -105,6 +105,7 @@
         - numix-wallpaper-notd
         - unity-tweak-tool
         - arc-theme
+        - openssh-server
 
     - name: Install Python pip
       easy_install: name=pip
