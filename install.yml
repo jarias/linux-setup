@@ -54,6 +54,11 @@
       apt_repository: repo='ppa:brightbox/ruby-ng-experimental'
       sudo: True
 
+    # Numix
+    - name: Install Numix repo
+      apt_repository: repo='ppa:numix/ppa'
+      sudo: True
+
     # Base packages
     - name: Install base system packages
       apt: name={{ item }} state=latest install_recommends=no
@@ -87,6 +92,10 @@
         - libevent-dev
         - vlc
         - openvpn
+        - numix-gtk-theme
+        - numix-icon-theme-circle
+        - numix-wallpaper-notd
+        - unity-tweak-tool
 
     - name: Install Python pip
       easy_install: name=pip
@@ -232,6 +241,7 @@
       unarchive: src=/tmp/packer_0.8.5_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/packer
+                 copy=no
       sudo: True
 
     # Terraform
@@ -242,6 +252,7 @@
       unarchive: src=/tmp/terraform_0.6.3_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/terraform
+                 copy=no
       sudo: True
 
     # Ngrok
@@ -252,6 +263,7 @@
       unarchive: src=/tmp/ngrok_2.0.19_linux_amd64.zip
                  dest=/usr/local/bin
                  creates=/usr/local/bin/ngrok
+                 copy=no
       sudo: True
 
     # IntelliJ IDEA
@@ -262,12 +274,13 @@
       unarchive: src=/tmp/ideaIU-14.1.4.tar.gz
                  dest=/usr/local
                  creates=/usr/local/idea-IU-141.1532.4
+                 copy=no
       sudo: True
     - name: Link IntelliJ binaries to /usr/local/bin
       file: src=/usr/local/idea-IU-141.1532.4/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
       sudo: True
       with_items:
-        - ideaIU.sh
+        - idea.sh
 
     # Sublime Text 3
     - name: Download Sublime Text 3
@@ -292,6 +305,7 @@
     - name: Install Arduino IDE
       unarchive: src=/tmp/arduino-1.6.5-linux64.tar.xz
                  dest=/usr/local
+                 creates=/usr/local/arduino-1.6.5
                  copy=no
       sudo: True
     - name: Link Arduino IDE binaries to /usr/local/bin
@@ -331,6 +345,26 @@
       command: vagrant plugin install {{ item }}
       with_items:
         - vagrant-vbguest
+
+    # Fonts
+    - name: Clone powerline fonts repo
+      git: repo=https://github.com/powerline/fonts dest=/tmp/powerline-fonts
+    - name: Install powerline fonts
+      command: /tmp/powerline-fonts/install.sh chdir=/tmp/powerline-fonts
+
+    - name: Download source code pro fonts
+      get_url: url=https://github.com/adobe-fonts/source-code-pro/archive/2.010R-ro/1.030R-it.tar.gz
+               dest=/tmp/1.030R-it.tar.gz
+    - name: Unarchive source code pro fonts
+      unarchive: src=/tmp/1.030R-it.tar.gz
+                 dest=/tmp
+                 creates=/tmp/source-code-pro-2.010R-ro-1.030R-it
+                 copy=no
+    - name: Install source code pro fonts
+      copy: src=/tmp/source-code-pro-2.010R-ro-1.030R-it/OTF/* dest=~/fonts/
+    - name: Update font cache
+      command: fc-cache -f -v
+      sudo: True
 
     # Vim plugins
     - name: Create bundle directory
