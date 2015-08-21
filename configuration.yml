@@ -66,14 +66,14 @@
       file: state=directory path="~/Projects"
 
     #Sublime Text 3
-    - name: Ensure ~/Library/Application Support/Sublime Text 3/Packages exists
-      file: path="~/Library/Application Support/Sublime Text 3/Packages" state=directory recurse=yes
+    - name: Ensure ~/.config/sublime-text-3/Packages exists
+      file: path="~/.config/sublime-text-3/Packages" state=directory recurse=yes
 
     - name: Remove Sublime Text 3 user settings
-      file: path="~/Library/Application Support/Sublime Text 3/Packages/User" state=absent
+      file: path="~/.config/sublime-text-3/Packages/User" state=absent
 
     - name: Link Sublime Text 3 user settings
-      file: state=link src="~/Dropbox/Sublime/User" dest="~/Library/Application Support/Sublime Text 3/Packages/User" force=true
+      file: state=link src="~/Dropbox/Sublime/User" dest="~/.config/sublime-text-3/Packages/User" force=true
 
     # SSH config
     - name: Clear ~/.ssh contents
