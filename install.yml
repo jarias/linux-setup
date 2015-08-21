@@ -1,0 +1,371 @@
+# Copyright 2015 Julio Arias
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+---
+# Here we describe every software we may want to install
+- hosts: all
+  tasks:
+    # Repos
+
+    # HipChat
+    - name: Install HipChat repo key
+      apt_key: url=https://www.hipchat.com/keys/hipchat-linux.key state=present
+      sudo: True
+    - name: Install HipChat repo
+      apt_repository: repo='deb http://downloads.hipchat.com/linux/apt stable main' state=present
+      sudo: True
+
+    # NodeJS
+    - name: Install NodeJS repo key
+      apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+      sudo: True
+    - name: Install NodeJS repo
+      apt_repository: repo='deb https://deb.nodesource.com/node_0.12 {{ansible_distribution_release}} main' state=present
+      sudo: True
+
+    # Heroku Toolbelt
+    - name: Install Heroku Toolbelt repo key
+      apt_key: url=https://toolbelt.heroku.com/apt/release.key state=present
+      sudo: True
+    - name: Install Heroku Toolbelt repo
+      apt_repository: repo='deb http://toolbelt.heroku.com/ubuntu ./' state=present
+      sudo: True
+
+    # Syncthing
+    - name: Install Syncthing repo key
+      apt_key: url=https://syncthing.net/release-key.txt state=present
+      sudo: True
+    - name: Install Syncthing repo
+      apt_repository: repo='deb http://apt.syncthing.net/ syncthing release' state=present
+      sudo: True
+
+    # Ruby
+    - name: Install Brightbox Ruby-NG repo
+      apt_repository: repo='ppa:brightbox/ruby-ng-experimental'
+      sudo: True
+
+    # Base packages
+    - name: Install base system packages
+      apt: name={{ item }} state=latest install_recommends=no
+      sudo: True
+      with_items:
+        - subversion
+        - bzr
+        - openjdk-8-jdk
+        - tmux
+        - build-essential
+        - cloc
+        - exuberant-ctags
+        - nodejs
+        - heroku-toolbelt
+        - tmux
+        - python
+        - python-dev
+        - python-setuptools
+        - zsh
+        - git
+        - git-flow
+        - mercurial
+        - syncthing
+        - curl
+        - ruby2.2
+        - ruby2.2-dev
+        - vim
+        - libgecode-dev
+        - unzip
+        - libpq-dev
+        - libevent-dev
+        - vlc
+        - openvpn
+
+    - name: Install Python pip
+      easy_install: name=pip
+      sudo: True
+
+    # Gems
+    - name: Install default Ruby Gems
+      gem: name={{ item }} state=present user_install=no
+      sudo: True
+      with_items:
+        - bundler
+        - homesick
+        - git-smart
+        - lunchy
+        #- berkshelf
+        - pry
+        - hirb
+        - svn2git
+        - ghost
+        - lolcat
+
+    # NPM
+    - name: Setup NPM prefix
+      command: /usr/bin/npm config set prefix '~/.npm-packages'
+               creates=~/.npmrc
+    - name: Install NPM default packages
+      npm: name={{ item }} global=yes
+      with_items:
+        - grunt-cli
+        - bower
+        - yo
+        - ember-cli
+        - broccoli-cli
+        - jshint
+        - sslmate
+
+    # Python pip
+    - name: Install Python pip default packages
+      pip: name={{ item }} extra_args='--user'
+      with_items:
+        - awscli
+        - psutil
+        - powerline-status
+        - docker-compose
+        - pgcli
+
+    # Docker
+    - name: Install Docker
+      shell: curl -sSL https://get.docker.com/ | sh
+             creates=/usr/bin/docker
+      sudo: True
+
+    # Go
+    - name: Download Go
+      get_url: url=https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
+               dest=/tmp/go1.5.linux-amd64.tar.gz
+
+    - name: Unarchive Go
+      unarchive: src=/tmp/go1.5.linux-amd64.tar.gz
+                 dest=/usr/local/
+                 creates=/usr/local/bin/go
+                 copy=no
+      sudo: True
+
+    - name: Link Go binaries to /usr/local/bin/
+      file: src=/usr/local/go/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - go
+        - godoc
+        - gofmt
+
+    - name: Create GOPATH dir
+      file: state=directory path="~/Golang"
+    - name: Install default Go packages
+      shell: GOPATH=~/Golang go get {{ item.package }}
+             creates=~/Golang/bin/{{ item.bin }}
+      with_items:
+        - { package: github.com/tools/godep, bin: godep }
+        - { package: github.com/github/hub, bin: hub }
+
+    # Direnv
+    - name: Download direnv
+      git: repo=https://github.com/direnv/direnv.git dest=/tmp/direnv
+    - name: Install direnv
+      command: make install chdir=/tmp/direnv creates=/usr/local/bin/direnv
+      sudo: True
+
+    # Maven
+    - name: Download Maven
+      get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz
+               dest=/tmp/apache-maven-3.3.1-bin.tar.gz
+    - name: Unarchive Maven
+      unarchive: src=/tmp/apache-maven-3.3.1-bin.tar.gz
+                 dest=/usr/local/
+                 creates=/usr/local/apache-maven-3.3.1
+                 copy=no
+      sudo: True
+    - name: Link Maven binaries in /usr/local/bin/
+      file: src=/usr/local/apache-maven-3.3.1/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - mvn
+        - mvnDebug
+
+    # Gradle
+    - name: Download Gradle
+      get_url: url=https://downloads.gradle.org/distributions/gradle-2.6-all.zip
+               dest=/tmp/gradle-2.6-all.zip
+    - name: Unarchive Gradle
+      unarchive: src=/tmp/gradle-2.6-all.zip
+                 dest=/usr/local/
+                 creates=/usr/local/gradle-2.6
+                 copy=no
+      sudo: True
+    - name: Link Gradle binaries in /usr/local/bin/
+      file: src=/usr/local/gradle-2.6/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - gradle
+
+    # Virtualbox
+    - name: Download Virtualbox deb package
+      get_url: url=http://download.virtualbox.org/virtualbox/5.0.2/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+               dest=/tmp/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+    - name: Install Virtualbox
+      apt: deb=/tmp/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+      sudo: True
+
+    # Vagrant
+    - name: Download Vagrant deb package
+      get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
+               dest=/tmp/vagrant_1.7.4_x86_64.deb
+    - name: Install Vagrant
+      apt: deb=/tmp/vagrant_1.7.4_x86_64.deb
+      sudo: True
+
+    # Packer
+    - name: Download Packer
+      get_url: url=https://dl.bintray.com/mitchellh/packer/packer_0.8.5_linux_amd64.zip
+               dest=/tmp/packer_0.8.5_linux_amd64.zip
+    - name: Install Packer
+      unarchive: src=/tmp/packer_0.8.5_linux_amd64.zip
+                 dest=/usr/local/bin
+                 creates=/usr/local/bin/packer
+      sudo: True
+
+    # Terraform
+    - name: Download Terraform
+      get_url: url=https://dl.bintray.com/mitchellh/terraform/terraform_0.6.3_linux_amd64.zip
+               dest=/tmp/terraform_0.6.3_linux_amd64.zip
+    - name: Install Terraform
+      unarchive: src=/tmp/terraform_0.6.3_linux_amd64.zip
+                 dest=/usr/local/bin
+                 creates=/usr/local/bin/terraform
+      sudo: True
+
+    # Ngrok
+    - name: Download Ngrok
+      get_url: url=https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip
+               dest=/tmp/ngrok_2.0.19_linux_amd64.zip
+    - name: Install Ngrok
+      unarchive: src=/tmp/ngrok_2.0.19_linux_amd64.zip
+                 dest=/usr/local/bin
+                 creates=/usr/local/bin/ngrok
+      sudo: True
+
+    # IntelliJ IDEA
+    - name: Download IntelliJ
+      get_url: url=https://d1opms6zj7jotq.cloudfront.net/idea/ideaIU-14.1.4.tar.gz
+               dest=/tmp/ideaIU-14.1.4.tar.gz
+    - name: Unarchive IntelliJ
+      unarchive: src=/tmp/ideaIU-14.1.4.tar.gz
+                 dest=/usr/local
+                 creates=/usr/local/idea-IU-141.1532.4
+      sudo: True
+    - name: Link IntelliJ binaries to /usr/local/bin
+      file: src=/usr/local/idea-IU-141.1532.4/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - ideaIU.sh
+
+    # Sublime Text 3
+    - name: Download Sublime Text 3
+      get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
+               dest=/tmp/sublime-text_build-3083_amd64.deb
+    - name: Install Sublime Text 3
+      apt: deb=/tmp/sublime-text_build-3083_amd64.deb
+      sudo: True
+
+    # Atom
+    - name: Download Atom
+      get_url: url=https://github.com/atom/atom/releases/download/v1.0.7/atom-amd64.deb
+               dest=/tmp/atom-amd64.deb
+    - name: Install Atom
+      apt: deb=/tmp/atom-amd64.deb
+      sudo: True
+
+    # Arduino IDE
+    - name: Download Arduino IDE
+      get_url: url=http://downloads.arduino.cc/arduino-1.6.5-linux64.tar.xz
+               dest=/tmp/arduino-1.6.5-linux64.tar.xz
+    - name: Install Arduino IDE
+      unarchive: src=/tmp/arduino-1.6.5-linux64.tar.xz
+                 dest=/usr/local
+                 copy=no
+      sudo: True
+    - name: Link Arduino IDE binaries to /usr/local/bin
+      file: src=/usr/local/arduino-1.6.5/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - arduino
+    - name: Install Arduino IDE .desktop file
+      copy: src=/usr/local/arduino-1.6.5/arduino.desktop dest=~/.local/share/applications/arduino.desktop
+
+    # Google Chrome
+    - name: Download Google Chrome
+      get_url: url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+               dest=/tmp/google-chrome-stable_current_amd64.deb
+    - name: Install Google Chrome
+      apt: deb=/tmp/google-chrome-stable_current_amd64.deb
+      sudo: True
+
+    # Dropbox
+    - name: Download Dropbox
+      get_url: url='https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.02.12_amd64.deb'
+               dest=/tmp/dropbox_2015.02.12_amd64.deb
+    - name: Install Dropbox
+      apt: deb=/tmp/dropbox_2015.02.12_amd64.deb
+      sudo: True
+
+    # Heroku plugins
+    - name: Install Heroku plugins
+      command: heroku plugins:install {{ item }}
+      with_items:
+        - https://github.com/ddollar/heroku-accounts.git
+        - https://github.com/heroku/heroku-pg-extras.git
+        - https://github.com/ddollar/heroku-pg-transfer.git
+
+    # Vagrant plugins
+    - name: Install Vagrant plugins
+      command: vagrant plugin install {{ item }}
+      with_items:
+        - vagrant-vbguest
+
+    # Vim plugins
+    - name: Create bundle directory
+      file: path=~/.vim/bundle state=directory recurse=true
+
+    - name: Create autoload directory
+      file: path=~/.vim/autoload state=directory recurse=true
+
+    - name: Install Pathogen
+      get_url: url=https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
+               dest=~/.vim/autoload/pathogen.vim
+
+    - name: Install Vim plugins
+      git: repo={{ item.repo }} dest=~/.vim/bundle/{{ item.name }}
+      with_items:
+        - { repo: 'https://github.com/Shougo/neocomplete.vim', name: 'neocomplete.tool' }
+        - { repo: 'https://github.com/mileszs/ack.vim.git', name: 'ack.tool' }
+        - { repo: 'https://github.com/vim-scripts/molokai.git', name: 'molokai.color' }
+        - { repo: 'https://github.com/scrooloose/nerdtree.git', name: 'nerdtree.tool' }
+        - { repo: 'https://github.com/jeetsukumaran/vim-buffergator.git', name: 'buffergator.tool' }
+        - { repo: 'https://github.com/tpope/vim-fugitive.git', name: 'fugitive.tool' }
+        - { repo: 'https://github.com/fatih/vim-go.git', name: 'go.lang' }
+        - { repo: 'https://github.com/pangloss/vim-javascript.git', name: 'javascript.lang' }
+        - { repo: 'https://github.com/mmalecki/vim-node.js.git', name: 'nodejs.lang' }
+        - { repo: 'https://github.com/kien/ctrlp.vim.git', name: 'ctrlp.tool' }
+        - { repo: 'https://github.com/scrooloose/nerdcommenter.git', name: 'nerdcommenter.tool' }
+        - { repo: 'https://github.com/ervandew/supertab.git', name: 'supertab.tool' }
+        - { repo: 'https://github.com/Lokaltog/vim-easymotion.git', name: 'easymotion.tool' }
+        - { repo: 'https://github.com/tpope/vim-git.git', name: 'git.lang' }
+        - { repo: 'https://github.com/tfnico/vim-gradle.git', name: 'gradle.lang' }
+        - { repo: 'https://github.com/groenewege/vim-less.git', name: 'less.lang' }
+        - { repo: 'https://github.com/bronson/vim-trailing-whitespace.git', name: 'trailing-whitespace.tool' }
+        - { repo: 'https://github.com/terryma/vim-multiple-cursors.git', name: 'multiple-cursors.tool' }
+        - { repo: 'https://github.com/scrooloose/syntastic.git', name: 'syntastic.tool' }
+        - { repo: 'https://github.com/maksimr/vim-jsbeautify.git', name: 'jsbeautify.tool' }
+        - { repo: 'https://github.com/tpope/vim-sensible.git', name: 'vim-sensible.config' }
+        - { repo: 'https://github.com/majutsushi/tagbar.git', name: 'tagbar.tool' }
+        - { repo: 'https://github.com/vim-scripts/ZoomWin.git', name: 'ZoomWin.tool' }
