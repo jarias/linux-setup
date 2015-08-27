@@ -34,7 +34,7 @@
 
     # Dotfiles
     - name: Clone homesick repos
-      command: /usr/local/bin/homesick clone {{item.repo}} creates=/Users/{{ lookup('env','USER') }}/.homesick/repos/{{ item.name }}
+      command: /usr/local/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
       with_items:
         - { repo: "https://github.com/jarias/dotfiles.git", name: dotfiles }
 

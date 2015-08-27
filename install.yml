@@ -72,6 +72,11 @@
       apt_repository: repo='ppa:libreoffice/ppa'
       sudo: True
 
+    # Geary
+    - name: Install Geary repo
+      apt_repository: repo='ppa:yorba/ppa'
+      sudo: True
+
     # Base packages
     - name: Install base system packages
       apt: name={{ item }} state=latest install_recommends=no
@@ -112,6 +117,8 @@
         - arc-theme
         - openssh-server
         - libreoffice
+        - libnss3-tools
+        - geary
 
     - name: Install Python pip
       easy_install: name=pip
@@ -157,6 +164,7 @@
         - powerline-status
         - docker-compose
         - pgcli
+        - mycli
 
     # Docker
     - name: Install Docker
@@ -348,6 +356,10 @@
         - arduino
     - name: Install Arduino IDE .desktop file
       copy: src=/usr/local/arduino-1.6.5/arduino.desktop dest=~/.local/share/applications/arduino.desktop
+    - name: Fix Arduino IDE .desktop exec path
+      lineinfile: dest=~/.local/share/applications/arduino.desktop regexp=^Exec= line=Exec=/usr/local/bin/arduino
+    - name: Fix Arduino IDE .desktop icon
+      lineinfile: dest=~/.local/share/applications/arduino.desktop regexp=^Icon= line=Icon=arduino
 
     # Google Chrome
     - name: Download Google Chrome
@@ -366,6 +378,26 @@
     - name: Install Dropbox
       apt: deb=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
       sudo: True
+
+    # PopCorn Time
+    - name: Download PopCorn Time
+      get_url: url='https://get.popcorntime.io/build/Popcorn-Time-0.3.8-3-Linux-64.tar.xz'
+               dest=/usr/local/downloads/Popcorn-Time-0.3.8-3-Linux-64.tar.xz
+      sudo: True
+    - name: Create install directory
+      file: path=/usr/local/popcorntime state=directory
+      sudo: True
+    - name: Unarchive PopCorn Time
+      unarchive: src=/usr/local/downloads/Popcorn-Time-0.3.8-3-Linux-64.tar.xz
+                 dest=/usr/local/popcorntime
+                 copy=no
+      sudo: True
+    - name: Install PopCorn Time desktop file
+      template: src=templates/Popcorn-Time.desktop dest=~/.local/share/applications/Popcorn-Time.desktop
+    - name: Fix PopCorn Time .desktop exec path
+      lineinfile: dest=~/.local/share/applications/Popcorn-Time.desktop regexp=^Exec= line=Exec=/usr/local/popcorntime/Popcorn-Time
+    - name: Fix PopCorn Time .desktop icon
+      lineinfile: dest=~/.local/share/applications/Popcorn-Time.desktop regexp=^Icon= line=Icon=popcorntime
 
     # Heroku plugins
     - name: Install Heroku plugins
