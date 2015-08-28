@@ -77,6 +77,10 @@
       apt_repository: repo='ppa:yorba/ppa'
       sudo: True
 
+    - name: Dist upgrade
+      apt: upgrade=dist
+      sudo: True
+
     # Base packages
     - name: Install base system packages
       apt: name={{ item }} state=latest install_recommends=no
