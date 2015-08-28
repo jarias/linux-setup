@@ -6,3 +6,4 @@ Icon=popcorn-time
 MimeType=application/x-bittorrent;x-scheme-handler/magnet;
 StartupNotify=false
 Categories=AudioVideo;Video;Network;Player;P2P;
+Type=Application

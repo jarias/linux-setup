@@ -59,12 +59,12 @@
       apt_repository: repo='ppa:numix/ppa'
       sudo: True
 
-    # Arc
-    - name: Install Arc Theme repo key
-      apt_key: url=http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_15.04/Release.key state=present
+    # Gnome 3
+    - name: Install Gnome 3 repo
+      apt_repository: repo='ppa:gnome3-team/gnome3'
       sudo: True
-    - name: Install Arc Theme repo
-      apt_repository: repo='deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_15.04/ /' state=present
+    - name: Install Gnome 3 staging repo
+      apt_repository: repo='ppa:gnome3-team/gnome3-staging'
       sudo: True
 
     # LibreOffice
@@ -112,13 +112,14 @@
         - openvpn
         - numix-gtk-theme
         - numix-icon-theme-circle
-        - numix-wallpaper-notd
-        - unity-tweak-tool
-        - arc-theme
         - openssh-server
         - libreoffice
         - libnss3-tools
-        - geary
+        - hipchat
+        - autoconf
+        - automake
+        - pkg-config
+        - libgtk-3-dev
 
     - name: Install Python pip
       easy_install: name=pip
@@ -205,6 +206,17 @@
       with_items:
         - { package: github.com/tools/godep, bin: godep }
         - { package: github.com/github/hub, bin: hub }
+
+    # Arc Theme
+    - name: Clone Arc Theme repo
+      git: repo="https://github.com/horst3180/arc-theme" depth=1 dest=/usr/local/src/arc-theme
+      sudo: True
+    - name: Configure Arc Theme
+      command: ./autogen.sh --prefix=/usr chdir=/usr/local/src/arc-theme
+      sudo: True
+    - name: Install Arc Theme
+      command: make install chdir=/usr/local/src/arc-theme
+      sudo: True
 
     # Direnv
     - name: Download direnv
