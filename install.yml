@@ -125,6 +125,8 @@
         - pkg-config
         - libgtk-3-dev
         - graphviz
+        - keychain
+        #- geary
 
     - name: Install Python pip
       easy_install: name=pip
@@ -307,6 +309,40 @@
                  creates=/usr/local/bin/terraform
                  copy=no
       sudo: True
+
+    # Etcd
+    - name: Download Etcd
+      get_url: url=https://github.com/coreos/etcd/releases/download/v2.1.2/etcd-v2.1.2-linux-amd64.tar.gz
+               dest=/usr/local/downloads/etcd-v2.1.2-linux-amd64.tar.gz
+      sudo: True
+    - name: Unarchive Etcd
+      unarchive: src=/usr/local/downloads/etcd-v2.1.2-linux-amd64.tar.gz
+                 dest=/usr/local/
+                 creates=/usr/local/etcd-v2.1.2-linux-amd64
+                 copy=no
+      sudo: True
+    - name: Link Etcd binaries in /usr/local/bin/
+      file: src=/usr/local/etcd-v2.1.2-linux-amd64/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - etcdctl
+
+    # Fleet
+    - name: Download Fleet
+      get_url: url=https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz
+               dest=/usr/local/downloads/fleet-v0.11.5-linux-amd64.tar.gz
+      sudo: True
+    - name: Unarchive Fleet
+      unarchive: src=/usr/local/downloads/fleet-v0.11.5-linux-amd64.tar.gz
+                 dest=/usr/local/
+                 creates=/usr/local/fleet-v0.11.5-linux-amd64
+                 copy=no
+      sudo: True
+    - name: Link Fleet binaries in /usr/local/bin/
+      file: src=/usr/local/fleet-v0.11.5-linux-amd64/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      sudo: True
+      with_items:
+        - fleetctl
 
     # Ngrok
     - name: Download Ngrok
