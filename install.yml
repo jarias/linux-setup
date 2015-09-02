@@ -58,9 +58,12 @@
       sudo: True
 
     # Ruby
-    - name: Install Brightbox Ruby-NG repo
-      apt_repository: repo='ppa:brightbox/ruby-ng-experimental'
-      sudo: True
+    # - name: Install Brightbox Ruby-NG experimental repo
+    #   apt_repository: repo='ppa:brightbox/ruby-ng-experimental'
+    #   sudo: True
+    # - name: Install Brightbox Ruby-NG repo
+    #   apt_repository: repo='ppa:brightbox/ruby-ng'
+    #   sudo: True
 
     # Numix
     - name: Install Numix repo
@@ -113,8 +116,8 @@
         - mercurial
         - syncthing
         - curl
-        - ruby2.2
-        - ruby2.2-dev
+        - ruby2.1
+        - ruby2.1-dev
         - vim
         - libgecode-dev
         - unzip
