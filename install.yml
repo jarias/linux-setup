@@ -17,6 +17,14 @@
   tasks:
     # Repos
 
+    # fontconfig-infinality
+    - name: Install fontconfig-infinality repo
+      apt_repository: repo='ppa:no1wantdthisname/ppa' state=present
+      sudo: True
+    - name: Install openjdk-fontfix repo
+      apt_repository: repo='ppa:no1wantdthisname/openjdk-fontfix' state=present
+      sudo: True
+
     # HipChat
     - name: Install HipChat repo key
       apt_key: url=https://www.hipchat.com/keys/hipchat-linux.key state=present
@@ -126,6 +134,7 @@
         - libgtk-3-dev
         - graphviz
         - keychain
+        - fontconfig-infinality
         #- geary
 
     - name: Install Python pip

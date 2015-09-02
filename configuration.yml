@@ -109,3 +109,7 @@
 
     - name: Window button layout
       command: gsettings set  org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
+
+    - name: Better fonts
+      command: /etc/fonts/infinality/infctl.sh setstyle linux
+      sudo: True
