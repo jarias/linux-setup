@@ -443,6 +443,7 @@
     - name: Install Google Chrome
       apt: deb=/usr/local/downloads/google-chrome-stable_current_amd64.deb
       sudo: True
+      ignore_errors: yes
 
     # Dropbox
     - name: Download Dropbox
