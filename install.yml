@@ -114,8 +114,8 @@
         - mercurial
         - syncthing
         - curl
-        - ruby2.1
-        - ruby2.1-dev
+        - ruby
+        - ruby-dev
         - vim
         - libgecode-dev
         - unzip
