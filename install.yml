@@ -18,11 +18,14 @@
     # Repos
 
     # fontconfig-infinality
+    - name: Install no1wantdthisname/ppa repo key
+      apt_key: keyserver=keyserver.ubuntu.com id=66BA314CE985B27B state=present
+      sudo: True
     - name: Install fontconfig-infinality repo
-      apt_repository: repo='ppa:no1wantdthisname/ppa' state=present
+      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu vivid main' state=present
       sudo: True
     - name: Install openjdk-fontfix repo
-      apt_repository: repo='ppa:no1wantdthisname/openjdk-fontfix' state=present
+      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/openjdk-fontfix/ubuntu vivid main ' state=present
       sudo: True
 
     # HipChat
@@ -38,7 +41,7 @@
       apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
       sudo: True
     - name: Install NodeJS repo
-      apt_repository: repo='deb https://deb.nodesource.com/node_0.12 {{ansible_distribution_release}} main' state=present
+      apt_repository: repo='deb https://deb.nodesource.com/node_4.x vivid main' state=present
       sudo: True
 
     # Heroku Toolbelt
@@ -81,11 +84,6 @@
     # LibreOffice
     - name: Install LibreOffice repo
       apt_repository: repo='ppa:libreoffice/ppa'
-      sudo: True
-
-    # Geary
-    - name: Install Geary repo
-      apt_repository: repo='ppa:yorba/ppa'
       sudo: True
 
     - name: Dist upgrade
@@ -138,7 +136,6 @@
         - graphviz
         - keychain
         - fontconfig-infinality
-        - geary
 
     - name: Install Python pip
       easy_install: name=pip
