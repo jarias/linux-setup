@@ -402,7 +402,7 @@
 
     # Atom
     - name: Download Atom
-      get_url: url=https://github.com/atom/atom/releases/download/v1.0.7/atom-amd64.deb
+      get_url: url=https://github.com/atom/atom/releases/download/v1.0.19/atom-amd64.deb
                dest=/usr/local/downloads/atom-amd64.deb
       sudo: True
     - name: Install Atom
@@ -450,26 +450,6 @@
     - name: Install Dropbox
       apt: deb=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
       sudo: True
-
-    # PopCorn Time
-    - name: Download PopCorn Time
-      get_url: url='https://get.popcorntime.io/build/Popcorn-Time-0.3.8-3-Linux-64.tar.xz'
-               dest=/usr/local/downloads/Popcorn-Time-0.3.8-3-Linux-64.tar.xz
-      sudo: True
-    - name: Create install directory
-      file: path=/usr/local/popcorntime state=directory
-      sudo: True
-    - name: Unarchive PopCorn Time
-      unarchive: src=/usr/local/downloads/Popcorn-Time-0.3.8-3-Linux-64.tar.xz
-                 dest=/usr/local/popcorntime
-                 copy=no
-      sudo: True
-    - name: Install PopCorn Time desktop file
-      template: src=templates/Popcorn-Time.desktop dest=~/.local/share/applications/Popcorn-Time.desktop
-    - name: Fix PopCorn Time .desktop exec path
-      lineinfile: dest=~/.local/share/applications/Popcorn-Time.desktop regexp=^Exec= line=Exec=/usr/local/popcorntime/Popcorn-Time
-    - name: Fix PopCorn Time .desktop icon
-      lineinfile: dest=~/.local/share/applications/Popcorn-Time.desktop regexp=^Icon= line=Icon=popcorntime
 
     # Heroku plugins
     - name: Install Heroku plugins
