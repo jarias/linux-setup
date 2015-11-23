@@ -16,16 +16,26 @@
 - hosts: all
   tasks:
     # Repos
+    # Intel
+    - name: Install Intel repo key
+      apt_key: url=https://download.01.org/gfx/RPM-GPG-KEY-ilg state=present
+      sudo: True
+    - name: Install Intel repo key2
+      apt_key: url=https://download.01.org/gfx/RPM-GPG-KEY-ilg-2 state=present
+      sudo: True
+    - name: Install Intel repo
+      apt_repository: repo='deb https://download.01.org/gfx/ubuntu/15.10/main wily main' state=present
+      sudo: True
 
     # fontconfig-infinality
     - name: Install no1wantdthisname/ppa repo key
       apt_key: keyserver=keyserver.ubuntu.com id=66BA314CE985B27B state=present
       sudo: True
     - name: Install fontconfig-infinality repo
-      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu vivid main' state=present
+      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu wily main' state=present
       sudo: True
     - name: Install openjdk-fontfix repo
-      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/openjdk-fontfix/ubuntu vivid main ' state=present
+      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/openjdk-fontfix/ubuntu wily main ' state=present
       sudo: True
 
     # HipChat
@@ -41,7 +51,7 @@
       apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
       sudo: True
     - name: Install NodeJS repo
-      apt_repository: repo='deb https://deb.nodesource.com/node_4.x vivid main' state=present
+      apt_repository: repo='deb https://deb.nodesource.com/node_4.x wily main' state=present
       sudo: True
 
     # Heroku Toolbelt
@@ -60,26 +70,10 @@
       apt_repository: repo='deb http://apt.syncthing.net/ syncthing release' state=present
       sudo: True
 
-    # Ruby
-    # - name: Install Brightbox Ruby-NG experimental repo
-    #   apt_repository: repo='ppa:brightbox/ruby-ng-experimental'
-    #   sudo: True
-    # - name: Install Brightbox Ruby-NG repo
-    #   apt_repository: repo='ppa:brightbox/ruby-ng'
-    #   sudo: True
-
     # Numix
     - name: Install Numix repo
       apt_repository: repo='ppa:numix/ppa'
       sudo: True
-
-    # Gnome 3
-    # - name: Install Gnome 3 repo
-    #   apt_repository: repo='ppa:gnome3-team/gnome3'
-    #   sudo: True
-    # - name: Install Gnome 3 staging repo
-    #   apt_repository: repo='ppa:gnome3-team/gnome3-staging'
-    #   sudo: True
 
     # LibreOffice
     - name: Install LibreOffice repo
@@ -102,7 +96,6 @@
         - build-essential
         - cloc
         - exuberant-ctags
-        - nodejs
         - heroku-toolbelt
         - tmux
         - python
@@ -136,6 +129,19 @@
         - graphviz
         - keychain
         - fontconfig-infinality
+        - nodejs
+        - xorg
+        - xserver-xorg-video-intel
+        - slim
+        - i3
+        - i3blocks
+        - p7zip-full
+        - xz-utils
+        - terminator
+        - lxappearance
+        - compton
+        - intel-linux-graphics-installer
+        - ranger
 
     - name: Install Python pip
       easy_install: name=pip
@@ -149,7 +155,6 @@
         - bundler
         - homesick
         - git-smart
-        - lunchy
         - berkshelf
         - pry
         - hirb
@@ -217,11 +222,16 @@
     - name: Create GOPATH dir
       file: state=directory path="~/Golang"
     - name: Install default Go packages
-      shell: GOPATH=~/Golang go get {{ item.package }}
-             creates=~/Golang/bin/{{ item.bin }}
+      shell: GOPATH=~/Golang go get {{ item.package }}             
       with_items:
-        - { package: github.com/tools/godep, bin: godep }
-        - { package: github.com/github/hub, bin: hub }
+        - { package: github.com/tools/godep }
+        - { package: golang.org/x/tools/cmd/gotype }
+        - { package: golang.org/x/tools/cmd/goimports }
+        - { package: golang.org/x/tools/cmd/cover }
+        - { package: github.com/onsi/ginkgo/ginkgo }
+        - { package: github.com/onsi/gomega }
+        - { package: github.com/golang/lint/golint }
+        - { package: github.com/constabulary/gb/... }
 
     # Arc Theme
     - name: Clone Arc Theme repo
@@ -279,11 +289,11 @@
 
     # Virtualbox
     - name: Download Virtualbox deb package
-      get_url: url=http://download.virtualbox.org/virtualbox/5.0.2/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
-               dest=/usr/local/downloads/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+      get_url: url=http://download.virtualbox.org/virtualbox/5.0.10/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
+               dest=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
       sudo: True
     - name: Install Virtualbox
-      apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.2-102096~Ubuntu~trusty_amd64.deb
+      apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
       sudo: True
 
     # Vagrant
@@ -367,17 +377,17 @@
 
     # IntelliJ IDEA
     - name: Download IntelliJ
-      get_url: url=https://d1opms6zj7jotq.cloudfront.net/idea/ideaIU-14.1.4.tar.gz
-               dest=/usr/local/downloads/ideaIU-14.1.4.tar.gz
+      get_url: url=https://download.jetbrains.com/idea/ideaIU-15.0.1.tar.gz
+               dest=/usr/local/downloads/ideaIU-15.0.1.tar.gz
       sudo: True
     - name: Unarchive IntelliJ
-      unarchive: src=/usr/local/downloads/ideaIU-14.1.4.tar.gz
+      unarchive: src=/usr/local/downloads/ideaIU-15.0.1.tar.gz
                  dest=/usr/local
-                 creates=/usr/local/idea-IU-141.1532.4
+                 creates=/usr/local/idea-IU-143.382.35
                  copy=no
       sudo: True
     - name: Link IntelliJ binaries to /usr/local/bin
-      file: src=/usr/local/idea-IU-141.1532.4/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      file: src=/usr/local/idea-IU-143.382.35/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link force=yes
       sudo: True
       with_items:
         - idea.sh
@@ -402,7 +412,7 @@
 
     # Atom
     - name: Download Atom
-      get_url: url=https://github.com/atom/atom/releases/download/v1.0.19/atom-amd64.deb
+      get_url: url=https://github.com/atom/atom/releases/download/v1.2.3/atom-amd64.deb
                dest=/usr/local/downloads/atom-amd64.deb
       sudo: True
     - name: Install Atom
@@ -425,12 +435,6 @@
       sudo: True
       with_items:
         - arduino
-    - name: Install Arduino IDE .desktop file
-      copy: src=/usr/local/arduino-1.6.5/arduino.desktop dest=~/.local/share/applications/arduino.desktop
-    - name: Fix Arduino IDE .desktop exec path
-      lineinfile: dest=~/.local/share/applications/arduino.desktop regexp=^Exec= line=Exec=/usr/local/bin/arduino
-    - name: Fix Arduino IDE .desktop icon
-      lineinfile: dest=~/.local/share/applications/arduino.desktop regexp=^Icon= line=Icon=arduino
 
     # Google Chrome
     - name: Download Google Chrome
@@ -444,11 +448,11 @@
 
     # Dropbox
     - name: Download Dropbox
-      get_url: url='https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.02.12_amd64.deb'
-               dest=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
+      get_url: url='https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb'
+               dest=/usr/local/downloads/dropbox_2015.10.28_amd64.deb
       sudo: True
     - name: Install Dropbox
-      apt: deb=/usr/local/downloads/dropbox_2015.02.12_amd64.deb
+      apt: deb=/usr/local/downloads/dropbox_2015.10.28_amd64.deb
       sudo: True
 
     # Heroku plugins
@@ -484,6 +488,38 @@
       sudo: True
     - name: Install source code pro fonts
       synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/.fonts/
+
+    - name: Download System San Francisco font
+      get_url: url=https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
+               dest=/usr/local/downloads/ssf.zip
+      sudo: True
+    - name: Unarchive System San Francisco font
+      unarchive: src=/usr/local/downloads/ssf.zip
+                 dest=/usr/local/downloads
+                 creates=/usr/local/downloads/YosemiteSanFranciscoFont-master
+                 copy=no
+      sudo: True
+    - name: Install System San Francisco font
+      copy: src='/usr/local/downloads/YosemiteSanFranciscoFont-master/{{ item }}.ttf' dest=~/.fonts
+      with_items:
+        - System San Francisco Display Regular
+        - System San Francisco Display Thin
+        - System San Francisco Display Ultralight
+        - System San Francisco Display Bold
+
+    - name: Download Font-Awesome
+      get_url: url=https://github.com/FortAwesome/Font-Awesome/archive/v4.4.0.tar.gz
+               dest=/usr/local/downloads/FontAwesome.tar.gz
+      sudo: True
+    - name: Unarchive Font-Awesome
+      unarchive: src=/usr/local/downloads/FontAwesome.tar.gz
+                 dest=/usr/local/downloads
+                 creates=/usr/local/downloads/Font-Awesome-4.4.0
+                 copy=no
+      sudo: True
+    - name: Install Font-Awesome
+      copy: src=/usr/local/downloads/Font-Awesome-4.4.0/fonts/fontawesome-webfont.ttf dest=~/.fonts
+
     - name: Update font cache
       command: fc-cache -f -v
       sudo: True
