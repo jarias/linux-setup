@@ -525,17 +525,17 @@
         - System San Francisco Display Bold
 
     - name: Download Font-Awesome
-      get_url: url=https://github.com/FortAwesome/Font-Awesome/archive/v4.4.0.tar.gz
-               dest=/usr/local/downloads/FontAwesome.tar.gz
+      get_url: url=https://github.com/FortAwesome/Font-Awesome/archive/v4.5.0.tar.gz
+               dest=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
       sudo: True
     - name: Unarchive Font-Awesome
-      unarchive: src=/usr/local/downloads/FontAwesome.tar.gz
+      unarchive: src=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
                  dest=/usr/local/downloads
-                 creates=/usr/local/downloads/Font-Awesome-4.4.0
+                 creates=/usr/local/downloads/Font-Awesome-4.5.0
                  copy=no
       sudo: True
     - name: Install Font-Awesome
-      copy: src=/usr/local/downloads/Font-Awesome-4.4.0/fonts/fontawesome-webfont.ttf dest=~/.fonts
+      copy: src=/usr/local/downloads/Font-Awesome-4.5.0/fonts/FontAwesome.otf dest=~/.fonts
 
     - name: Update font cache
       command: fc-cache -f -v
