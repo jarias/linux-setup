@@ -157,7 +157,7 @@
         - lxappearance
         - compton
         - intel-linux-graphics-installer
-        - ranger
+        - thunar
         - imagemagick
 
     - name: Install Python pip
