@@ -27,6 +27,15 @@
       apt_repository: repo='deb https://download.01.org/gfx/ubuntu/15.10/main wily main' state=present
       sudo: True
 
+    # I3
+    - name: Install i3 repo
+      apt_repository: repo='deb http://debian.sur5r.net/i3/ wily universe' state=present
+      sudo: True
+
+    - name: Install i3 repo keyring
+      apt: name=sur5r-keyring force=yes
+      sudo: True
+
     # fontconfig-infinality
     - name: Install no1wantdthisname/ppa repo key
       apt_key: keyserver=keyserver.ubuntu.com id=66BA314CE985B27B state=present
@@ -75,6 +84,11 @@
       apt_repository: repo='ppa:numix/ppa'
       sudo: True
 
+    # Moka
+    - name: Install Moka repo
+      apt_repository: repo='ppa:moka/stable'
+      sudo: True
+
     # LibreOffice
     - name: Install LibreOffice repo
       apt_repository: repo='ppa:libreoffice/ppa'
@@ -118,6 +132,7 @@
         - openvpn
         - numix-gtk-theme
         - numix-icon-theme-circle
+        - moka-icon-theme
         - openssh-server
         - libreoffice
         - libnss3-tools
@@ -132,7 +147,8 @@
         - nodejs
         - xorg
         - xserver-xorg-video-intel
-        - slim
+        - lightdm
+        - lightdm-gtk-greeter
         - i3
         - i3blocks
         - p7zip-full
@@ -142,6 +158,7 @@
         - compton
         - intel-linux-graphics-installer
         - ranger
+        - imagemagick
 
     - name: Install Python pip
       easy_install: name=pip
@@ -222,7 +239,7 @@
     - name: Create GOPATH dir
       file: state=directory path="~/Golang"
     - name: Install default Go packages
-      shell: GOPATH=~/Golang go get {{ item.package }}             
+      shell: GOPATH=~/Golang go get {{ item.package }}
       with_items:
         - { package: github.com/tools/godep }
         - { package: golang.org/x/tools/cmd/gotype }

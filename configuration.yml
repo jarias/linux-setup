@@ -102,13 +102,23 @@
     - name: Symlink ~/.chef to ~/Dropbox/chef
       file: state=link src="~/Dropbox/chef" dest="~/.chef" force=true
 
+    # Lightdm
+    - name: Copy lightdm-gtk-greeter config
+      copy: src=files/lightdm-gtk-greeter.conf dest=/etc/lightdm/lightdm-gtk-greeter.conf
+      sudo: True
+
+    # Syncthing
+    - name: Create user systemd dir
+      file: path=~/.config/systemd/user state=directory
+    - name: Copy Syncthing systemd unit
+      copy: src=files/syncthing.service dest=~/.config/systemd/user/syncthing.service
+    - name: Enable Syncthing service
+      command: systemctl --user enable syncthing.service
+
     # User
     - name: Modify current user groups and shell
       user: name={{ lookup('env','USER') }} groups=docker append=yes shell=/usr/bin/zsh
       sudo: True
-
-    - name: Window button layout
-      command: gsettings set  org.gnome.desktop.wm.preferences button-layout 'close,minimize,maximize:'
 
     - name: Better fonts
       command: /etc/fonts/infinality/infctl.sh setstyle linux
