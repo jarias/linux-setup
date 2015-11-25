@@ -16,6 +16,12 @@
 - hosts: all
   tasks:
     # Repos
+
+    # Wine
+    - name: Install wine repo
+      apt_repository: repo='ppa:ubuntu-wine/ppa'
+      sudo: True
+
     # Intel
     - name: Install Intel repo key
       apt_key: url=https://download.01.org/gfx/RPM-GPG-KEY-ilg state=present
@@ -153,7 +159,6 @@
         - i3blocks
         - p7zip-full
         - xz-utils
-        - terminator
         - lxappearance
         - compton
         - intel-linux-graphics-installer
@@ -271,17 +276,17 @@
 
     # Maven
     - name: Download Maven
-      get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.3.1/binaries/apache-maven-3.3.1-bin.tar.gz
-               dest=/usr/local/downloads/apache-maven-3.3.1-bin.tar.gz
+      get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
+               dest=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
       sudo: True
     - name: Unarchive Maven
-      unarchive: src=/usr/local/downloads/apache-maven-3.3.1-bin.tar.gz
+      unarchive: src=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
                  dest=/usr/local/
-                 creates=/usr/local/apache-maven-3.3.1
+                 creates=/usr/local/apache-maven-3.0.5
                  copy=no
       sudo: True
     - name: Link Maven binaries in /usr/local/bin/
-      file: src=/usr/local/apache-maven-3.3.1/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
+      file: src=/usr/local/apache-maven-3.0.5/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link force=yes
       sudo: True
       with_items:
         - mvn
