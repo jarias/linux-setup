@@ -15,165 +15,67 @@
 # Here we describe every software we may want to install
 - hosts: all
   tasks:
-    # Repos
 
-    # Wine
-    - name: Install wine repo
-      apt_repository: repo='ppa:ubuntu-wine/ppa'
-      sudo: True
-
-    # Intel
-    - name: Install Intel repo key
-      apt_key: url=https://download.01.org/gfx/RPM-GPG-KEY-ilg state=present
-      sudo: True
-    - name: Install Intel repo key2
-      apt_key: url=https://download.01.org/gfx/RPM-GPG-KEY-ilg-2 state=present
-      sudo: True
-    - name: Install Intel repo
-      apt_repository: repo='deb https://download.01.org/gfx/ubuntu/15.10/main wily main' state=present
-      sudo: True
-
-    # I3
-    - name: Install i3 repo
-      apt_repository: repo='deb http://debian.sur5r.net/i3/ wily universe' state=present
-      sudo: True
-
-    - name: Install i3 repo keyring
-      apt: name=sur5r-keyring force=yes
-      sudo: True
-
-    # fontconfig-infinality
-    - name: Install no1wantdthisname/ppa repo key
-      apt_key: keyserver=keyserver.ubuntu.com id=66BA314CE985B27B state=present
-      sudo: True
-    - name: Install fontconfig-infinality repo
-      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/ppa/ubuntu wily main' state=present
-      sudo: True
-    - name: Install openjdk-fontfix repo
-      apt_repository: repo='deb http://ppa.launchpad.net/no1wantdthisname/openjdk-fontfix/ubuntu wily main ' state=present
-      sudo: True
-
-    # HipChat
-    - name: Install HipChat repo key
-      apt_key: url=https://www.hipchat.com/keys/hipchat-linux.key state=present
-      sudo: True
-    - name: Install HipChat repo
-      apt_repository: repo='deb http://downloads.hipchat.com/linux/apt stable main' state=present
-      sudo: True
-
-    # NodeJS
-    - name: Install NodeJS repo key
-      apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
-      sudo: True
-    - name: Install NodeJS repo
-      apt_repository: repo='deb https://deb.nodesource.com/node_4.x wily main' state=present
-      sudo: True
-
-    # Heroku Toolbelt
-    - name: Install Heroku Toolbelt repo key
-      apt_key: url=https://toolbelt.heroku.com/apt/release.key state=present
-      sudo: True
-    - name: Install Heroku Toolbelt repo
-      apt_repository: repo='deb http://toolbelt.heroku.com/ubuntu ./' state=present
-      sudo: True
-
-    # Syncthing
-    - name: Install Syncthing repo key
-      apt_key: url=https://syncthing.net/release-key.txt state=present
-      sudo: True
-    - name: Install Syncthing repo
-      apt_repository: repo='deb http://apt.syncthing.net/ syncthing release' state=present
-      sudo: True
-
-    # Numix
-    - name: Install Numix repo
-      apt_repository: repo='ppa:numix/ppa'
-      sudo: True
-
-    # Moka
-    - name: Install Moka repo
-      apt_repository: repo='ppa:moka/stable'
-      sudo: True
-
-    # LibreOffice
-    - name: Install LibreOffice repo
-      apt_repository: repo='ppa:libreoffice/ppa'
-      sudo: True
-
-    - name: Dist upgrade
-      apt: upgrade=dist
-      sudo: True
+    - name: "add archlinuxfr repository to pacman"
+      lineinfile:
+        dest: "/etc/pacman.conf"
+        state: "present"
+        line: "{{ item }}"
+      with_items:
+        - "[archlinuxfr]"
+        - "SigLevel = Never"
+        - "Server = http://repo.archlinux.fr/$arch"
 
     # Base packages
     - name: Install base system packages
-      apt: name={{ item }} state=latest install_recommends=no
+      pacman: name={{ item }} state=latest
       sudo: True
       with_items:
         - subversion
         - bzr
-        - openjdk-8-jdk
+        - jdk8-openjdk
         - tmux
-        - build-essential
         - cloc
-        - exuberant-ctags
-        - heroku-toolbelt
-        - tmux
-        - python
-        - python-dev
-        - python-setuptools
+        - ctags
         - zsh
         - git
-        - git-flow
         - mercurial
         - syncthing
         - curl
         - ruby
-        - ruby-dev
-        - vim
-        - libgecode-dev
+        - vim-python3
         - unzip
-        - libpq-dev
-        - libevent-dev
         - vlc
         - openvpn
-        - numix-gtk-theme
-        - numix-icon-theme-circle
-        - moka-icon-theme
-        - openssh-server
+        - openssh
         - libreoffice
-        - libnss3-tools
-        - hipchat
-        - autoconf
-        - automake
-        - pkg-config
-        - libgtk-3-dev
         - graphviz
         - keychain
-        - fontconfig-infinality
         - nodejs
-        - xorg
-        - xserver-xorg-video-intel
+        - npm
+        - xorg-server
+        - xorg-xrdb
+        - xf86-video-intel
         - lightdm
         - lightdm-gtk-greeter
-        - i3
-        - i3blocks
-        - p7zip-full
-        - xz-utils
+        - i3-wm
+        - p7zip
+        - xz
         - lxappearance
-        - compton
-        - intel-linux-graphics-installer
         - thunar
         - imagemagick
-        - g++
-        - libgtk-3-dev
-        - gtk-doc-tools
-        - gnutls-bin
-        - valac
-        - libglib3.0-cil-dev
-        - libgnutls28-dev
-        - libgirepository1.0-dev
-        - libxml2-utils
-        - gperf
+        - docker
+        - go
+        - chromium
+        - yaourt
+        - vagrant
+        - pulseaudio
+        - pulseaudio-alsa
+        - python-setuptools
+        - python2
+        - python
+        - pavucontrol
+        - postgresql-libs
 
     - name: Install Python pip
       easy_install: name=pip
@@ -181,8 +83,7 @@
 
     # Gems
     - name: Install default Ruby Gems
-      gem: name={{ item }} state=present user_install=no
-      sudo: True
+      gem: name={{ item }} state=present user_install=yes
       with_items:
         - bundler
         - homesick
@@ -215,41 +116,9 @@
       with_items:
         - awscli
         - psutil
-        - powerline-status
         - docker-compose
         - pgcli
         - mycli
-
-    # Docker
-    - name: Install Docker
-      shell: curl -sSL https://get.docker.com/ | sh
-             creates=/usr/bin/docker
-      sudo: True
-
-    - name: Create downloads directory
-      file: path=/usr/local/downloads state=directory
-      sudo: True
-
-    # Go
-    - name: Download Go
-      get_url: url=https://storage.googleapis.com/golang/go1.5.linux-amd64.tar.gz
-               dest=/usr/local/downloads/go1.5.linux-amd64.tar.gz
-      sudo: True
-
-    - name: Unarchive Go
-      unarchive: src=/usr/local/downloads/go1.5.linux-amd64.tar.gz
-                 dest=/usr/local/
-                 creates=/usr/local/bin/go
-                 copy=no
-      sudo: True
-
-    - name: Link Go binaries to /usr/local/bin/
-      file: src=/usr/local/go/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      sudo: True
-      with_items:
-        - go
-        - godoc
-        - gofmt
 
     - name: Create GOPATH dir
       file: state=directory path="~/Golang"
@@ -320,92 +189,22 @@
         - gradle
 
     # Virtualbox
-    - name: Download Virtualbox deb package
-      get_url: url=http://download.virtualbox.org/virtualbox/5.0.10/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-               dest=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-      sudo: True
-    - name: Install Virtualbox
-      apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-      sudo: True
+    #- name: Download Virtualbox deb package
+    #  get_url: url=http://download.virtualbox.org/virtualbox/5.0.10/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
+    #           dest=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
+    #  sudo: True
+    #- name: Install Virtualbox
+    #  apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
+    #  sudo: True
 
     # Vagrant
-    - name: Download Vagrant deb package
-      get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
-               dest=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
-      sudo: True
-    - name: Install Vagrant
-      apt: deb=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
-      sudo: True
-
-    # Packer
-    - name: Download Packer
-      get_url: url=https://dl.bintray.com/mitchellh/packer/packer_0.8.5_linux_amd64.zip
-               dest=/usr/local/downloads/packer_0.8.5_linux_amd64.zip
-      sudo: True
-    - name: Install Packer
-      unarchive: src=/usr/local/downloads/packer_0.8.5_linux_amd64.zip
-                 dest=/usr/local/bin
-                 creates=/usr/local/bin/packer
-                 copy=no
-      sudo: True
-
-    # Terraform
-    - name: Download Terraform
-      get_url: url=https://dl.bintray.com/mitchellh/terraform/terraform_0.6.3_linux_amd64.zip
-               dest=/usr/local/downloads/terraform_0.6.3_linux_amd64.zip
-      sudo: True
-    - name: Install Terraform
-      unarchive: src=/usr/local/downloads/terraform_0.6.3_linux_amd64.zip
-                 dest=/usr/local/bin
-                 creates=/usr/local/bin/terraform
-                 copy=no
-      sudo: True
-
-    # Etcd
-    - name: Download Etcd
-      get_url: url=https://github.com/coreos/etcd/releases/download/v2.1.2/etcd-v2.1.2-linux-amd64.tar.gz
-               dest=/usr/local/downloads/etcd-v2.1.2-linux-amd64.tar.gz
-      sudo: True
-    - name: Unarchive Etcd
-      unarchive: src=/usr/local/downloads/etcd-v2.1.2-linux-amd64.tar.gz
-                 dest=/usr/local/
-                 creates=/usr/local/etcd-v2.1.2-linux-amd64
-                 copy=no
-      sudo: True
-    - name: Link Etcd binaries in /usr/local/bin/
-      file: src=/usr/local/etcd-v2.1.2-linux-amd64/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      sudo: True
-      with_items:
-        - etcdctl
-
-    # Fleet
-    - name: Download Fleet
-      get_url: url=https://github.com/coreos/fleet/releases/download/v0.11.5/fleet-v0.11.5-linux-amd64.tar.gz
-               dest=/usr/local/downloads/fleet-v0.11.5-linux-amd64.tar.gz
-      sudo: True
-    - name: Unarchive Fleet
-      unarchive: src=/usr/local/downloads/fleet-v0.11.5-linux-amd64.tar.gz
-                 dest=/usr/local/
-                 creates=/usr/local/fleet-v0.11.5-linux-amd64
-                 copy=no
-      sudo: True
-    - name: Link Fleet binaries in /usr/local/bin/
-      file: src=/usr/local/fleet-v0.11.5-linux-amd64/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      sudo: True
-      with_items:
-        - fleetctl
-
-    # Ngrok
-    - name: Download Ngrok
-      get_url: url=https://dl.ngrok.com/ngrok_2.0.19_linux_amd64.zip
-               dest=/usr/local/downloads/ngrok_2.0.19_linux_amd64.zip
-      sudo: True
-    - name: Install Ngrok
-      unarchive: src=/usr/local/downloads/ngrok_2.0.19_linux_amd64.zip
-                 dest=/usr/local/bin
-                 creates=/usr/local/bin/ngrok
-                 copy=no
-      sudo: True
+    #- name: Download Vagrant deb package
+    #  get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
+    #           dest=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
+    #  sudo: True
+    #- name: Install Vagrant
+    #  apt: deb=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
+    #  sudo: True
 
     # IntelliJ IDEA
     - name: Download IntelliJ
@@ -424,33 +223,6 @@
       with_items:
         - idea.sh
 
-    # Sublime Text 3
-    - name: Download Sublime Text 3
-      get_url: url=http://c758482.r82.cf2.rackcdn.com/sublime-text_build-3083_amd64.deb
-               dest=/usr/local/downloads/sublime-text_build-3083_amd64.deb
-      sudo: True
-    - name: Install Sublime Text 3
-      apt: deb=/usr/local/downloads/sublime-text_build-3083_amd64.deb
-      sudo: True
-
-    # Skype
-    - name: Download Skype
-      get_url: url=http://download.skype.com/linux/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-               dest=/usr/local/downloads/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-      sudo: True
-    - name: Install Skype
-      apt: deb=/usr/local/downloads/skype-ubuntu-precise_4.3.0.37-1_i386.deb
-      sudo: True
-
-    # Atom
-    - name: Download Atom
-      get_url: url=https://github.com/atom/atom/releases/download/v1.2.3/atom-amd64.deb
-               dest=/usr/local/downloads/atom-amd64.deb
-      sudo: True
-    - name: Install Atom
-      apt: deb=/usr/local/downloads/atom-amd64.deb
-      sudo: True
-
     # Arduino IDE
     - name: Download Arduino IDE
       get_url: url=http://downloads.arduino.cc/arduino-1.6.5-linux64.tar.xz
@@ -468,32 +240,13 @@
       with_items:
         - arduino
 
-    # Google Chrome
-    - name: Download Google Chrome
-      get_url: url=https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-               dest=/usr/local/downloads/google-chrome-stable_current_amd64.deb
-      sudo: True
-    - name: Install Google Chrome
-      apt: deb=/usr/local/downloads/google-chrome-stable_current_amd64.deb
-      sudo: True
-      ignore_errors: yes
-
-    # Dropbox
-    - name: Download Dropbox
-      get_url: url='https://www.dropbox.com/download?dl=packages/ubuntu/dropbox_2015.10.28_amd64.deb'
-               dest=/usr/local/downloads/dropbox_2015.10.28_amd64.deb
-      sudo: True
-    - name: Install Dropbox
-      apt: deb=/usr/local/downloads/dropbox_2015.10.28_amd64.deb
-      sudo: True
-
     # Heroku plugins
-    - name: Install Heroku plugins
-      command: heroku plugins:install {{ item }}
-      with_items:
-        - https://github.com/ddollar/heroku-accounts.git
-        - https://github.com/heroku/heroku-pg-extras.git
-        - https://github.com/ddollar/heroku-pg-transfer.git
+    #- name: Install Heroku plugins
+    #  command: heroku plugins:install {{ item }}
+    #  with_items:
+    #    - https://github.com/ddollar/heroku-accounts.git
+    #    - https://github.com/heroku/heroku-pg-extras.git
+    #    - https://github.com/ddollar/heroku-pg-transfer.git
 
     # Vagrant plugins
     - name: Install Vagrant plugins
@@ -519,7 +272,7 @@
                  copy=no
       sudo: True
     - name: Install source code pro fonts
-      synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/.fonts/
+      synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/.local/share/fonts
 
     - name: Download System San Francisco font
       get_url: url=https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
@@ -532,7 +285,7 @@
                  copy=no
       sudo: True
     - name: Install System San Francisco font
-      copy: src='/usr/local/downloads/YosemiteSanFranciscoFont-master/{{ item }}.ttf' dest=~/.fonts
+      copy: src='/usr/local/downloads/YosemiteSanFranciscoFont-master/{{ item }}.ttf' dest=~/.local/share/fonts
       with_items:
         - System San Francisco Display Regular
         - System San Francisco Display Thin
@@ -550,27 +303,10 @@
                  copy=no
       sudo: True
     - name: Install Font-Awesome
-      copy: src=/usr/local/downloads/Font-Awesome-4.5.0/fonts/FontAwesome.otf dest=~/.fonts
+      copy: src=/usr/local/downloads/Font-Awesome-4.5.0/fonts/FontAwesome.otf dest=~/.local/share/fonts
 
     - name: Update font cache
       command: fc-cache -f -v
-      sudo: True
-
-    # Termite
-    - name: Clone termite repo
-      git: repo="https://github.com/thestinger/termite.git" depth=1 dest=/usr/local/src/termite accept_hostkey=yes
-      sudo: True
-    - name: Clone vte-ng repo
-      git: repo="https://github.com/thestinger/vte-ng.git" depth=1 dest=/usr/local/src/vte-ng accept_hostkey=yes
-      sudo: True
-    - name: Configure vte-ng
-      command: ./autogen.sh chdir=/usr/local/src/vte-ng
-      sudo: True
-    - name: Install vte-ng
-      command: make install chdir=/usr/local/src/vte-ng
-      sudo: True
-    - name: Install termite
-      command: make install chdir=/usr/local/src/termite
       sudo: True
 
     # Vim plugins

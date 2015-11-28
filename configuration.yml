@@ -34,12 +34,12 @@
 
     # Dotfiles
     - name: Clone homesick repos
-      command: /usr/local/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
+      command: ~/.gem/ruby/2.2.0/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
       with_items:
         - { repo: "https://github.com/jarias/dotfiles.git", name: dotfiles }
 
     - name: Symlink dotfiles
-      command: /usr/local/bin/homesick symlink --force dotfiles
+      command: ~/.gem/ruby/2.2.0/bin/homesick symlink --force dotfiles
 
     - name: Ensure ~/.zshrc presence
       ignore_errors: True
@@ -64,16 +64,6 @@
 
     - name: create ~/Projects directory
       file: state=directory path="~/Projects"
-
-    #Sublime Text 3
-    - name: Ensure ~/.config/sublime-text-3/Packages exists
-      file: path="~/.config/sublime-text-3/Packages" state=directory recurse=yes
-
-    - name: Remove Sublime Text 3 user settings
-      file: path="~/.config/sublime-text-3/Packages/User" state=absent
-
-    - name: Link Sublime Text 3 user settings
-      file: state=link src="~/Dropbox/Sublime/User" dest="~/.config/sublime-text-3/Packages/User" force=true
 
     # SSH config
     - name: Clear ~/.ssh contents
@@ -118,8 +108,4 @@
     # User
     - name: Modify current user groups and shell
       user: name={{ lookup('env','USER') }} groups=docker append=yes shell=/usr/bin/zsh
-      sudo: True
-
-    - name: Better fonts
-      command: /etc/fonts/infinality/infctl.sh setstyle linux
       sudo: True
