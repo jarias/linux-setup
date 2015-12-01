@@ -25,6 +25,36 @@
         - "[archlinuxfr]"
         - "SigLevel = Never"
         - "Server = http://repo.archlinux.fr/$arch"
+      sudo: True
+
+    - name: "add infinality-bundle key"
+      shell: "pacman-key -r 962DDE58 && pacman-key --lsign-key 962DDE58"
+      changed_when: false
+      sudo: True
+
+    - name: "add infinality-bundle" # https://wiki.archlinux.org/index.php/Unofficial_user_repositories#infinality-bundle
+      lineinfile:
+        dest: "/etc/pacman.conf"
+        state: "present"
+        line: "{{ item }}"
+      with_items:
+        - "[infinality-bundle]"
+        - "Server = http://bohoomil.com/repo/$arch"
+        - "Server = http://bohoomil.com/repo/fonts"
+      sudo: True
+
+    - name: "enable multilib"
+      lineinfile:
+        dest: "/etc/pacman.conf"
+        state: "present"
+        line: "{{ item }}"
+      with_items:
+        - "[multilib]"
+        - "Include = /etc/pacman.d/mirrorlist"
+      sudo: True
+
+    - pacman: update_cache=yes
+      sudo: True
 
     # Base packages
     - name: Install base system packages
@@ -33,7 +63,7 @@
       with_items:
         - subversion
         - bzr
-        - jdk8-openjdk
+        - jdk8-openjdk-infinality
         - tmux
         - cloc
         - ctags
@@ -53,12 +83,10 @@
         - keychain
         - nodejs
         - npm
-        - xorg-server
         - xorg-xrdb
-        - xf86-video-intel
-        - lightdm
-        - lightdm-gtk-greeter
         - i3-wm
+        - rofi
+        - conky
         - p7zip
         - xz
         - lxappearance
@@ -76,6 +104,11 @@
         - python
         - pavucontrol
         - postgresql-libs
+        - infinality-bundle
+        - lm_sensors
+        - wine
+        - wine-mono
+        - winetricks
 
     - name: Install Python pip
       easy_install: name=pip
@@ -188,65 +221,13 @@
       with_items:
         - gradle
 
-    # Virtualbox
-    #- name: Download Virtualbox deb package
-    #  get_url: url=http://download.virtualbox.org/virtualbox/5.0.10/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-    #           dest=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-    #  sudo: True
-    #- name: Install Virtualbox
-    #  apt: deb=/usr/local/downloads/virtualbox-5.0_5.0.10-104061~Ubuntu~wily_amd64.deb
-    #  sudo: True
-
-    # Vagrant
-    #- name: Download Vagrant deb package
-    #  get_url: url=https://dl.bintray.com/mitchellh/vagrant/vagrant_1.7.4_x86_64.deb
-    #           dest=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
-    #  sudo: True
-    #- name: Install Vagrant
-    #  apt: deb=/usr/local/downloads/vagrant_1.7.4_x86_64.deb
-    #  sudo: True
-
-    # IntelliJ IDEA
-    - name: Download IntelliJ
-      get_url: url=https://download.jetbrains.com/idea/ideaIU-15.0.1.tar.gz
-               dest=/usr/local/downloads/ideaIU-15.0.1.tar.gz
-      sudo: True
-    - name: Unarchive IntelliJ
-      unarchive: src=/usr/local/downloads/ideaIU-15.0.1.tar.gz
-                 dest=/usr/local
-                 creates=/usr/local/idea-IU-143.382.35
-                 copy=no
-      sudo: True
-    - name: Link IntelliJ binaries to /usr/local/bin
-      file: src=/usr/local/idea-IU-143.382.35/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link force=yes
-      sudo: True
-      with_items:
-        - idea.sh
-
-    # Arduino IDE
-    - name: Download Arduino IDE
-      get_url: url=http://downloads.arduino.cc/arduino-1.6.5-linux64.tar.xz
-               dest=/usr/local/downloads/arduino-1.6.5-linux64.tar.xz
-      sudo: True
-    - name: Install Arduino IDE
-      unarchive: src=/usr/local/downloads/arduino-1.6.5-linux64.tar.xz
-                 dest=/usr/local
-                 creates=/usr/local/arduino-1.6.5
-                 copy=no
-      sudo: True
-    - name: Link Arduino IDE binaries to /usr/local/bin
-      file: src=/usr/local/arduino-1.6.5/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      sudo: True
-      with_items:
-        - arduino
-
     # Heroku plugins
-    #- name: Install Heroku plugins
-    #  command: heroku plugins:install {{ item }}
-    #  with_items:
-    #    - https://github.com/ddollar/heroku-accounts.git
-    #    - https://github.com/heroku/heroku-pg-extras.git
-    #    - https://github.com/ddollar/heroku-pg-transfer.git
+    - name: Install Heroku plugins
+      command: heroku plugins:install {{ item }}
+      with_items:
+        - https://github.com/ddollar/heroku-accounts.git
+        - https://github.com/heroku/heroku-pg-extras.git
+        - https://github.com/ddollar/heroku-pg-transfer.git
 
     # Vagrant plugins
     - name: Install Vagrant plugins

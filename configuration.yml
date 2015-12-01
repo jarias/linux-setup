@@ -92,11 +92,6 @@
     - name: Symlink ~/.chef to ~/Dropbox/chef
       file: state=link src="~/Dropbox/chef" dest="~/.chef" force=true
 
-    # Lightdm
-    - name: Copy lightdm-gtk-greeter config
-      copy: src=files/lightdm-gtk-greeter.conf dest=/etc/lightdm/lightdm-gtk-greeter.conf
-      sudo: True
-
     # Syncthing
     - name: Create user systemd dir
       file: path=~/.config/systemd/user state=directory
