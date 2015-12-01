@@ -221,6 +221,18 @@
       with_items:
         - gradle
 
+    # Tomcat7
+    - name: Download Tomcat7
+      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz
+               dest=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
+      sudo: True
+    - name: Unarchive Tomcat7
+      unarchive: src=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
+                 dest=/usr/local/
+                 creates=/usr/local/apache-tomcat-7.0.65
+                 copy=no              
+      sudo: True
+
     # Heroku plugins
     - name: Install Heroku plugins
       command: heroku plugins:install {{ item }}
