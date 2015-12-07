@@ -85,6 +85,7 @@
         - npm
         - xorg-xrdb
         - i3-wm
+        - i3lock
         - rofi
         - conky
         - p7zip
