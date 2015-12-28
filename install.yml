@@ -87,15 +87,12 @@
         - i3-wm
         - i3lock
         - rofi
-        - conky
         - p7zip
         - xz
         - lxappearance
-        - thunar
         - imagemagick
         - docker
         - go
-        - chromium
         - yaourt
         - vagrant
         - pulseaudio
@@ -110,6 +107,9 @@
         - wine
         - wine-mono
         - winetricks
+        - scrot
+        - xautolock
+        - transmission-cli
 
     - name: Install Python pip
       easy_install: name=pip
