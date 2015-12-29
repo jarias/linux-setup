@@ -110,6 +110,16 @@
         - scrot
         - xautolock
         - transmission-cli
+        - sddm
+        - tree
+        - scummvm
+        - scummvm-tools
+        - samba
+        - rsync
+        - ranger
+        - termite
+        - xfce4-power-manager
+
 
     - name: Install Python pip
       easy_install: name=pip
@@ -231,7 +241,7 @@
       unarchive: src=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
                  dest=/usr/local/
                  creates=/usr/local/apache-tomcat-7.0.65
-                 copy=no              
+                 copy=no
       sudo: True
 
     # Heroku plugins
