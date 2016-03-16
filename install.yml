@@ -15,7 +15,6 @@
 # Here we describe every software we may want to install
 - hosts: all
   tasks:
-
     - name: "add archlinuxfr repository to pacman"
       lineinfile:
         dest: "/etc/pacman.conf"
@@ -25,12 +24,14 @@
         - "[archlinuxfr]"
         - "SigLevel = Never"
         - "Server = http://repo.archlinux.fr/$arch"
-      sudo: True
+      become: yes
+      become_method: sudo
 
     - name: "add infinality-bundle key"
       shell: "pacman-key -r 962DDE58 && pacman-key --lsign-key 962DDE58"
       changed_when: false
-      sudo: True
+      become: yes
+      become_method: sudo
 
     - name: "add infinality-bundle" # https://wiki.archlinux.org/index.php/Unofficial_user_repositories#infinality-bundle
       lineinfile:
@@ -41,7 +42,8 @@
         - "[infinality-bundle]"
         - "Server = http://bohoomil.com/repo/$arch"
         - "Server = http://bohoomil.com/repo/fonts"
-      sudo: True
+      become: yes
+      become_method: sudo
 
     - name: "enable multilib"
       lineinfile:
@@ -51,15 +53,18 @@
       with_items:
         - "[multilib]"
         - "Include = /etc/pacman.d/mirrorlist"
-      sudo: True
+      become: yes
+      become_method: sudo
 
     - pacman: update_cache=yes
-      sudo: True
+      become: yes
+      become_method: sudo
 
     # Base packages
     - name: Install base system packages
       pacman: name={{ item }} state=latest
-      sudo: True
+      become: yes
+      become_method: sudo
       with_items:
         - subversion
         - bzr
@@ -73,7 +78,7 @@
         - syncthing
         - curl
         - ruby
-        - vim-python3
+        - gvim
         - unzip
         - vlc
         - openvpn
@@ -104,26 +109,21 @@
         - postgresql-libs
         - infinality-bundle
         - lm_sensors
-        - wine
-        - wine-mono
-        - winetricks
         - scrot
         - xautolock
-        - transmission-cli
-        - sddm
         - tree
         - scummvm
         - scummvm-tools
         - samba
         - rsync
         - ranger
-        - termite
         - xfce4-power-manager
-
+        - xfce4-terminal
 
     - name: Install Python pip
       easy_install: name=pip
-      sudo: True
+      become: yes
+      become_method: sudo
 
     # Gems
     - name: Install default Ruby Gems
@@ -181,36 +181,48 @@
     # Arc Theme
     - name: Clone Arc Theme repo
       git: repo="https://github.com/horst3180/arc-theme" depth=1 dest=/usr/local/src/arc-theme
-      sudo: True
+      become: yes
+      become_method: sudo
     - name: Configure Arc Theme
       command: ./autogen.sh --prefix=/usr chdir=/usr/local/src/arc-theme
-      sudo: True
+      become: yes
+      become_method: sudo
     - name: Install Arc Theme
       command: make install chdir=/usr/local/src/arc-theme
-      sudo: True
+      become: yes
+      become_method: sudo
 
     # Direnv
     - name: Download direnv
       git: repo=https://github.com/direnv/direnv.git dest=/usr/local/downloads/direnv
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Install direnv
       command: make install chdir=/usr/local/downloads/direnv creates=/usr/local/bin/direnv
-      sudo: True
+      become: yes
+      become_method: sudo
 
     # Maven
     - name: Download Maven
       get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
                dest=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive Maven
       unarchive: src=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
                  dest=/usr/local/
                  creates=/usr/local/apache-maven-3.0.5
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Link Maven binaries in /usr/local/bin/
       file: src=/usr/local/apache-maven-3.0.5/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link force=yes
-      sudo: True
+      become: yes
+      become_method: sudo
+
       with_items:
         - mvn
         - mvnDebug
@@ -219,16 +231,22 @@
     - name: Download Gradle
       get_url: url=https://downloads.gradle.org/distributions/gradle-2.6-all.zip
                dest=/usr/local/downloads/gradle-2.6-all.zip
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive Gradle
       unarchive: src=/usr/local/downloads/gradle-2.6-all.zip
                  dest=/usr/local/
                  creates=/usr/local/gradle-2.6
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Link Gradle binaries in /usr/local/bin/
       file: src=/usr/local/gradle-2.6/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      sudo: True
+      become: yes
+      become_method: sudo
+
       with_items:
         - gradle
 
@@ -236,13 +254,17 @@
     - name: Download Tomcat7
       get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz
                dest=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive Tomcat7
       unarchive: src=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
                  dest=/usr/local/
                  creates=/usr/local/apache-tomcat-7.0.65
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
 
     # Heroku plugins
     - name: Install Heroku plugins
@@ -261,33 +283,43 @@
     # Fonts
     - name: Clone powerline fonts repo
       git: repo=https://github.com/powerline/fonts dest=/usr/local/downloads/powerline-fonts
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Install powerline fonts
       command: /usr/local/downloads/powerline-fonts/install.sh chdir=/usr/local/downloads/powerline-fonts
 
     - name: Download source code pro fonts
       get_url: url=https://github.com/adobe-fonts/source-code-pro/archive/2.010R-ro/1.030R-it.tar.gz
                dest=/usr/local/downloads/1.030R-it.tar.gz
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive source code pro fonts
       unarchive: src=/usr/local/downloads/1.030R-it.tar.gz
                  dest=/usr/local/downloads
                  creates=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Install source code pro fonts
       synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/.local/share/fonts
 
     - name: Download System San Francisco font
       get_url: url=https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
                dest=/usr/local/downloads/ssf.zip
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive System San Francisco font
       unarchive: src=/usr/local/downloads/ssf.zip
                  dest=/usr/local/downloads
                  creates=/usr/local/downloads/YosemiteSanFranciscoFont-master
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Install System San Francisco font
       copy: src='/usr/local/downloads/YosemiteSanFranciscoFont-master/{{ item }}.ttf' dest=~/.local/share/fonts
       with_items:
@@ -299,19 +331,25 @@
     - name: Download Font-Awesome
       get_url: url=https://github.com/FortAwesome/Font-Awesome/archive/v4.5.0.tar.gz
                dest=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Unarchive Font-Awesome
       unarchive: src=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
                  dest=/usr/local/downloads
                  creates=/usr/local/downloads/Font-Awesome-4.5.0
                  copy=no
-      sudo: True
+      become: yes
+      become_method: sudo
+
     - name: Install Font-Awesome
       copy: src=/usr/local/downloads/Font-Awesome-4.5.0/fonts/FontAwesome.otf dest=~/.local/share/fonts
 
     - name: Update font cache
       command: fc-cache -f -v
-      sudo: True
+      become: yes
+      become_method: sudo
+
 
     # Vim plugins
     - name: Create bundle directory
@@ -327,6 +365,7 @@
     - name: Install Vim plugins
       git: repo={{ item.repo }} dest=~/.vim/bundle/{{ item.name }}
       with_items:
+        - { repo: 'https://github.com/lilydjwg/colorizer', name: 'colorizer.tool' }
         - { repo: 'https://github.com/Shougo/neocomplete.vim', name: 'neocomplete.tool' }
         - { repo: 'https://github.com/mileszs/ack.vim.git', name: 'ack.tool' }
         - { repo: 'https://github.com/vim-scripts/molokai.git', name: 'molokai.color' }

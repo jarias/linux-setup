@@ -6,4 +6,4 @@ if [ ! -x /usr/bin/ansible ]; then
 fi
 
 #Run Ansible
-PYTHONIOENCODING='utf-8' ansible-playbook desktop.yml --ask-sudo-pass
+PYTHONIOENCODING='utf-8' ansible-playbook desktop.yml --ask-become-pass
