@@ -34,12 +34,12 @@
 
     # Dotfiles
     - name: Clone homesick repos
-      command: ~/.gem/ruby/2.2.0/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
+      command: ~/.gem/ruby/2.3.0/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
       with_items:
         - { repo: "https://github.com/jarias/dotfiles.git", name: dotfiles }
 
     - name: Symlink dotfiles
-      command: ~/.gem/ruby/2.2.0/bin/homesick symlink --force dotfiles
+      command: ~/.gem/ruby/2.3.0/bin/homesick symlink --force dotfiles
 
     - name: Ensure ~/.zshrc presence
       ignore_errors: True

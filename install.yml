@@ -210,7 +210,7 @@
 
     # Tomcat7
     - name: Download Tomcat7
-      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.68.tar.gz
+      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.tar.gz
                dest=/usr/local/downloads/apache-tomcat-7.0.68.tar.gz
       become: yes
       become_method: sudo
