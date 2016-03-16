@@ -80,7 +80,6 @@
         - ruby
         - gvim
         - unzip
-        - vlc
         - openvpn
         - openssh
         - libreoffice
@@ -119,6 +118,12 @@
         - ranger
         - xfce4-power-manager
         - xfce4-terminal
+        - maven
+        - gradle
+        - weechat
+        - noto-fonts
+        - noto-fonts-emoji
+        - mpv
 
     - name: Install Python pip
       easy_install: name=pip
@@ -203,68 +208,20 @@
       become: yes
       become_method: sudo
 
-    # Maven
-    - name: Download Maven
-      get_url: url=http://mirrors.ucr.ac.cr/apache/maven/maven-3/3.0.5/binaries/apache-maven-3.0.5-bin.tar.gz
-               dest=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive Maven
-      unarchive: src=/usr/local/downloads/apache-maven-3.0.5-bin.tar.gz
-                 dest=/usr/local/
-                 creates=/usr/local/apache-maven-3.0.5
-                 copy=no
-      become: yes
-      become_method: sudo
-
-    - name: Link Maven binaries in /usr/local/bin/
-      file: src=/usr/local/apache-maven-3.0.5/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link force=yes
-      become: yes
-      become_method: sudo
-
-      with_items:
-        - mvn
-        - mvnDebug
-
-    # Gradle
-    - name: Download Gradle
-      get_url: url=https://downloads.gradle.org/distributions/gradle-2.6-all.zip
-               dest=/usr/local/downloads/gradle-2.6-all.zip
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive Gradle
-      unarchive: src=/usr/local/downloads/gradle-2.6-all.zip
-                 dest=/usr/local/
-                 creates=/usr/local/gradle-2.6
-                 copy=no
-      become: yes
-      become_method: sudo
-
-    - name: Link Gradle binaries in /usr/local/bin/
-      file: src=/usr/local/gradle-2.6/bin/{{ item }} dest=/usr/local/bin/{{ item }} state=link
-      become: yes
-      become_method: sudo
-
-      with_items:
-        - gradle
-
     # Tomcat7
     - name: Download Tomcat7
-      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.65.tar.gz
-               dest=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
+      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.65/bin/apache-tomcat-7.0.68.tar.gz
+               dest=/usr/local/downloads/apache-tomcat-7.0.68.tar.gz
       become: yes
       become_method: sudo
 
     - name: Unarchive Tomcat7
-      unarchive: src=/usr/local/downloads/apache-tomcat-7.0.65.tar.gz
+      unarchive: src=/usr/local/downloads/apache-tomcat-7.0.68.tar.gz
                  dest=/usr/local/
-                 creates=/usr/local/apache-tomcat-7.0.65
+                 creates=/usr/local/apache-tomcat-7.0.68
                  copy=no
       become: yes
       become_method: sudo
-
 
     # Heroku plugins
     - name: Install Heroku plugins
