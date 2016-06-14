@@ -65,8 +65,7 @@
       pacman: name={{ item }} state=latest
       become: yes
       become_method: sudo
-      with_items:
-        - subversion
+      with_items:        
         - bzr
         - jdk8-openjdk-infinality
         - tmux
@@ -74,15 +73,13 @@
         - ctags
         - zsh
         - git
-        - mercurial
-        - syncthing
+        - mercurial    
         - curl
         - ruby
         - gvim
         - unzip
         - openvpn
         - openssh
-        - libreoffice
         - graphviz
         - keychain
         - nodejs
@@ -107,8 +104,7 @@
         - pavucontrol
         - postgresql-libs
         - infinality-bundle
-        - lm_sensors
-        - scrot
+        - lm_sensors        
         - xautolock
         - tree
         - scummvm
@@ -124,6 +120,10 @@
         - noto-fonts
         - noto-fonts-emoji
         - mpv
+        - go-tools
+        - tomcat7
+        - adobe-source-code-pro-fonts
+        - powerline-fonts
 
     - name: Install Python pip
       easy_install: name=pip
@@ -138,9 +138,6 @@
         - homesick
         - git-smart
         - berkshelf
-        - pry
-        - hirb
-        - svn2git
         - ghost
         - lolcat
 
@@ -154,10 +151,8 @@
         - grunt-cli
         - bower
         - yo
-        - ember-cli
-        - broccoli-cli
-        - jshint
         - sslmate
+        - standard
 
     # Python pip
     - name: Install Python pip default packages
@@ -168,6 +163,7 @@
         - docker-compose
         - pgcli
         - mycli
+        - http-prompt
 
     - name: Create GOPATH dir
       file: state=directory path="~/Golang"
@@ -178,50 +174,7 @@
         - { package: golang.org/x/tools/cmd/gotype }
         - { package: golang.org/x/tools/cmd/goimports }
         - { package: golang.org/x/tools/cmd/cover }
-        - { package: github.com/onsi/ginkgo/ginkgo }
-        - { package: github.com/onsi/gomega }
-        - { package: github.com/golang/lint/golint }
         - { package: github.com/constabulary/gb/... }
-
-    # Arc Theme
-    - name: Clone Arc Theme repo
-      git: repo="https://github.com/horst3180/arc-theme" depth=1 dest=/usr/local/src/arc-theme
-      become: yes
-      become_method: sudo
-    - name: Configure Arc Theme
-      command: ./autogen.sh --prefix=/usr chdir=/usr/local/src/arc-theme
-      become: yes
-      become_method: sudo
-    - name: Install Arc Theme
-      command: make install chdir=/usr/local/src/arc-theme
-      become: yes
-      become_method: sudo
-
-    # Direnv
-    - name: Download direnv
-      git: repo=https://github.com/direnv/direnv.git dest=/usr/local/downloads/direnv
-      become: yes
-      become_method: sudo
-
-    - name: Install direnv
-      command: make install chdir=/usr/local/downloads/direnv creates=/usr/local/bin/direnv
-      become: yes
-      become_method: sudo
-
-    # Tomcat7
-    - name: Download Tomcat7
-      get_url: url=http://mirrors.ucr.ac.cr/apache/tomcat/tomcat-7/v7.0.68/bin/apache-tomcat-7.0.68.tar.gz
-               dest=/usr/local/downloads/apache-tomcat-7.0.68.tar.gz
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive Tomcat7
-      unarchive: src=/usr/local/downloads/apache-tomcat-7.0.68.tar.gz
-                 dest=/usr/local/
-                 creates=/usr/local/apache-tomcat-7.0.68
-                 copy=no
-      become: yes
-      become_method: sudo
 
     # Heroku plugins
     - name: Install Heroku plugins
@@ -236,77 +189,6 @@
       command: vagrant plugin install {{ item }}
       with_items:
         - vagrant-vbguest
-
-    # Fonts
-    - name: Clone powerline fonts repo
-      git: repo=https://github.com/powerline/fonts dest=/usr/local/downloads/powerline-fonts
-      become: yes
-      become_method: sudo
-
-    - name: Install powerline fonts
-      command: /usr/local/downloads/powerline-fonts/install.sh chdir=/usr/local/downloads/powerline-fonts
-
-    - name: Download source code pro fonts
-      get_url: url=https://github.com/adobe-fonts/source-code-pro/archive/2.010R-ro/1.030R-it.tar.gz
-               dest=/usr/local/downloads/1.030R-it.tar.gz
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive source code pro fonts
-      unarchive: src=/usr/local/downloads/1.030R-it.tar.gz
-                 dest=/usr/local/downloads
-                 creates=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it
-                 copy=no
-      become: yes
-      become_method: sudo
-
-    - name: Install source code pro fonts
-      synchronize: src=/usr/local/downloads/source-code-pro-2.010R-ro-1.030R-it/OTF/ dest=~/.local/share/fonts
-
-    - name: Download System San Francisco font
-      get_url: url=https://github.com/supermarin/YosemiteSanFranciscoFont/archive/master.zip
-               dest=/usr/local/downloads/ssf.zip
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive System San Francisco font
-      unarchive: src=/usr/local/downloads/ssf.zip
-                 dest=/usr/local/downloads
-                 creates=/usr/local/downloads/YosemiteSanFranciscoFont-master
-                 copy=no
-      become: yes
-      become_method: sudo
-
-    - name: Install System San Francisco font
-      copy: src='/usr/local/downloads/YosemiteSanFranciscoFont-master/{{ item }}.ttf' dest=~/.local/share/fonts
-      with_items:
-        - System San Francisco Display Regular
-        - System San Francisco Display Thin
-        - System San Francisco Display Ultralight
-        - System San Francisco Display Bold
-
-    - name: Download Font-Awesome
-      get_url: url=https://github.com/FortAwesome/Font-Awesome/archive/v4.5.0.tar.gz
-               dest=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
-      become: yes
-      become_method: sudo
-
-    - name: Unarchive Font-Awesome
-      unarchive: src=/usr/local/downloads/FontAwesomev4.5.0.tar.gz
-                 dest=/usr/local/downloads
-                 creates=/usr/local/downloads/Font-Awesome-4.5.0
-                 copy=no
-      become: yes
-      become_method: sudo
-
-    - name: Install Font-Awesome
-      copy: src=/usr/local/downloads/Font-Awesome-4.5.0/fonts/FontAwesome.otf dest=~/.local/share/fonts
-
-    - name: Update font cache
-      command: fc-cache -f -v
-      become: yes
-      become_method: sudo
-
 
     # Vim plugins
     - name: Create bundle directory
