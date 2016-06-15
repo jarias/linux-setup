@@ -95,3 +95,34 @@
       become: yes
       become_method: sudo
 
+    - name: Copy udev rule files
+      copy: src=files/udev/{{ item }} dest=/etc/udev/rules.d/{{ item }} owner=root group=root mode=644
+      with_items:
+        - 98-monitor_hot_plug.rules
+        - 99-hdmi_sound.rules
+      become: yes
+      become_method: sudo
+
+    - name: Reload udev rules
+      command: /usr/bin/udevadm control --reload-rules
+      become: yes
+      become_method: sudo
+
+    - name: Copy sytemd unit files
+      copy: src=files/systemd/{{ item }} dest=/etc/systemd/system/{{ item }} owner=root group=root mode=644
+      with_items:
+        - hdmi_sound_toggle.service
+        - monitor_hot_plug.service
+      become: yes
+      become_method: sudo
+
+    - name: Copy scripts files
+      copy: src=files/scripts/{{ item }} dest=/usr/local/bin/{{ item }} owner=root group=root mode=755
+      with_items:
+        - display-setup
+        - hdmi_sound_toggle.sh
+      become: yes
+      become_method: sudo
+
+      
+

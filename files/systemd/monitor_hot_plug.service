@@ -1,0 +1,10 @@
+[Unit]
+Description=Monitor hotplug
+
+[Service]
+Type=simple
+RemainAfterExit=no
+ExecStart=/usr/local/bin/display-setup
+
+[Install]
+WantedBy=multi-user.target
