@@ -65,7 +65,7 @@
       pacman: name={{ item }} state=latest
       become: yes
       become_method: sudo
-      with_items:        
+      with_items:
         - bzr
         - jdk8-openjdk-infinality
         - tmux
@@ -73,7 +73,7 @@
         - ctags
         - zsh
         - git
-        - mercurial    
+        - mercurial
         - curl
         - ruby
         - gvim
@@ -104,7 +104,7 @@
         - pavucontrol
         - postgresql-libs
         - infinality-bundle
-        - lm_sensors        
+        - lm_sensors
         - xautolock
         - tree
         - scummvm
@@ -132,6 +132,10 @@
         - virt-manager
         - qemu
         - perf
+        - terminus-font
+        - vinagre
+        - dnsmasq
+        - intel-ucode
 
     - name: Install Python pip
       easy_install: name=pip
