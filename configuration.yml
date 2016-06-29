@@ -27,7 +27,7 @@
       copy: src=~/.oh-my-zsh/templates/zshrc.zsh-template dest=~/.zshrc
 
     - name: Change oh-my-zsh plugin list
-      lineinfile: dest=~/.zshrc regexp="^plugins=" line="plugins=(git git-flow-avh vagrant)" state=present
+      lineinfile: dest=~/.zshrc regexp="^plugins=" line="plugins=(git git-flow-avh vagrant docker heroku)" state=present
 
     - name: Change prompt theme
       lineinfile: dest=~/.zshrc regexp="^ZSH_THEME=" line="ZSH_THEME=\"pygmalion\"" state=present
