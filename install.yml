@@ -124,6 +124,13 @@
         - tomcat7
         - adobe-source-code-pro-fonts
         - powerline-fonts
+        - xawtv
+        - scrot
+        - mpg123
+        - autofs
+        - libvirt
+        - virt-manager
+        - qemu
 
     - name: Install Python pip
       easy_install: name=pip
@@ -153,7 +160,6 @@
         - yo
         - sslmate
         - standard
-        - prey
 
     # Python pip
     - name: Install Python pip default packages
