@@ -131,6 +131,7 @@
         - libvirt
         - virt-manager
         - qemu
+        - perf
 
     - name: Install Python pip
       easy_install: name=pip
