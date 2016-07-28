@@ -216,7 +216,6 @@
     - name: Install Vim plugins
       git: repo={{ item.repo }} dest=~/.vim/bundle/{{ item.name }}
       with_items:
-        - { repo: 'https://github.com/lilydjwg/colorizer', name: 'colorizer.tool' }
         - { repo: 'https://github.com/Shougo/neocomplete.vim', name: 'neocomplete.tool' }
         - { repo: 'https://github.com/mileszs/ack.vim.git', name: 'ack.tool' }
         - { repo: 'https://github.com/vim-scripts/molokai.git', name: 'molokai.color' }
