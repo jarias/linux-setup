@@ -182,25 +182,36 @@
     - name: Install default Go packages
       shell: GOPATH=~/Golang go get {{ item.package }}
       with_items:
-        - { package: github.com/tools/godep }
         - { package: golang.org/x/tools/cmd/gotype }
         - { package: golang.org/x/tools/cmd/goimports }
         - { package: golang.org/x/tools/cmd/cover }
+        - { package: golang.org/x/tools/cmd/guru }
+        - { package: golang.org/x/tools/cmd/gorename }
+        - { package: github.com/nsf/gocode }
+        - { package: github.com/alecthomas/gometalinter }
+        - { package: github.com/golang/lint/golint }
+        - { package: github.com/rogpeppe/godef }
+        - { package: github.com/kisielk/errcheck }
+        - { package: github.com/jstemmer/gotags }
+        - { package: github.com/klauspost/asmfmt/cmd/asmfmt }
+        - { package: github.com/fatih/motion }
+        - { package: github.com/zmb3/gogetdoc }
+        - { package: github.com/josharian/impl }
         - { package: github.com/constabulary/gb/... }
 
     # Heroku plugins
-    - name: Install Heroku plugins
-      command: heroku plugins:install {{ item }}
-      with_items:
-        - https://github.com/ddollar/heroku-accounts.git
-        - https://github.com/heroku/heroku-pg-extras.git
-        - https://github.com/ddollar/heroku-pg-transfer.git
+    #- name: Install Heroku plugins
+    #  command: heroku plugins:install {{ item }}
+    #  with_items:
+    #    - https://github.com/heroku/heroku-pg-extras.git
 
     # Vagrant plugins
     - name: Install Vagrant plugins
       command: vagrant plugin install {{ item }}
       with_items:
         - vagrant-vbguest
+        - vagrant-mutate
+        - vagrant-libvirt
 
     # Vim plugins
     - name: Create bundle directory
