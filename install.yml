@@ -15,18 +15,6 @@
 # Here we describe every software we may want to install
 - hosts: all
   tasks:
-    - name: "add archlinuxfr repository to pacman"
-      lineinfile:
-        dest: "/etc/pacman.conf"
-        state: "present"
-        line: "{{ item }}"
-      with_items:
-        - "[archlinuxfr]"
-        - "SigLevel = Never"
-        - "Server = http://repo.archlinux.fr/$arch"
-      become: yes
-      become_method: sudo
-
     - name: "add infinality-bundle key"
       shell: "pacman-key -r 962DDE58 && pacman-key --lsign-key 962DDE58"
       changed_when: false
@@ -94,7 +82,6 @@
         - imagemagick
         - docker
         - go
-        - yaourt
         - vagrant
         - pulseaudio
         - pulseaudio-alsa
@@ -198,12 +185,6 @@
         - { package: github.com/zmb3/gogetdoc }
         - { package: github.com/josharian/impl }
         - { package: github.com/constabulary/gb/... }
-
-    # Heroku plugins
-    #- name: Install Heroku plugins
-    #  command: heroku plugins:install {{ item }}
-    #  with_items:
-    #    - https://github.com/heroku/heroku-pg-extras.git
 
     # Vagrant plugins
     - name: Install Vagrant plugins
