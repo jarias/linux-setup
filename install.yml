@@ -209,28 +209,19 @@
       git: repo={{ item.repo }} dest=~/.vim/bundle/{{ item.name }}
       with_items:
         - { repo: 'https://github.com/Shougo/neocomplete.vim', name: 'neocomplete.tool' }
-        - { repo: 'https://github.com/mileszs/ack.vim.git', name: 'ack.tool' }
-        - { repo: 'https://github.com/vim-scripts/molokai.git', name: 'molokai.color' }
         - { repo: 'https://github.com/scrooloose/nerdtree.git', name: 'nerdtree.tool' }
         - { repo: 'https://github.com/jeetsukumaran/vim-buffergator.git', name: 'buffergator.tool' }
         - { repo: 'https://github.com/tpope/vim-fugitive.git', name: 'fugitive.tool' }
         - { repo: 'https://github.com/fatih/vim-go.git', name: 'go.lang' }
         - { repo: 'https://github.com/pangloss/vim-javascript.git', name: 'javascript.lang' }
-        - { repo: 'https://github.com/mmalecki/vim-node.js.git', name: 'nodejs.lang' }
         - { repo: 'https://github.com/kien/ctrlp.vim.git', name: 'ctrlp.tool' }
-        - { repo: 'https://github.com/scrooloose/nerdcommenter.git', name: 'nerdcommenter.tool' }
-        - { repo: 'https://github.com/ervandew/supertab.git', name: 'supertab.tool' }
         - { repo: 'https://github.com/Lokaltog/vim-easymotion.git', name: 'easymotion.tool' }
         - { repo: 'https://github.com/tpope/vim-git.git', name: 'git.lang' }
-        - { repo: 'https://github.com/tfnico/vim-gradle.git', name: 'gradle.lang' }
-        - { repo: 'https://github.com/groenewege/vim-less.git', name: 'less.lang' }
         - { repo: 'https://github.com/bronson/vim-trailing-whitespace.git', name: 'trailing-whitespace.tool' }
         - { repo: 'https://github.com/terryma/vim-multiple-cursors.git', name: 'multiple-cursors.tool' }
         - { repo: 'https://github.com/scrooloose/syntastic.git', name: 'syntastic.tool' }
-        - { repo: 'https://github.com/maksimr/vim-jsbeautify.git', name: 'jsbeautify.tool' }
         - { repo: 'https://github.com/tpope/vim-sensible.git', name: 'vim-sensible.config' }
         - { repo: 'https://github.com/majutsushi/tagbar.git', name: 'tagbar.tool' }
         - { repo: 'https://github.com/vim-scripts/ZoomWin.git', name: 'ZoomWin.tool' }
         - { repo: 'https://github.com/chriskempson/base16-vim.git', name: 'base16.color' }
         - { repo: 'https://github.com/SirVer/ultisnips.git', name: 'utilsnips.tool' }
-        - { repo: 'https://github.com/AndrewRadev/splitjoin.vim.git', name: 'splitjoin.tool' }
