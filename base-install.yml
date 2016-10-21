@@ -51,47 +51,9 @@
       apt_repository: repo='ppa:no1wantdthisname/ppa' state=present
       become: yes
 
-    # Golang
-    - name: Install Golang repo
-      apt_repository: repo='ppa:ubuntu-lxc/lxd-stable' state=present
-      become: yes
-
-    # Docker
-    - name: Install Docker repo key
-      apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
-      become: yes
-
-    - name: Install Docker repo
-      apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-{{ansible_distribution_release}} main'
-      become: yes
-
-    # Numix
-    - name: Install Numix repo
-      apt_repository: repo='ppa:numix/ppa'
-      become: yes
-
-    # Arc
-    - name: Install Arc Theme repo key
-      apt_key: url=http://download.opensuse.org/repositories/home:Horst3180/xUbuntu_16.04/Release.key state=present
-      become: yes
-
-    - name: Install Arc Theme repo
-      apt_repository: repo='deb http://download.opensuse.org/repositories/home:/Horst3180/xUbuntu_16.04/ /' state=present
-      become: yes
-
-    # Moka
-    - name: Install Moka repo
-      apt_repository: repo='ppa:moka/stable'
-      become: yes
-
     # Ubuntu Make
     - name: Install Ubuntu Make repo
       apt_repository: repo='ppa:ubuntu-desktop/ubuntu-make'
-      become: yes
-
-    # Ruby
-    - name: Install RubyNG repo
-      apt_repository: repo='ppa:brightbox/ruby-ng'
       become: yes
 
     # Gradle
@@ -113,24 +75,12 @@
       apt_repository: repo='deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' filename='google-chrome' state=present
       become: yes
 
-    - name: Install git-flow repo
-      apt_repository: repo='ppa:pdoes/gitflow-avh' state=present
-      become: yes
-
     - name: Install Google Cloud SDK repo key
       apt_key: url='https://packages.cloud.google.com/apt/doc/apt-key.gpg' state=present
       become: yes
 
     - name: Install Google Cloud SDK repo
       apt_repository: repo='deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main' state=present
-      become: yes
-
-    - name: Install i3 repo
-      apt_repository: repo='deb http://debian.sur5r.net/i3/ {{ansible_distribution_release}} universe' state=present
-      become: yes
-
-    - name: Install i3 repo key
-      apt: name=sur5r-keyring state=present allow_unauthenticated=yes
       become: yes
 
     # Base packages Ubuntu only
@@ -140,12 +90,8 @@
       with_items:
         - git-flow
         - rofi
-        - numix-gtk-theme
-        - numix-icon-theme-circle
-        - moka-icon-theme
         - unity-tweak-tool
         - arc-theme
-        - fontconfig-infinality
         - openjdk-8-jdk
         - nodejs
         - heroku-toolbelt

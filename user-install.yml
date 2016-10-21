@@ -58,7 +58,7 @@
         - http-prompt
 
     - name: Create GOPATH dir
-      file: state=directory path="~/Golang"
+      file: state=directory path=~/Golang
     - name: Install default Go packages
       shell: GOPATH=~/Golang go get -u {{ item.package }}
       with_items:
