@@ -21,15 +21,15 @@
       become: yes
       become_method: sudo
 
-    - name: "add infinality-bundle" # https://wiki.archlinux.org/index.php/Unofficial_user_repositories#infinality-bundle
+    - name: "add menari.org repo"
       lineinfile:
         dest: "/etc/pacman.conf"
         state: "present"
         line: "{{ item }}"
       with_items:
-        - "[infinality-bundle]"
-        - "Server = http://bohoomil.com/repo/$arch"
-        - "Server = http://bohoomil.com/repo/fonts"
+        - "[menari]"
+        - "Server = http://repo.menari.org/$arch"
+        - "SigLevel = Never"
       become: yes
       become_method: sudo
 
@@ -123,6 +123,39 @@
         - vinagre
         - dnsmasq
         - intel-ucode
+        - ngrok
+        - google-cloud-sdk
+        - arduino
+        - atom-editor-bin
+        - cairo-infinality
+        - cfssl
+        - direnv
+        - debtap
+        - dropbox
+        - epson-inkjet-printer-escpr
+        - flamegraph-git
+        - fontconfig-infinality
+        - freetype2-infinality
+        - google-chrome
+        - i3blocks
+        - heroku-toolbelt
+        - intellij-idea-ultimate-edition
+        - j4-dmenu-desktop
+        - jdk8-openjdk-infinality
+        - keybase-bin
+        - ltunify-git
+        - moka-icon-theme-git
+        - n1
+        - openvpn-update-resolv-conf
+        - otf-fira-code
+        - prey-node-client
+        - skypeforlinux-bin
+        - slack-desktop
+        - ttf-font-awesome
+        - visual-studio-code
+        - xreader
+        - xviewer
+        - wine-gaming-nine
 
     - name: Install Python pip
       easy_install: name=pip
@@ -152,6 +185,9 @@
         - yo
         - sslmate
         - standard
+        - eslint
+        - ember-cli
+        - gulp-cli
 
     # Python pip
     - name: Install Python pip default packages
