@@ -7,5 +7,10 @@ if [ ! -x /usr/bin/ansible ]; then
 	sudo apt-get install -y ansible
 fi
 
+if [ -z "$ARTIFACTORY_USERNAME" ] || [ -z $ARTIFACTORY_PASSWORD ]; then
+  echo "Missing Edify artifactory credentials"
+  exit 1
+fi
+
 #Run Ansible
-PYTHONIOENCODING='utf-8' ansible-playbook base-desktop.yml --extra-vars "artifactory_username=$ARTIFACTORY_USERNAME artifactory_password=$ARTIFACTORY_PASSWORD kubuntu=false"
+PYTHONIOENCODING='utf-8' ansible-playbook base-desktop.yml --extra-vars "artifactory_username=$ARTIFACTORY_USERNAME artifactory_password=$ARTIFACTORY_PASSWORD"
