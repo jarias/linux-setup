@@ -1,4 +1,4 @@
-# Copyright 2015 Julio Arias
+# Copyright 2016 Edify Software Consulting
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -15,153 +15,6 @@
 # Here we describe every software we may want to install
 - hosts: all
   tasks:
-    - name: "add infinality-bundle key"
-      shell: "pacman-key -r 962DDE58 && pacman-key --lsign-key 962DDE58"
-      changed_when: false
-      become: yes
-      become_method: sudo
-
-    - name: "add menari.org repo"
-      lineinfile:
-        dest: "/etc/pacman.conf"
-        state: "present"
-        line: "{{ item }}"
-      with_items:
-        - "[menari]"
-        - "Server = http://repo.menari.org/$arch"
-        - "SigLevel = Never"
-      become: yes
-      become_method: sudo
-
-    - name: "enable multilib"
-      lineinfile:
-        dest: "/etc/pacman.conf"
-        state: "present"
-        line: "{{ item }}"
-      with_items:
-        - "[multilib]"
-        - "Include = /etc/pacman.d/mirrorlist"
-      become: yes
-      become_method: sudo
-
-    - pacman: update_cache=yes
-      become: yes
-      become_method: sudo
-
-    # Base packages
-    - name: Install base system packages
-      pacman: name={{ item }} state=latest
-      become: yes
-      become_method: sudo
-      with_items:
-        - bzr
-        - jdk8-openjdk-infinality
-        - tmux
-        - cloc
-        - ctags
-        - zsh
-        - git
-        - mercurial
-        - curl
-        - ruby
-        - gvim
-        - unzip
-        - openvpn
-        - openssh
-        - graphviz
-        - keychain
-        - nodejs
-        - npm
-        - xorg-xrdb
-        - i3-wm
-        - i3lock
-        - rofi
-        - p7zip
-        - xz
-        - lxappearance
-        - imagemagick
-        - docker
-        - go
-        - vagrant
-        - pulseaudio
-        - pulseaudio-alsa
-        - python-setuptools
-        - python2
-        - python
-        - pavucontrol
-        - postgresql-libs
-        - infinality-bundle
-        - lm_sensors
-        - xautolock
-        - tree
-        - scummvm
-        - scummvm-tools
-        - samba
-        - rsync
-        - ranger
-        - xfce4-power-manager
-        - xfce4-terminal
-        - maven
-        - gradle
-        - weechat
-        - noto-fonts
-        - noto-fonts-emoji
-        - mpv
-        - go-tools
-        - tomcat7
-        - adobe-source-code-pro-fonts
-        - powerline-fonts
-        - xawtv
-        - scrot
-        - mpg123
-        - autofs
-        - libvirt
-        - virt-manager
-        - qemu
-        - perf
-        - terminus-font
-        - vinagre
-        - dnsmasq
-        - intel-ucode
-        - ngrok
-        - google-cloud-sdk
-        - arduino
-        - atom-editor-bin
-        - cairo-infinality
-        - cfssl
-        - direnv
-        - debtap
-        - dropbox
-        - epson-inkjet-printer-escpr
-        - flamegraph-git
-        - fontconfig-infinality
-        - freetype2-infinality
-        - google-chrome
-        - i3blocks
-        - heroku-toolbelt
-        - intellij-idea-ultimate-edition
-        - j4-dmenu-desktop
-        - jdk8-openjdk-infinality
-        - keybase-bin
-        - ltunify-git
-        - moka-icon-theme-git
-        - n1
-        - openvpn-update-resolv-conf
-        - otf-fira-code
-        - prey-node-client
-        - skypeforlinux-bin
-        - slack-desktop
-        - ttf-font-awesome
-        - visual-studio-code
-        - xreader
-        - xviewer
-        - wine-gaming-nine
-
-    - name: Install Python pip
-      easy_install: name=pip
-      become: yes
-      become_method: sudo
-
     # Gems
     - name: Install default Ruby Gems
       gem: name={{ item }} state=present user_install=yes
@@ -169,13 +22,13 @@
         - bundler
         - homesick
         - git-smart
-        - berkshelf
         - ghost
-        - lolcat
 
     # NPM
+    - name: Creates local node_modules directory
+      file: path=~/.node_modules/lib state=directory recurse=true
     - name: Setup NPM prefix
-      command: /usr/bin/npm config set prefix '~/.npm-packages'
+      command: /usr/bin/npm config set prefix '~/.node_modules'
                creates=~/.npmrc
     - name: Install NPM default packages
       npm: name={{ item }} global=yes
@@ -183,13 +36,17 @@
         - grunt-cli
         - bower
         - yo
-        - sslmate
         - standard
+        - sslmate
         - eslint
         - ember-cli
         - gulp-cli
 
     # Python pip
+    - name: Update pip
+      pip: name=pip extra_args='--upgrade'
+      become: yes
+
     - name: Install Python pip default packages
       pip: name={{ item }} extra_args='--user'
       with_items:
@@ -222,12 +79,23 @@
         - { package: github.com/josharian/impl }
         - { package: github.com/constabulary/gb/... }
 
+    - name: Jetbrains IDEs
+      command: umake ide {{ item }} ~/.local/share/umake/ide/{{ item }}
+               creates=~/.local/share/umake/ide/{{ item }}
+      with_items:
+        - webstorm
+        - rubymine
+        - phpstorm
+        - idea-ultimate
+        - pycharm-professional
+
     # Vagrant plugins
-    #- name: Install Vagrant plugins
-    #  command: vagrant plugin install {{ item }}
-    #  with_items:
-    #    - vagrant-vbguest
-    #    - vagrant-mutate
+    - name: Install Vagrant plugins
+      command: vagrant plugin install {{ item }}
+      with_items:
+        - vagrant-vbguest
+        - vagrant-libvirt
+        - vagrant-mutate
 
     # Vim plugins
     - name: Create bundle directory
@@ -260,3 +128,4 @@
         - { repo: 'https://github.com/vim-scripts/ZoomWin.git', name: 'ZoomWin.tool' }
         - { repo: 'https://github.com/chriskempson/base16-vim.git', name: 'base16.color' }
         - { repo: 'https://github.com/SirVer/ultisnips.git', name: 'utilsnips.tool' }
+

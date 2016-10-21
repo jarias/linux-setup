@@ -1,6 +1,0 @@
-[Unit]
-Description=NAS backups
-
-[Service]
-Type=oneshot
-ExecStart=/usr/bin/rsync -avh -e ssh --delete Projects jarias@gray::home/Backups

@@ -1,0 +1,46 @@
+---
+- hosts: all
+  tasks:
+    # Oh-My-Zsh
+    - name: Clone oh-my-zsh
+      git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=~/.oh-my-zsh
+
+    - name: Install base16 shell
+      git: repo=https://github.com/chriskempson/base16-shell.git dest=~/.config/base16-shell
+
+    - name: Backup ~/.zshrc
+      command: mv ~/.zshrc ~/.zshrc.backup
+      ignore_errors: True
+
+    - name: Copy oh-my-zsh template .zshrc
+      copy: src=~/.oh-my-zsh/templates/zshrc.zsh-template dest=~/.zshrc
+
+    - name: Change oh-my-zsh plugin list
+      lineinfile: dest=~/.zshrc regexp="^plugins=" line="plugins=(git git-flow-avh vagrant docker heroku)" state=present
+
+    - name: Change prompt theme
+      lineinfile: dest=~/.zshrc regexp="^ZSH_THEME=" line="ZSH_THEME=\"pygmalion\"" state=present
+
+    # Dotfiles
+    - name: Clone homesick repos
+      command: ~/.gem/ruby/2.3.0/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
+      with_items:
+        - { repo: "https://github.com/jarias/dotfiles.git", name: dotfiles }
+
+    - name: Symlink dotfiles
+      command: ~/.gem/ruby/2.3.0/bin/homesick symlink --force dotfiles
+
+    - name: Ensure ~/.zshrc presence
+      ignore_errors: True
+      file: path=~/.zshrc state=touch
+
+    - name: Add ~/.zshrc.local load to ~/.zshrc
+      lineinfile: dest=~/.zshrc regexp="\.zshrc\.local" line=". ~/.zshrc.local" state=present
+
+    - name: create ~/Projects directory
+      file: state=directory path="~/Projects"
+
+    # User
+    - name: Modify current user groups and shell
+      user: name={{ lookup('env','USER') }} groups=docker,libvirtd append=yes shell=/usr/bin/zsh
+      become: yes
