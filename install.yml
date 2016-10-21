@@ -203,7 +203,7 @@
     - name: Create GOPATH dir
       file: state=directory path="~/Golang"
     - name: Install default Go packages
-      shell: GOPATH=~/Golang go get {{ item.package }}
+      shell: GOPATH=~/Golang go get -u {{ item.package }}
       with_items:
         - { package: golang.org/x/tools/cmd/gotype }
         - { package: golang.org/x/tools/cmd/goimports }
@@ -223,12 +223,11 @@
         - { package: github.com/constabulary/gb/... }
 
     # Vagrant plugins
-    - name: Install Vagrant plugins
-      command: vagrant plugin install {{ item }}
-      with_items:
-        - vagrant-vbguest
-        - vagrant-mutate
-        - vagrant-libvirt
+    #- name: Install Vagrant plugins
+    #  command: vagrant plugin install {{ item }}
+    #  with_items:
+    #    - vagrant-vbguest
+    #    - vagrant-mutate
 
     # Vim plugins
     - name: Create bundle directory
