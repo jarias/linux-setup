@@ -117,8 +117,20 @@
       apt_repository: repo='ppa:pdoes/gitflow-avh' state=present
       become: yes
 
+    - name: Install Google Cloud SDK repo key
+      apt_key: url='https://packages.cloud.google.com/apt/doc/apt-key.gpg' state=present
+      become: yes
+
     - name: Install Google Cloud SDK repo
-      apt_repository: repo='deb http://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main' state=present
+      apt_repository: repo='deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main' state=present
+      become: yes
+
+    - name: Install i3 repo
+      apt_repository: repo='deb http://debian.sur5r.net/i3/ {{ansible_distribution_release}} universe' state=present
+      become: yes
+
+    - name: Install i3 repo key
+      apt: name=sur5r-keyring state=present allow_unauthenticated=yes
       become: yes
 
     # Base packages Ubuntu only
@@ -147,7 +159,7 @@
         - vagrant
         - google-chrome-stable
         - openssh-server
-        - vim
+        - vim-nox
         - build-essential
         - subversion
         - bzr
@@ -184,11 +196,16 @@
         - direnv
         - prey
         - code
-        - n1
+        - nylas
         - google-cloud-sdk
+        - xfce4-terminal
+        - lxappearance
+        - lm-sensors
+        - fonts-font-awesome
+        - feh
 
     - name: Remove old versions base packages
-      apt: name={{ item }} state=absent purge=yes
+      apt: name={{ item }} state=absent purge=yes autoremove=yes
       become: yes
       with_items:
         - openjdk-7-jre-headless
