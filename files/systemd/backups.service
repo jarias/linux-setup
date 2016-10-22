@@ -1,0 +1,7 @@
+[Unit]
+Description=NAS backups
+
+[Service]
+Type=oneshot
+ExecStart=/home/jarias/.bin/backups
+User=jarias

@@ -1,0 +1,5 @@
+[Unit]
+Description=NAS backups timer
+
+[Timer]
+OnCalendar=Tue,Thu,Fri 10:00:00
