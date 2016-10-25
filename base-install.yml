@@ -150,6 +150,9 @@
         - lm-sensors
         - fonts-font-awesome
         - feh
+        - jq
+        - pavucontrol
+        - htop
 
     - name: Remove old versions base packages
       apt: name={{ item }} state=absent purge=yes autoremove=yes
