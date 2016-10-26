@@ -83,6 +83,10 @@
       apt_repository: repo='deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main' state=present
       become: yes
 
+    - name: Install yubico PPA repo
+      apt_repository: repo=ppa:yubico/stable state=present
+      become: yes
+
     # Base packages Ubuntu only
     - name: Install base system packages
       apt: name={{ item }} state=latest
@@ -146,13 +150,19 @@
         - nylas
         - google-cloud-sdk
         - xfce4-terminal
-        - lxappearance
         - lm-sensors
         - fonts-font-awesome
         - feh
         - jq
         - pavucontrol
         - htop
+        - network-manager-openvpn-gnome
+        - yubikey-neo-manager
+        - yubikey-personalization-gui
+        - yubikey-personalization
+        - pcscd
+        - scdaemon
+        - pcsc-tools
 
     - name: Remove old versions base packages
       apt: name={{ item }} state=absent purge=yes autoremove=yes
