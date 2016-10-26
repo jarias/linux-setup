@@ -160,6 +160,7 @@
         - yubikey-neo-manager
         - yubikey-personalization-gui
         - yubikey-personalization
+        - moka-icon-theme
         - pcscd
         - scdaemon
         - pcsc-tools
