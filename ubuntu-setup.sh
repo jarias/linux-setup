@@ -13,4 +13,4 @@ if [ -z "$ARTIFACTORY_USERNAME" ] || [ -z $ARTIFACTORY_PASSWORD ]; then
 fi
 
 #Run Ansible
-PYTHONIOENCODING='utf-8' ansible-playbook desktop.yml --ask-become-pass --extra-vars "artifactory_username=$ARTIFACTORY_USERNAME artifactory_password=$ARTIFACTORY_PASSWORD"
+ansible-playbook desktop.yml --ask-become-pass --extra-vars "artifactory_username=$ARTIFACTORY_USERNAME artifactory_password=$ARTIFACTORY_PASSWORD"

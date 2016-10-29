@@ -95,7 +95,6 @@
         - xautolock
         - git-flow
         - rofi
-        - unity-tweak-tool
         - arc-theme
         - openjdk-8-jdk
         - nodejs
@@ -161,6 +160,7 @@
         - yubikey-personalization-gui
         - yubikey-personalization
         - moka-icon-theme
+        - vinagre
         - pcscd
         - scdaemon
         - pcsc-tools
