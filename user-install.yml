@@ -48,7 +48,7 @@
       become: yes
 
     - name: Install Python pip default packages
-      pip: name={{ item }} extra_args='--user'
+      pip: name={{ item }} extra_args='--user -U'
       with_items:
         - awscli
         - psutil
