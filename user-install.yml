@@ -42,20 +42,6 @@
         - ember-cli
         - gulp-cli
 
-    # Python pip
-    - name: Update pip
-      pip: name=pip extra_args='--upgrade'
-      become: yes
-
-    - name: Install Python pip default packages
-      pip: name={{ item }} extra_args='--user -U'
-      with_items:
-        - awscli
-        - psutil
-        - docker-compose
-        - pgcli
-        - mycli
-        - http-prompt
 
     - name: Create GOPATH dir
       file: path=~/go state=directory
@@ -130,4 +116,19 @@
         - { repo: 'https://github.com/chriskempson/base16-vim.git', name: 'base16.color' }
         - { repo: 'https://github.com/SirVer/ultisnips.git', name: 'utilsnips.tool' }
         - { repo: 'https://github.com/hashivim/vim-terraform.git', name: 'terraform.lang' }
+
+    # Python pip
+    - name: Update pip
+      pip: name=pip extra_args='--upgrade'
+      become: yes
+
+    - name: Install Python pip default packages
+      pip: name={{ item }} extra_args='--user -U'
+      with_items:
+        - awscli
+        - psutil
+        - docker-compose
+        - pgcli
+        - mycli
+        - http-prompt
 
