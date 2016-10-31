@@ -6,6 +6,14 @@
       apt: name=apt-transport-https state=present
       become: yes
 
+    # Docker
+    - name: Install Docker repo key
+      apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
+      become: yes
+    - name: Install Docker repo
+      apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+      become: yes
+
     # Edify Debian repo
     - name: Install Edify repo key
       apt_key: url='https://{{artifactory_username}}:{{artifactory_password}}@edify.jfrog.io/edify/api/gpg/key/public' state=present
