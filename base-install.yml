@@ -6,6 +6,13 @@
       apt: name=apt-transport-https state=present
       become: yes
 
+    #- name: Install R repo key
+    #  apt_key: keyserver=keyserver.ubuntu.com id=E298A3A825C0D65DFD57CBB651716619E084DAB9
+    #  become: yes
+    #- name: Install R repo
+    #  apt_repository: repo='deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/'
+    #  become: yes
+
     # Docker
     - name: Install Docker repo key
       apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
@@ -100,6 +107,7 @@
       apt: name={{ item }} state=latest
       become: yes
       with_items:
+        - r-base
         - xautolock
         - git-flow
         - rofi
