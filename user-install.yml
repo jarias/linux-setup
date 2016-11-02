@@ -23,6 +23,7 @@
         - homesick
         - git-smart
         - ghost
+        - travis
 
     # NPM
     - name: Creates local node_modules directory
