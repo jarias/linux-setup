@@ -39,6 +39,15 @@
       apt_repository: repo='deb [arch=amd64] https://repo.skype.com/deb stable main' filename='skype-stable' state=present
       become: yes
 
+    - name: Install keybase repo key
+      apt_key:
+        url: https://keybase.io/docs/server_security/code_signing_key.asc
+        state: present
+      become: yes
+    - name: Install Keybase repo
+      apt_repository: repo='deb http://prerelease.keybase.io/deb stable main' filename='keybase' state=present
+      become: yes
+
     # NodeJS
     - name: Install NodeJS repo key
       apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
@@ -107,6 +116,7 @@
       apt: name={{ item }} state=latest
       become: yes
       with_items:
+        - keybase
         - r-base
         - xautolock
         - git-flow
