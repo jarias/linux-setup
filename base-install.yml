@@ -111,11 +111,17 @@
       apt_repository: repo=ppa:yubico/stable state=present
       become: yes
 
+    #- name: Install tmate PPA repo
+    #  apt_repository:
+    #    repo: ppa:tmate.io/archive
+    #  become: yes
+
     # Base packages Ubuntu only
     - name: Install base system packages
       apt: name={{ item }} state=latest
       become: yes
       with_items:
+        #- tmate
         - keybase
         - r-base
         - xautolock
