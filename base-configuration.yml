@@ -1,16 +1,25 @@
 ---
 - hosts: all
   tasks:
-   # SSH config
+      # SSH config
     - name: Disable empty password login
-      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitEmptyPasswords" line="PermitEmptyPasswords no"
+      lineinfile:
+        dest: "/etc/ssh/sshd_config"
+        regexp: "^#?PermitEmptyPasswords"
+        line: "PermitEmptyPasswords no"
       become: yes
 
     - name: Disable remote root login
-      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PermitRootLogin" line="PermitRootLogin no"
+      lineinfile:
+        dest: "/etc/ssh/sshd_config"
+        regexp: "^#?PermitRootLogin"
+        line: "PermitRootLogin no"
       become: yes
 
     - name: Disable password login
-      lineinfile: dest=/etc/ssh/sshd_config regexp="^#?PasswordAuthentication" line="PasswordAuthentication no"
+      lineinfile:
+        dest: "/etc/ssh/sshd_config"
+        regexp: "^#?PasswordAuthentication"
+        line: "PasswordAuthentication no"
       become: yes
 

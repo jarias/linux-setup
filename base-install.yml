@@ -3,112 +3,139 @@
 - hosts: all
   tasks:
     - name: Install apt-transport-https
-      apt: name=apt-transport-https state=present
+      apt:
+        name: apt-transport-https
       become: yes
 
-    #- name: Install R repo key
-    #  apt_key: keyserver=keyserver.ubuntu.com id=E298A3A825C0D65DFD57CBB651716619E084DAB9
-    #  become: yes
-    #- name: Install R repo
-    #  apt_repository: repo='deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu xenial/'
-    #  become: yes
+    - name: Install R repo key
+      apt_key:
+        keyserver: "keyserver.ubuntu.com"
+        id: "E298A3A825C0D65DFD57CBB651716619E084DAB9"
+      become: yes
+    - name: Install R repo
+      apt_repository:
+        repo: "deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu yakkety/"
+      become: yes
 
     # Docker
     - name: Install Docker repo key
-      apt_key: keyserver=p80.pool.sks-keyservers.net id=58118E89F3A912897C070ADBF76221572C52609D
+      apt_key:
+        keyserver: "p80.pool.sks-keyservers.net"
+        id: "58118E89F3A912897C070ADBF76221572C52609D"
       become: yes
     - name: Install Docker repo
-      apt_repository: repo='deb https://apt.dockerproject.org/repo ubuntu-xenial main'
+      apt_repository:
+        repo: "deb https://apt.dockerproject.org/repo ubuntu-yakkety main"
       become: yes
 
     # Edify Debian repo
     - name: Install Edify repo key
-      apt_key: url='https://{{artifactory_username}}:{{artifactory_password}}@edify.jfrog.io/edify/api/gpg/key/public' state=present
+      apt_key:
+        url: "https://{{artifactory_username}}:{{artifactory_password}}@edify.jfrog.io/edify/api/gpg/key/public"
       become: yes
 
     - name: Install Edify repo
-      apt_repository: repo='deb https://{{artifactory_username}}:{{artifactory_password}}@edify.jfrog.io/edify/debian-local stable main'
+      apt_repository:
+        repo: "deb https://{{artifactory_username}}:{{artifactory_password}}@edify.jfrog.io/edify/debian-local stable main"
       become: yes
 
     # Skype
     - name: Install Skype repo key
-      apt_key: url='https://repo.skype.com/data/SKYPE-GPG-KEY' state=present
+      apt_key:
+        url: "https://repo.skype.com/data/SKYPE-GPG-KEY"
       become: yes
 
     - name: Install Skype repo
-      apt_repository: repo='deb [arch=amd64] https://repo.skype.com/deb stable main' filename='skype-stable' state=present
+      apt_repository:
+        repo: "deb [arch=amd64] https://repo.skype.com/deb stable main"
+        filename: "skype-stable"
       become: yes
 
     - name: Install keybase repo key
       apt_key:
-        url: https://keybase.io/docs/server_security/code_signing_key.asc
-        state: present
+        url: "https://keybase.io/docs/server_security/code_signing_key.asc"
       become: yes
     - name: Install Keybase repo
-      apt_repository: repo='deb http://prerelease.keybase.io/deb stable main' filename='keybase' state=present
+      apt_repository:
+        repo: "deb http://prerelease.keybase.io/deb stable main"
+        filename: "keybase"
       become: yes
 
     # NodeJS
     - name: Install NodeJS repo key
-      apt_key: url=https://deb.nodesource.com/gpgkey/nodesource.gpg.key state=present
+      apt_key:
+        url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
       become: yes
-
     - name: Install NodeJS repo
-      apt_repository: repo='deb https://deb.nodesource.com/node_6.x {{ansible_distribution_release}} main' state=present
+      apt_repository:
+        repo: "deb https://deb.nodesource.com/node_6.x {{ansible_distribution_release}} main"
       become: yes
 
     # Heroku Toolbelt
     - name: Install Heroku Toolbelt repo key
-      apt_key: url=https://toolbelt.heroku.com/apt/release.key state=present
+      apt_key:
+        url: "https://toolbelt.heroku.com/apt/release.key"
       become: yes
 
     - name: Install Heroku Toolbelt repo
-      apt_repository: repo='deb http://toolbelt.heroku.com/ubuntu ./' state=present
+      apt_repository:
+        repo: "deb http://toolbelt.heroku.com/ubuntu ./"
       become: yes
 
     # Infinality
     - name: Install OpenJDK infinality repo
-      apt_repository: repo='ppa:no1wantdthisname/openjdk-fontfix' state=present
+      apt_repository:
+        repo: "ppa:no1wantdthisname/openjdk-fontfix"
       become: yes
 
     - name: Installinfinality repo
-      apt_repository: repo='ppa:no1wantdthisname/ppa' state=present
+      apt_repository:
+        repo: "ppa:no1wantdthisname/ppa"
       become: yes
 
     # Ubuntu Make
     - name: Install Ubuntu Make repo
-      apt_repository: repo='ppa:ubuntu-desktop/ubuntu-make'
+      apt_repository:
+        repo: "ppa:ubuntu-desktop/ubuntu-make"
       become: yes
 
     # Gradle
     - name: Install Gradle PPA repo
-      apt_repository: repo='ppa:cwchien/gradle'
+      apt_repository:
+        repo: "ppa:cwchien/gradle"
       become: yes
 
     # Atom
     - name: Install Atom PPA repo
-      apt_repository: repo='ppa:webupd8team/atom'
+      apt_repository:
+        repo: "ppa:webupd8team/atom"
       become: yes
 
     # Google Chrome
     - name: Install Google Chrome repo key
-      apt_key: url='https://dl-ssl.google.com/linux/linux_signing_key.pub' state=present
+      apt_key:
+        url: "https://dl-ssl.google.com/linux/linux_signing_key.pub"
       become: yes
 
     - name: Install Google Chrome repo
-      apt_repository: repo='deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main' filename='google-chrome' state=present
+      apt_repository:
+        repo: "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main"
+        filename: "google-chrome"
       become: yes
 
     - name: Install Google Cloud SDK repo key
-      apt_key: url='https://packages.cloud.google.com/apt/doc/apt-key.gpg' state=present
+      apt_key:
+        url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
       become: yes
 
     - name: Install Google Cloud SDK repo
-      apt_repository: repo='deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main' state=present
+      apt_repository:
+        repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main"
       become: yes
 
     - name: Install yubico PPA repo
-      apt_repository: repo=ppa:yubico/stable state=present
+      apt_repository:
+        repo: "ppa:yubico/stable"
       become: yes
 
     #- name: Install tmate PPA repo
@@ -118,7 +145,8 @@
 
     # Base packages Ubuntu only
     - name: Install base system packages
-      apt: name={{ item }} state=latest
+      apt:
+        name: "{{ item }}"
       become: yes
       with_items:
         #- tmate
@@ -198,7 +226,11 @@
         - pcsc-tools
 
     - name: Remove old versions base packages
-      apt: name={{ item }} state=absent purge=yes autoremove=yes
+      apt:
+        name: "{{ item }}"
+        state: "absent"
+        purge: yes
+        autoremove: yes
       become: yes
       with_items:
         - openjdk-7-jre-headless

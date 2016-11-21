@@ -17,7 +17,9 @@
   tasks:
     # Gems
     - name: Install default Ruby Gems
-      gem: name={{ item }} state=present user_install=yes
+      gem:
+        name: "{{ item }}"
+        user_install: yes
       with_items:
         - bundler
         - homesick
@@ -27,12 +29,16 @@
 
     # NPM
     - name: Creates local node_modules directory
-      file: path=~/.node_modules/lib state=directory recurse=true
+      file:
+        path: "~/.node_modules/lib"
+        state: directory
+        recurse: yes
     - name: Setup NPM prefix
-      command: /usr/bin/npm config set prefix '~/.node_modules'
-               creates=~/.npmrc
+      command: /usr/bin/npm config set prefix '~/.node_modules' creates="~/.npmrc"
     - name: Install NPM default packages
-      npm: name={{ item }} global=yes
+      npm:
+        name: "{{ item }}"
+        global: yes
       with_items:
         - grunt-cli
         - bower
@@ -45,10 +51,12 @@
 
 
     - name: Create GOPATH dir
-      file: path=~/go state=directory
+      file:
+        path: "~/go"
+        state: directory
 
     - name: Install default Go packages
-      shell: GOPATH=~/go go get -u {{ item.package }}
+      shell: "GOPATH=~/go go get -u {{ item.package }}"
       with_items:
         - { package: golang.org/x/tools/cmd/gotype }
         - { package: golang.org/x/tools/cmd/goimports }
@@ -68,8 +76,7 @@
         - { package: github.com/constabulary/gb/... }
 
     - name: Jetbrains IDEs
-      command: umake ide {{ item }} ~/.local/share/umake/ide/{{ item }}
-               creates=~/.local/share/umake/ide/{{ item }}
+      command: umake ide {{ item }} ~/.local/share/umake/ide/{{ item }} creates=~/.local/share/umake/ide/{{ item }}
       with_items:
         - webstorm
         - rubymine
@@ -79,7 +86,7 @@
 
     # Vagrant plugins
     - name: Install Vagrant plugins
-      command: vagrant plugin install {{ item }}
+      command: "vagrant plugin install {{ item }}"
       with_items:
         - vagrant-vbguest
         - vagrant-libvirt
@@ -87,17 +94,26 @@
 
     # Vim plugins
     - name: Create bundle directory
-      file: path=~/.vim/bundle state=directory recurse=true
+      file:
+        path: "~/.vim/bundle"
+        state: directory
+        recurse: yes
 
     - name: Create autoload directory
-      file: path=~/.vim/autoload state=directory recurse=true
+      file:
+        path: "~/.vim/autoload"
+        state: directory
+        recurse: yes
 
     - name: Install Pathogen
-      get_url: url=https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim
-               dest=~/.vim/autoload/pathogen.vim
+      get_url:
+        url: "https://raw.github.com/tpope/vim-pathogen/master/autoload/pathogen.vim"
+        dest: "~/.vim/autoload/pathogen.vim"
 
     - name: Install Vim plugins
-      git: repo={{ item.repo }} dest=~/.vim/bundle/{{ item.name }}
+      git:
+        repo: "{{ item.repo }}"
+        dest: "~/.vim/bundle/{{ item.name }}"
       with_items:
         - { repo: 'https://github.com/Shougo/neocomplete.vim', name: 'neocomplete.tool' }
         - { repo: 'https://github.com/scrooloose/nerdtree.git', name: 'nerdtree.tool' }
@@ -120,11 +136,15 @@
 
     # Python pip
     - name: Update pip
-      pip: name=pip extra_args='--upgrade'
+      pip:
+        name: "pip"
+        extra_args: "--upgrade"
       become: yes
 
     - name: Install Python pip default packages
-      pip: name={{ item }} extra_args='--user -U'
+      pip:
+        name: "{{ item }}"
+        extra_args: "--user -U"
       with_items:
         - awscli
         - psutil
