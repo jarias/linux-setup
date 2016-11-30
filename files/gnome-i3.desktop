@@ -3,7 +3,6 @@ Name=GNOME with i3
 Comment=A GNOME fallback mode session using i3 as the window manager.
 Exec=gnome-session --session=gnome-i3
 TryExec=gnome-session
-Icon=
 Type=Application
 DesktopNames=GNOME-Flashback;Unity;
 X-Ubuntu-Gettext-Domain=gnome-flashback
