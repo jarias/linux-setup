@@ -45,7 +45,7 @@
       user: name={{ lookup('env','USER') }} groups=docker,libvirt append=yes shell=/usr/bin/zsh
       become: yes
 
-    - name: Create user sytemd folder
+    - name: Create user systemd folder
       file: path=~/.config/systemd/user/ state=directory recurse=yes
 
     - name: Copy systemd user files
