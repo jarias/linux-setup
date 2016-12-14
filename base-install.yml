@@ -170,7 +170,6 @@
         - openjdk-8-jdk
         - nodejs
         - heroku-toolbelt
-        - golang
         - docker-engine
         - ubuntu-make
         - ruby2.3
