@@ -1,5 +1,5 @@
 Linux-Setup
-=======
+===========
 
 Ansible playbooks to setup a new Ubuntu/Debian workstation
 
