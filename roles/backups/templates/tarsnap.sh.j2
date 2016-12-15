@@ -1,5 +1,19 @@
 #!/bin/bash
 
+BASE_PATH=/home/{{ ansible_user }}
+
 /usr/local/bin/tarsnap -c \
     -f "$(uname -n)-$(date +%Y-%m-%d_%H-%M-%S)" \
-      /home/{{ ansible_user }}
+    ${BASE_PATH}/bin \
+    ${BASE_PATH}/Desktop \
+    ${BASE_PATH}/Documents \
+    ${BASE_PATH}/Downloads \
+    ${BASE_PATH}/Dropbox \
+    ${BASE_PATH}/go \
+    ${BASE_PATH}/Music \
+    ${BASE_PATH}/Pictures \
+    ${BASE_PATH}/Projects \
+    ${BASE_PATH}/Public \
+    ${BASE_PATH}/Steam \
+    ${BASE_PATH}/Templates \
+    ${BASE_PATH}/Videos
