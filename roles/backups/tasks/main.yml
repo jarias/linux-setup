@@ -1,0 +1,12 @@
+---
+- name: Copy systemd files
+  copy: src=files/{{item}} dest=~/.config/systemd/user/{{item}}
+  with_items:
+    - backups.service
+    - backups.timer
+
+- name: Enable backups timer
+  command: systemctl --user enable backups.timer
+
+- name: Start backups timer
+  command: systemctl --user start backups.timer

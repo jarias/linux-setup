@@ -1,0 +1,14 @@
+---
+- name: Remove old installation of Go
+  file:
+    path: /usr/local/go
+    state: absent
+  become: yes
+
+- name: Install Go
+  unarchive:
+    src: https://storage.googleapis.com/golang/go1.7.4.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+  become: yes
+

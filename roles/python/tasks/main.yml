@@ -1,0 +1,19 @@
+---
+- name: Update pip
+  pip:
+    name: "pip"
+    extra_args: "--upgrade"
+  become: yes
+
+- name: Install Python pip default packages
+  pip:
+    name: "{{ item }}"
+    extra_args: "--user -U"
+  with_items:
+    - awscli
+    - psutil
+    - docker-compose
+    - pgcli
+    - mycli
+    - http-prompt
+

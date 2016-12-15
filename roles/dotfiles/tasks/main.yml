@@ -1,0 +1,9 @@
+---
+- name: Clone homesick repos
+  command: ~/.gem/ruby/2.3.0/bin/homesick clone {{item.repo}} creates=~/.homesick/repos/{{ item.name }}
+  with_items:
+    - { repo: "{{ dotfiles_repo }}", name: dotfiles }
+
+- name: Symlink dotfiles
+  command: ~/.gem/ruby/2.3.0/bin/homesick symlink --force dotfiles
+

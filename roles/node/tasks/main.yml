@@ -1,0 +1,24 @@
+---
+- name: Creates local node_modules directory
+  file:
+    path: "~/.node_modules/lib"
+    state: directory
+    recurse: yes
+
+- name: Setup NPM prefix
+  command: /usr/bin/npm config set prefix '~/.node_modules' creates="~/.npmrc"
+
+- name: Install NPM default packages
+  npm:
+    name: "{{ item }}"
+    global: yes
+  with_items:
+    - grunt-cli
+    - bower
+    - yo
+    - standard
+    - sslmate
+    - eslint
+    - ember-cli
+    - gulp-cli
+

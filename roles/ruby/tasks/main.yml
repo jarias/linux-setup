@@ -1,0 +1,13 @@
+---
+- name: Install default Ruby Gems
+  gem:
+    name: "{{ item }}"
+    user_install: yes
+    state: latest
+  with_items:
+    - bundler
+    - homesick
+    - git-smart
+    - ghost
+    - travis
+

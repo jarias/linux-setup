@@ -1,0 +1,10 @@
+---
+- name: Jetbrains IDEs
+  command: umake ide {{ item }} ~/.local/share/umake/ide/{{ item }} creates=~/.local/share/umake/ide/{{ item }}
+  with_items:
+    - webstorm
+    - rubymine
+    - phpstorm
+    - idea-ultimate
+    - pycharm-professional
+
