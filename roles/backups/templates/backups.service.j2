@@ -1,0 +1,7 @@
+[Unit]
+Description=NAS backups
+
+[Service]
+Type=oneshot
+ExecStart=/home/{{ ansible_user }}/bin/backups
+User={{ ansible_user }}

@@ -18,8 +18,27 @@ if [ -z "$DOTFILES_REPO" ]; then
 fi
 
 CONFIGURE_BACKUPS="${CONFIGURE_BACKUPS:-yes}"
+CONFIGURE_TARSNAP="${CONFIGURE_BACKUPS:-yes}"
+
+if [ "$CONFIGURE_BACKUPS" == "yes" ] && ([ -z $NAS_USERNAME ] || [ -z $NAS_HOSTNAME ]); then
+  echo "Configure backups is enable but no NAS username or domain provided"
+  exit 1
+fi
+
+ANSIBLE_EXTRA_VARS=$(cat <<EOF
+{
+"nas_username":"${NAS_USERNAME}",
+"nas_hostname":"${NAS_HOSTNAME}",
+"dotfiles_repo":"${DOTFILES_REPO}",
+"configure_backups":"${CONFIGURE_BACKUPS}",
+"configure_tarsnap":"${CONFIGURE_TARSNAP}",
+"artifactory_username":"${ARTIFACTORY_USERNAME}",
+"artifactory_password":"${ARTIFACTORY_PASSWORD}"
+}
+EOF
+)
 
 #Run Ansible
 ansible-playbook desktop.yml \
   --ask-become-pass \
-  --extra-vars "dotfiles_repo=${DOTFILES_REPO} configure_backups=${CONFIGURE_BACKUPS} artifactory_username=${ARTIFACTORY_USERNAME} artifactory_password=${ARTIFACTORY_PASSWORD}"
+  --extra-vars "${ANSIBLE_EXTRA_VARS}"

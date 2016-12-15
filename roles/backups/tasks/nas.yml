@@ -1,0 +1,31 @@
+---
+- name: Create backups systemd service file
+  template:
+    src: "templates/backups.service.j2"
+    dest: "~/.config/systemd/user/backups.service"
+  when: configure_backups == "yes"
+
+- name: Create backups systemd timer file
+  copy:
+    src: files/backups.timer
+    dest: ~/.config/systemd/user/backups.timer
+
+- name: Create home bin directory
+  file:
+    path: ~/bin
+    state: directory
+
+- name: Create backups script
+  template:
+    src: templates/backups.j2
+    dest: "/home/{{ ansible_user }}/bin/backups"
+    mode: 0755
+  become: yes
+
+- name: Enable backups timer
+  command: systemctl --user enable backups.timer
+  when: configure_backups == "yes"
+
+- name: Start backups timer
+  command: systemctl --user start backups.timer
+  when: configure_backups == "yes"
