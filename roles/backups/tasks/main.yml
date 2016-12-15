@@ -4,9 +4,12 @@
   with_items:
     - backups.service
     - backups.timer
+  when: configure_backups == "yes"
 
 - name: Enable backups timer
   command: systemctl --user enable backups.timer
+  when: configure_backups == "yes"
 
 - name: Start backups timer
   command: systemctl --user start backups.timer
+  when: configure_backups == "yes"

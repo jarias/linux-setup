@@ -1,7 +1,5 @@
 ---
 - hosts: all
-  vars:
-    dotfiles_repo: https://github.com/jarias/dotfiles.git
   roles:
     - i3
     - base
@@ -12,7 +10,6 @@
     - vagrant
     - vim
     - jetbrains
-    - gotools
     - ohmyzsh
     - dotfiles
     - backups
