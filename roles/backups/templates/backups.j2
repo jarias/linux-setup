@@ -19,8 +19,6 @@ rsync -azP \
   ${HOME}/Pictures \
   ${HOME}/Projects \
   ${HOME}/Public \
-  ${HOME}/Steam \
-  ${HOME}/Templates \
   ${HOME}/Videos ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
   && ssh ${NAS} \
   "mv Backups/incomplete_back-$date Backups/back-$date \
