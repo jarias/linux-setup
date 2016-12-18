@@ -17,8 +17,8 @@
 
 - name: Create backups script
   template:
-    src: templates/backups.j2
-    dest: "/home/{{ ansible_user }}/bin/backups"
+    src: templates/backups.sh.j2
+    dest: "/home/{{ ansible_user }}/bin/backups.sh"
     mode: 0755
   become: yes
 

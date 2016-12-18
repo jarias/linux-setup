@@ -2,7 +2,7 @@
 - name: Create tarsnap script
   template:
     src: templates/tarsnap.sh.j2
-    dest: /usr/local/bin
+    dest: /root/tarsnap.sh
     mode: 0700
   become: yes
   when: configure_tarsnap == "yes"

@@ -6,6 +6,8 @@ NAS="{{ nas_username }}@{{ nas_hostname }}"
 
 rsync -azP \
   -e ssh \
+  --exclude 'output-qemu' \
+  --exclude 'packer_cache' \
   --delete \
   --delete-excluded \
   --link-dest=../current \

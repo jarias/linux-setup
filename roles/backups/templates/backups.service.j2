@@ -3,5 +3,5 @@ Description=NAS backups
 
 [Service]
 Type=oneshot
-ExecStart=/home/{{ ansible_user }}/bin/backups
+ExecStart=/home/{{ ansible_user }}/bin/backups.sh
 User={{ ansible_user }}
