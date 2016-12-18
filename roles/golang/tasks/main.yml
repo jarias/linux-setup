@@ -1,6 +1,6 @@
 ---
 - name: Register the current Go version (if any)
-  command: /usr/local/go/bin/go version
+  shell: /usr/local/go/bin/go version | cut -d ' ' -f3 | sed 's/go\(.*\)/\1/'
   ignore_errors: yes
   register: go_version
   changed_when: false
