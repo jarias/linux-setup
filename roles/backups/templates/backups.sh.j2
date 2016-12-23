@@ -23,6 +23,6 @@ rsync -azP \
   ${HOME}/Public \
   ${HOME}/Videos ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
   && ssh ${NAS} \
-  "mv Backups/incomplete_back-$date Backups/back-$date \
+  "mv Backups/incomplete_back-${CURENT_DATE} Backups/back-${CURENT_DATE} \
   && rm -f Backups/current \
-  && ln -s back-$date Backups/current"
+  && ln -s back-${CURENT_DATE} Backups/current"
