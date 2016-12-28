@@ -18,3 +18,15 @@
   apt:
     name: neovim
   become: yes
+
+- name: Create .vim directory
+  file:
+    path: "~/.local/share/nvim/site/autoload"
+    state: directory
+    recurse: yes
+
+- name: Install Plug
+  get_url:
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    dest: "~/.local/share/nvim/site/autoload/plug.vim"
+
