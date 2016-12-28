@@ -144,10 +144,11 @@
     repo: "ppa:yubico/stable"
   become: yes
 
-#- name: Install tmate PPA repo
-#  apt_repository:
-#    repo: ppa:tmate.io/archive
-#  become: yes
+- name: Install tmate PPA repo
+  apt_repository:
+    repo: ppa:tmate.io/archive
+  become: yes
+
 
 # Base packages Ubuntu only
 - name: Install base system packages
@@ -155,7 +156,7 @@
     name: "{{ item }}"
   become: yes
   with_items:
-    #- tmate
+    - tmate
     - enpass
     - keybase
     - r-base
