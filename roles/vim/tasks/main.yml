@@ -1,4 +1,9 @@
 ---
+- name: Install vim gtk3
+  apt:
+    name: vim-gtk3
+  become: yes
+
 - name: Create .vim directory
   file:
     path: "~/.vim"

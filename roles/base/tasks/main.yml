@@ -176,7 +176,6 @@
     - vagrant
     - google-chrome-stable
     - openssh-server
-    - vim-nox
     - build-essential
     - subversion
     - bzr
