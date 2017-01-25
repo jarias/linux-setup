@@ -16,4 +16,6 @@
     - backups
     - base16
     - user
-
+    - wine
+    - obs
+    - polybar

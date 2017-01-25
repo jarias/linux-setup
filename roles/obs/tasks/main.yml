@@ -1,0 +1,10 @@
+---
+- name: Install OBS ppa
+  apt_repository:
+    repo: ppa:obsproject/obs-studio
+  become: yes
+
+- name: Install OBS
+  apt:
+    name: obs-studio
+  become: yes

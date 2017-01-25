@@ -1,0 +1,46 @@
+---
+- name: Install polybar deps
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - cmake
+    - cmake-data
+    - libcairo2-dev
+    - libxcb1-dev
+    - libxcb-ewmh-dev
+    - libxcb-icccm4-dev
+    - libxcb-image0-dev
+    - libxcb-randr0-dev
+    - libxcb-util0-dev
+    - libxcb-xkb-dev
+    - pkg-config
+    - python-xcbgen
+    - xcb-proto
+
+- name: Ensure building clean
+  file:
+    path: /tmp/polybar
+    state: absent
+  become: yes
+
+- name: Clone polybar repo
+  git:
+    repo: https://github.com/jaagr/polybar.git
+    dest: /tmp/polybar
+
+- name: Create build dir
+  file:
+    path: /tmp/polybar/build
+    state: directory
+
+- name: Run cmake
+  command: cmake -DENABLE_XRANDR_MONITORS=0 ..
+  args:
+    chdir: /tmp/polybar/build
+
+- name: Install polybar
+  command: make install
+  args:
+    chdir: /tmp/polybar/build
+  become: yes

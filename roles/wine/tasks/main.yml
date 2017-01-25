@@ -1,0 +1,10 @@
+---
+- name: Install wine ppa
+  apt_repository:
+    repo: ppa:wine/wine-builds
+  become: yes
+
+- name: Install wine
+  apt:
+    name: wine-staging
+  become: yes
