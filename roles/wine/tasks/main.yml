@@ -6,5 +6,5 @@
 
 - name: Install wine
   apt:
-    name: wine-staging
+    name: wine-staging-amd64
   become: yes
