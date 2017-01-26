@@ -44,4 +44,6 @@
     - { package: github.com/zmb3/gogetdoc }
     - { package: github.com/josharian/impl }
     - { package: github.com/constabulary/gb/... }
+    - { package: github.com/derekparker/delve/cmd/dlv }
+    - { package: github.com/aarzilli/gdlv }
 
