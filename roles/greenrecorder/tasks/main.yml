@@ -1,0 +1,10 @@
+---
+- name: Install GreenRecorder PPA
+  apt_repository:
+    repo: ppa:mhsabbagh/greenproject
+  become: yes
+
+- name: Install GreenRecorder
+  apt:
+    name: green-recorder
+  become: yes
