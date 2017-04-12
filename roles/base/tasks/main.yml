@@ -213,16 +213,16 @@
     - direnv
     - prey
     - code
-    - nylas
+    #- nylas
     - google-cloud-sdk
-    - xfce4-terminal
+    #- xfce4-terminal
     - lm-sensors
     - fonts-font-awesome
     - feh
     - jq
     - pavucontrol
     - htop
-    - network-manager-openvpn-gnome
+    #- network-manager-openvpn-gnome
     - yubikey-neo-manager
     - yubikey-personalization-gui
     - yubikey-personalization

@@ -5,7 +5,7 @@
     - neovim
     - base
     - golang
-    - node
+#    - node
     - ruby
     - python
     - vagrant
@@ -21,3 +21,4 @@
     - polybar
     - firefox
     - greenrecorder
+    - yarn
