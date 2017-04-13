@@ -1,0 +1,8 @@
+---
+- name: Install Fonts
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - fonts-font-awesome
+    - fonts-hack-ttf

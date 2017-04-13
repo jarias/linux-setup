@@ -1,4 +1,20 @@
 ---
+# NodeJS
+- name: Install NodeJS repo key
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+  become: yes
+
+- name: Install NodeJS repo
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_6.x {{ansible_distribution_release}} main"
+  become: yes
+
+- name: Install NodeJS
+  apt:
+    name: nodejs
+  become: yes
+
 - name: Creates local node_modules directory
   file:
     path: "~/.node_modules/lib"
@@ -6,19 +22,7 @@
     recurse: yes
 
 - name: Setup NPM prefix
-  command: /usr/bin/npm config set prefix '~/.node_modules' creates="~/.npmrc"
-
-- name: Install NPM default packages
-  npm:
-    name: "{{ item }}"
-    global: yes
-  with_items:
-    - grunt-cli
-    - bower
-    - yo
-    - standard
-    - sslmate
-    - eslint
-    - ember-cli
-    - gulp-cli
+  command: "/usr/bin/npm config set prefix ~/.node_modules"
+  args:
+    creates: "~/.npmrc"
 

@@ -1,0 +1,15 @@
+---
+- name: Install Google Cloud SDK repo key
+  apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+  become: yes
+
+- name: Install Google Cloud SDK repo
+  apt_repository:
+    repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ansible_distribution_release}} main"
+  become: yes
+
+- name: Install Google Cloud SDK
+  apt:
+    name: google-cloud-sdk
+  become: yes

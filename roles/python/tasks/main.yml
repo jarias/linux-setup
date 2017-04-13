@@ -1,9 +1,26 @@
 ---
+- name: Install python
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - python
+    - python-dev
+    - python-setuptools
+    - python-pip
+
 - name: Update pip
   pip:
     name: "pip"
     extra_args: "--upgrade"
   become: yes
+
+- name: Install pip packages dependencies
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - libpq-dev
 
 - name: Install Python pip default packages
   pip:

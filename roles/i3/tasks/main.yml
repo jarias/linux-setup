@@ -1,4 +1,27 @@
 ---
+- name: Install i3wm
+  apt:
+    name: i3
+  become: yes
+
+- name: Install i3blocks
+  apt:
+    name: i3blocks
+  become: yes
+
+- name: Install desktop enviroment extras
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - xautolock
+    - feh
+    - pavucontrol
+    - moka-icon-theme
+    - vinagre
+    - rofi
+    - arc-theme
+
 - name: Copy Gnome session file
   copy:
     src: files/gnome-i3.session

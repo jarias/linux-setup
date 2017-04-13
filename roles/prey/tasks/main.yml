@@ -1,0 +1,5 @@
+---
+- name: Install Prey
+  apt:
+    name: prey
+  become: yes

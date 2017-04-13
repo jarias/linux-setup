@@ -1,0 +1,16 @@
+---
+- name: Install Skype repo key
+  apt_key:
+    url: "https://repo.skype.com/data/SKYPE-GPG-KEY"
+  become: yes
+
+- name: Install Skype repo
+  apt_repository:
+    repo: "deb [arch=amd64] https://repo.skype.com/deb stable main"
+    filename: "skype-stable"
+  become: yes
+
+- name: Install Skype for Linux
+  apt:
+    name: skypeforlinux
+  become: yes

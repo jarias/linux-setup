@@ -1,4 +1,12 @@
 ---
+- name: Install Ruby
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - ruby
+    - ruby-dev
+
 - name: Install default Ruby Gems
   gem:
     name: "{{ item }}"

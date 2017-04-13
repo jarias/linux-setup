@@ -1,0 +1,27 @@
+---
+- name: Install Ubuntu Make repo
+  apt_repository:
+    repo: "ppa:ubuntu-desktop/ubuntu-make"
+  become: yes
+
+- name: Install extra dev tools
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - jq
+    - curl
+    - tmux
+    - ubuntu-make
+    - cloc
+    - direnv
+    - rsync
+    - htop
+
+- name: Install extra compression utils
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - p7zip-full
+    - xz-utils

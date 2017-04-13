@@ -1,0 +1,15 @@
+---
+- name: Install Heroku Toolbelt repo key
+  apt_key:
+    url: "https://toolbelt.heroku.com/apt/release.key"
+  become: yes
+
+- name: Install Heroku Toolbelt repo
+  apt_repository:
+    repo: "deb http://toolbelt.heroku.com/ubuntu ./"
+  become: yes
+
+- name: Install Heroku Toolbelt
+  apt:
+    name: heroku-toolbelt
+  become: yes

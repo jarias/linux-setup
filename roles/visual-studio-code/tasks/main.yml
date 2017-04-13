@@ -1,0 +1,11 @@
+---
+- name: Install Visual Studio Code repo
+  apt_repository:
+    repo: "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main"
+    filename: "vscode"
+  become: yes
+
+- name: Install Visual Studio Code
+  apt:
+    name: code
+  become: yes

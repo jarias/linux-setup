@@ -1,0 +1,10 @@
+---
+- name: Install Atom PPA repo
+  apt_repository:
+    repo: "ppa:webupd8team/atom"
+  become: yes
+
+- name: Install Atom
+  apt:
+    name: atom
+  become: yes

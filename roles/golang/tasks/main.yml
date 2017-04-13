@@ -1,9 +1,8 @@
 ---
 - name: Register the current Go version (if any)
-  shell: /usr/local/go/bin/go version | cut -d ' ' -f3 | sed 's/go\(.*\)/\1/'
+  shell: /usr/local/go/bin/go version | cut -d ' ' -f3 | sed 's/go\(.*\)/\1/' | tr -d '\n'
   ignore_errors: yes
   register: go_version
-  changed_when: false
 
 - name: Remove old installation of Go
   file:

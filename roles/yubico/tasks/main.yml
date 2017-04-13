@@ -1,0 +1,18 @@
+---
+- name: Install yubico PPA repo
+  apt_repository:
+    repo: "ppa:yubico/stable"
+  become: yes
+
+- name: Install Yubico tools
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - yubikey-neo-manager
+    - yubikey-personalization-gui
+    - yubikey-personalization
+    - pcscd
+    - scdaemon
+    - pcsc-tools
+

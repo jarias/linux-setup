@@ -1,0 +1,10 @@
+---
+- name: Install Gradle PPA repo
+  apt_repository:
+    repo: "ppa:cwchien/gradle"
+  become: yes
+
+- name: Install Gradle
+  apt:
+    name: gradle
+  become: yes

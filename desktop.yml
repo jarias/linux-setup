@@ -1,11 +1,23 @@
 ---
 - hosts: all
   roles:
+    - apt
+    - slack
+    - visual-studio-code
+    - prey
+    - zsh
+    - openssh-server
+    - dev-tools
+    - fonts
+    - libvirt
+    - openvpn
+    - git
+    - java
+    - keybase
     - i3
     - neovim
-    - base
     - golang
-#    - node
+    - node
     - ruby
     - python
     - vagrant
@@ -20,5 +32,16 @@
     - obs
     - polybar
     - firefox
-    - greenrecorder
     - yarn
+    - chrome
+    - docker
+    - gradle
+    - heroku
+    - r
+    - skype
+    - tmate
+    - yubico
+    - google-cloud-sdk
+    - atom
+    - enpass
+

@@ -1,0 +1,16 @@
+---
+- name: Install R repo key
+  apt_key:
+    keyserver: "keyserver.ubuntu.com"
+    id: "E298A3A825C0D65DFD57CBB651716619E084DAB9"
+  become: yes
+
+- name: Install R repo
+  apt_repository:
+    repo: "deb [arch=amd64,i386] https://cran.rstudio.com/bin/linux/ubuntu yakkety/"
+  become: yes
+
+- name: Install R
+  apt:
+    name: r-base
+  become: yes
