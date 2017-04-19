@@ -17,11 +17,10 @@ rsync -azP \
   ${HOME}/Downloads \
   ${HOME}/Dropbox \
   ${HOME}/go \
-  ${HOME}/Music \
   ${HOME}/Pictures \
   ${HOME}/Projects \
   ${HOME}/Public \
-  ${HOME}/Videos ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
+  ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
   && ssh ${NAS} \
   "mv Backups/incomplete_back-${CURENT_DATE} Backups/back-${CURENT_DATE} \
   && rm -f Backups/current \
