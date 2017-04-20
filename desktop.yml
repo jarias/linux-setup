@@ -37,7 +37,7 @@
     - docker
     - gradle
     - heroku
-    - r
+      #- r
     - skype
     - tmate
     - yubico
