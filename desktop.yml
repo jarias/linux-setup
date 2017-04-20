@@ -2,6 +2,7 @@
 - hosts: all
   roles:
     - apt
+    - docker
     - slack
     - visual-studio-code
     - prey
@@ -34,7 +35,6 @@
     - firefox
     - yarn
     - chrome
-    - docker
     - gradle
     - heroku
       #- r
