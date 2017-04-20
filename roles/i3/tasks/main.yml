@@ -21,6 +21,7 @@
     - vinagre
     - rofi
     - arc-theme
+    - lxappearance
 
   #- name: Copy Gnome session file
   #  copy:
