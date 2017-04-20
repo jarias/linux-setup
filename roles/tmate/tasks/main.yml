@@ -2,6 +2,7 @@
 - name: Install tmate PPA repo
   apt_repository:
     repo: ppa:tmate.io/archive
+    codename: yakkety
   become: yes
 
 - name: Install tmate
