@@ -17,6 +17,10 @@
     - pkg-config
     - python-xcbgen
     - xcb-proto
+    - libiw-dev
+    - libxcb-xrm-dev
+    - libcurl4-openssl-dev
+    - libjsoncpp-dev
 
 - name: Ensure building clean
   file:
