@@ -31,7 +31,7 @@
     - user
     - wine
     - obs
-    - polybar
+      #- polybar
     - firefox
     - yarn
     - chrome
