@@ -22,7 +22,7 @@
     - python
     - vagrant
       #- vim
-    - jetbrains
+      #- jetbrains
     - ohmyzsh
     - dotfiles
     - backups
