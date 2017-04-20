@@ -21,7 +21,7 @@
     - ruby
     - python
     - vagrant
-    - vim
+      #- vim
     - jetbrains
     - ohmyzsh
     - dotfiles
