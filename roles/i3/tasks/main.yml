@@ -1,7 +1,7 @@
 ---
 - name: Install i3wm
   apt:
-    name: i3
+    name: i3-wm
   become: yes
 
 - name: Install i3blocks
