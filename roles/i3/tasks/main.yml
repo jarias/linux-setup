@@ -22,14 +22,14 @@
     - rofi
     - arc-theme
 
-- name: Copy Gnome session file
-  copy:
-    src: files/gnome-i3.session
-    dest: /usr/share/gnome-session/sessions/
-  become: yes
-
-- name: Copy i3 Gnome X session file
-  copy:
-    src: files/gnome-i3.desktop
-    dest: /usr/share/xsessions/
-  become: yes
+  #- name: Copy Gnome session file
+  #  copy:
+  #    src: files/gnome-i3.session
+  #    dest: /usr/share/gnome-session/sessions/
+  #  become: yes
+  #
+  #- name: Copy i3 Gnome X session file
+  #  copy:
+  #    src: files/gnome-i3.desktop
+  #    dest: /usr/share/xsessions/
+  #  become: yes
