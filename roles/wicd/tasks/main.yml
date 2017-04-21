@@ -1,0 +1,7 @@
+---
+- name: Install wicd
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - wicd-curses
