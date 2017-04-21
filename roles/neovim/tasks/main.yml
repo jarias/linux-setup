@@ -12,6 +12,10 @@
     - python-pip
     - python3-dev
     - python3-pip
+    - python3-neovim
+    - python-neovim
+    - ruby-neovim
+    - xsel
   become: yes
 
 - name: Install NeoVim
