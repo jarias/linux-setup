@@ -2,6 +2,8 @@
 - hosts: all
   roles:
     - apt
+    - xorg
+    - wicd
     - docker
     - slack
     - visual-studio-code
