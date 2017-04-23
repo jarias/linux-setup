@@ -8,18 +8,15 @@ rsync -azP \
   -e ssh \
   --exclude 'output-qemu' \
   --exclude 'packer_cache' \
+  --exclude '*.vmdk' \
+  --exclude '*.iso' \
   --delete \
   --delete-excluded \
   --link-dest=../current \
-  ${HOME}/bin \
-  ${HOME}/Desktop \
   ${HOME}/Documents \
-  ${HOME}/Downloads \
-  ${HOME}/Dropbox \
   ${HOME}/go \
   ${HOME}/Pictures \
   ${HOME}/Projects \
-  ${HOME}/Public \
   ${HOME}/.ssh \
   ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
   && ssh ${NAS} \
