@@ -46,4 +46,7 @@
     - google-cloud-sdk
     - atom
     - enpass
+    - terraform
+    - packer
+    - vault
 
