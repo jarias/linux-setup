@@ -20,6 +20,7 @@ rsync -azP \
   ${HOME}/Pictures \
   ${HOME}/Projects \
   ${HOME}/Public \
+  ${HOME}/.ssh \
   ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
   && ssh ${NAS} \
   "mv Backups/incomplete_back-${CURENT_DATE} Backups/back-${CURENT_DATE} \
