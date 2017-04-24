@@ -49,4 +49,6 @@
     - terraform
     - packer
     - vault
+    - tarsnap
+    - ranger
 

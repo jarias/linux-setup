@@ -2,7 +2,7 @@
 
 BASE_PATH=/home/{{ ansible_user_id }}
 
-/usr/local/bin/tarsnap -c \
+/usr/bin/tarsnap -c \
     -f "$(uname -n)-$(date +%Y-%m-%d_%H-%M-%S)" \
     ${BASE_PATH}/Documents \
     ${BASE_PATH}/go \

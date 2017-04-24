@@ -1,0 +1,15 @@
+---
+- name: Add tarsnap apt repo key
+  apt_key:
+    url:  https://pkg.tarsnap.com/tarsnap-deb-packaging-key.asc
+  become: yes
+
+- name: Add tarsnap apt repo
+  apt_repository:
+    repo: "deb http://pkg.tarsnap.com/deb/{{ ansible_distribution_release }} ./"
+  become: yes
+
+- name: Install tarsnap
+  apt:
+    name: tarsnap
+  become: yes
