@@ -17,6 +17,7 @@
     - direnv
     - rsync
     - htop
+    - exuberant-ctags
 
 - name: Install extra compression utils
   apt:
