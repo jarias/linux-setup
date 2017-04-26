@@ -12,3 +12,11 @@
     - dmz-cursor-theme
     - bumblebee
     - xinput
+
+- name: Sync xorg conf
+  copy:
+    src: files/xorg.conf.d
+    dest: /etc/X11
+    owner: root
+    group: root
+  become: yes
