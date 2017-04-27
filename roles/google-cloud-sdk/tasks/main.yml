@@ -6,7 +6,7 @@
 
 - name: Install Google Cloud SDK repo
   apt_repository:
-    repo: "deb https://packages.cloud.google.com/apt cloud-sdk-yakkety main"
+    repo: "deb https://packages.cloud.google.com/apt cloud-sdk-{{ ansible_distribution_release }} main"
   become: yes
 
 - name: Install Google Cloud SDK
