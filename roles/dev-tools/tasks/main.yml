@@ -18,6 +18,7 @@
     - rsync
     - htop
     - exuberant-ctags
+    - ack
 
 - name: Install extra compression utils
   apt:
