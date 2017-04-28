@@ -13,3 +13,13 @@
   apt:
     name: "yarn"
   become: yes
+
+- name: Install global modules
+  command: "/usr/bin/yarn global add {{ item }}"
+  with_items:
+    - "@angular/cli"
+    - prettier
+    - eslint
+    - tern
+    - create-react-app
+    - ember-cli
