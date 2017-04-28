@@ -20,3 +20,19 @@
     owner: root
     group: root
   become: yes
+
+- name: Copy bbswitch module configs
+  copy:
+    src: files/modprobe.d/
+    dest: /etc
+    owner: root
+    group: root
+  become: yes
+
+- name: Copy kernel /etc/modules file
+  copy:
+    src: files/modules
+    dest: /etc
+    owner: root
+    group: root
+  become: yes
