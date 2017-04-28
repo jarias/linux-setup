@@ -20,4 +20,6 @@
     - compton
     - alsa-tools-gui
     - xfce4-power-manager
+    - cups
+    - tlp
 
