@@ -19,6 +19,7 @@
     - htop
     - exuberant-ctags
     - ack
+    - clang
 
 - name: Install extra compression utils
   apt:
