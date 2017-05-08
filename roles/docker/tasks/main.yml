@@ -7,7 +7,7 @@
 
 - name: Install Docker repo
   apt_repository:
-    repo: "deb https://apt.dockerproject.org/repo ubuntu-yakkety main"
+    repo: "deb https://apt.dockerproject.org/repo ubuntu-{{ansible_distribution_release}} main"
   become: yes
 
 - name: Install Docker
