@@ -21,6 +21,7 @@
   become: yes
   with_items:
     - libpq-dev
+    - libssl-dev
 
 - name: Install Python pip default packages
   pip:
@@ -34,4 +35,5 @@
     - mycli
     - http-prompt
     - saws
+    - ansible-lint
 
