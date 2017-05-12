@@ -13,7 +13,7 @@
   lineinfile: dest=~/.zshrc regexp="^plugins=" line="plugins=(git git-flow-avh vagrant docker heroku)" state=present
 
 - name: Change prompt theme
-  lineinfile: dest=~/.zshrc regexp="^ZSH_THEME=" line="ZSH_THEME=\"pygmalion\"" state=present
+  lineinfile: dest=~/.zshrc regexp="^ZSH_THEME=" line="ZSH_THEME=\"spaceship\"" state=present
 
 - name: Add ~/.zshrc.local load to ~/.zshrc
   lineinfile: dest=~/.zshrc regexp="\.zshrc\.local" line=". ~/.zshrc.local" state=present
