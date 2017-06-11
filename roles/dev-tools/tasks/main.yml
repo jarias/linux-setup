@@ -20,6 +20,7 @@
     - exuberant-ctags
     - ack
     - clang
+    - cloud-utils
 
 - name: Install extra compression utils
   apt:
