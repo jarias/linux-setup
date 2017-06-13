@@ -12,6 +12,8 @@
     - dmz-cursor-theme
     - bumblebee
     - xinput
+    - xdotool
+    - rxvt-unicode-256color
 
 - name: Sync xorg conf
   copy:
