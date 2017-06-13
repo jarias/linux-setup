@@ -6,3 +6,7 @@
   with_items:
     - fonts-font-awesome
     - fonts-hack-ttf
+    - fonts-noto
+    - fonts-noto-cjk
+    - fonts-noto-mono
+    - fonts-firacode
