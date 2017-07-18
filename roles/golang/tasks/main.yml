@@ -45,4 +45,5 @@
     - { package: github.com/constabulary/gb/... }
     - { package: github.com/derekparker/delve/cmd/dlv }
     - { package: github.com/aarzilli/gdlv }
+    - { package: github.com/uber/go-torch }
 
