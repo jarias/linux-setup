@@ -1,5 +1,5 @@
 ---
 - name: Install Slack
   apt:
-    deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-2.6.3-amd64.deb 
+    deb: https://downloads.slack-edge.com/linux_releases/slack-desktop-2.7.0-amd64.deb
   become: yes

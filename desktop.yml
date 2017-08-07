@@ -2,6 +2,7 @@
 - hosts: all
   roles:
     - apt
+    - chrome
     - xorg
     - wicd
     - docker
@@ -36,7 +37,6 @@
       #- polybar
     - firefox
     - yarn
-    - chrome
     - gradle
     - heroku
       #- r
@@ -51,7 +51,7 @@
     - vault
     - tarsnap
     - ranger
-    - termite
+      #- termite
     - rust
     - pass
     - rofi-pass

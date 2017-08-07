@@ -27,7 +27,6 @@
 - name: Install default Go packages
   shell: "GOPATH=~/go go get -u {{ item.package }}"
   with_items:
-    - { package: github.com/Masterminds/glide }
     - { package: golang.org/x/tools/cmd/goimports }
     - { package: golang.org/x/tools/cmd/cover }
     - { package: golang.org/x/tools/cmd/guru }
@@ -42,8 +41,8 @@
     - { package: github.com/fatih/motion }
     - { package: github.com/zmb3/gogetdoc }
     - { package: github.com/josharian/impl }
-    - { package: github.com/constabulary/gb/... }
     - { package: github.com/derekparker/delve/cmd/dlv }
     - { package: github.com/aarzilli/gdlv }
     - { package: github.com/uber/go-torch }
+    - { package: github.com/golang/dep/cmd/dep }
 
