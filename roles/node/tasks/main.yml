@@ -7,7 +7,7 @@
 
 - name: Install NodeJS repo
   apt_repository:
-    repo: "deb https://deb.nodesource.com/node_7.x {{ansible_distribution_release}} main"
+    repo: "deb https://deb.nodesource.com/node_8.x {{ansible_distribution_release}} main"
   become: yes
 
 - name: Install NodeJS
