@@ -4,7 +4,6 @@
     - apt
     - chrome
     - xorg
-    - wicd
     - docker
     - slack
     - visual-studio-code
@@ -24,34 +23,24 @@
     - node
     - ruby
     - python
-    - vagrant
-      #- vim
-      #- jetbrains
     - ohmyzsh
     - dotfiles
-    - backups
     - base16
     - user
-    - wine
+    - backups
+      #- wine
     - obs
-      #- polybar
-    - firefox
     - yarn
-    - gradle
     - heroku
-      #- r
     - skype
     - tmate
     - yubico
     - google-cloud-sdk
-    - atom
-    - enpass
     - terraform
-    - packer
-    - vault
+      #- packer
+      #- vault
     - tarsnap
     - ranger
-      #- termite
     - rust
     - pass
     - rofi-pass

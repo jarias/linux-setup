@@ -1,6 +1,6 @@
 ---
 - name: Modify current user groups and shell
-  user: name={{ lookup('env','USER') }} groups=docker,libvirt append=yes shell=/usr/bin/zsh
+  user: name={{ lookup('env','USER') }} groups=libvirt append=yes shell=/usr/bin/zsh
   become: yes
 
 - name: Create user systemd folder

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+IN="eDP1"
+EXT="HDMI1"
+
+if (xrandr | grep "$EXT disconnected"); then
+  xrandr --output $EXT --off --output $IN --auto --primary
+else
+  xrandr --output $IN --auto --output $EXT --primary --panning 3840x2160+3840+0 --scale 2x2 --right-of $IN
+fi
+
+i3-msg restart

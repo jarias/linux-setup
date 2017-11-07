@@ -5,10 +5,10 @@
     install_recommends: yes
   become: yes
   with_items:
-    - xserver-xorg
-    - xinit
-    - dbus-x11
-    - x11-xserver-utils
+    #- xserver-xorg
+    #- xinit
+    #- dbus-x11
+    #- x11-xserver-utils
     - dmz-cursor-theme
     - bumblebee
     - xinput
