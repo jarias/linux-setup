@@ -22,9 +22,10 @@
     mode: 0755
 
 - name: Enable backups timer
-  command: systemctl --user enable backups.timer
+  systemd:
+    name: backups.timer
+    state: started
+    enabled: yes
+    user: yes
   when: configure_backups == "yes"
 
-- name: Start backups timer
-  command: systemctl --user start backups.timer
-  when: configure_backups == "yes"

@@ -3,4 +3,4 @@ Description=Tarsnap backups
 
 [Service]
 Type=oneshot
-ExecStart=/root/tarsnap.sh
+ExecStart=/home/jarias/tarsnap.sh

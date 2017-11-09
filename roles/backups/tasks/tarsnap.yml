@@ -2,23 +2,20 @@
 - name: Create tarsnap script
   template:
     src: templates/tarsnap.sh.j2
-    dest: /root/tarsnap.sh
+    dest: ~/bin/tarsnap.sh
     mode: 0700
-  become: yes
   when: configure_tarsnap == "yes"
 
 - name: Create tarsnap systemd timer file
   copy:
     src: files/tarsnap.timer
-    dest: /etc/systemd/system/
-  become: yes
+    dest: ~/.config/systemd/user/tarsnap.timer
   when: configure_tarsnap == "yes"
 
 - name: Create tarsnap systemd service file
   copy:
     src: files/tarsnap.service
-    dest: /etc/systemd/system/
-  become: yes
+    dest: ~/.config/systemd/user/tarsnap.service
   when: configure_tarsnap == "yes"
 
 - name: Enable tarsnap systemd timer
@@ -26,6 +23,6 @@
     name: tarsnap.timer
     state: started
     enabled: yes
-  become: yes
+    user: yes
   when: configure_tarsnap == "yes"
 

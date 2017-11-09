@@ -9,5 +9,6 @@
     src: "https://releases.hashicorp.com/vault/{{ vault_version_target }}/vault_{{ vault_version_target }}_linux_amd64.zip"
     dest: /usr/local/bin
     remote_src: True
+    validate_certs: False
   become: yes
   when: vault_version|failed or vault_version.stdout != vault_version_target

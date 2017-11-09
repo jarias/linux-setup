@@ -9,7 +9,6 @@
     name: "{{ item }}"
   become: yes
   with_items:
-    - yubikey-neo-manager
     - yubikey-personalization-gui
     - yubikey-personalization
     - pcscd

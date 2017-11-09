@@ -9,5 +9,6 @@
     src: "https://releases.hashicorp.com/terraform/{{ terraform_version_target }}/terraform_{{ terraform_version_target }}_linux_amd64.zip"
     dest: /usr/local/bin
     remote_src: True
+    validate_certs: False
   become: yes
   when: terraform_version|failed or terraform_version.stdout != terraform_version_target

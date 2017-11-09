@@ -22,7 +22,7 @@
     - golang
     - node
     - ruby
-    - python
+      #- python
     - ohmyzsh
     - dotfiles
     - base16
@@ -33,16 +33,17 @@
     - yarn
     - heroku
     - skype
-    - tmate
+      #- tmate
     - yubico
     - google-cloud-sdk
     - terraform
-      #- packer
-      #- vault
+    - packer
+    - vault
     - tarsnap
     - ranger
     - rust
     - pass
     - rofi-pass
     - xapps
+    - gnupg
 
