@@ -27,12 +27,10 @@
   pip:
     name: "{{ item }}"
     extra_args: "--user -U"
+    executable: pip3
   with_items:
     - awscli
-    - psutil
-    - docker-compose
     - pgcli
-    - mycli
     - http-prompt
     - saws
     - autopep8

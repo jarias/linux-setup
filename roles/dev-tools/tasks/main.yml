@@ -7,13 +7,16 @@
     - jq
     - curl
     - tmux
-      #- cloc
+    - cloc
     - direnv
     - rsync
     - htop
     - exuberant-ctags
       #- clang
     - cloud-utils
+    - silversearcher-ag
+    - redis-tools
+    - lm-sensors
 
 - name: Install extra compression utils
   apt:

@@ -39,7 +39,7 @@
     state: directory
 
 - name: Run cmake
-  command: cmake -DENABLE_XRANDR_MONITORS=0 ..
+  command: cmake ..
   args:
     chdir: /tmp/polybar/build
 

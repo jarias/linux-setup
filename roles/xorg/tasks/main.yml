@@ -10,6 +10,9 @@
     - xinput
     - xdotool
     - rxvt-unicode-256color
+    - xbacklight
+    - gnome-session
+    - compton
 
 - name: Sync xorg conf
   copy:
