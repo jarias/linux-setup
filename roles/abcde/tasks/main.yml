@@ -1,0 +1,14 @@
+---
+- name: Install abcde
+  apt:
+    name: abcde
+  become: yes
+
+- name: Install encoders
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - lame
+    - opus-tools
+    - flac
+  become: yes

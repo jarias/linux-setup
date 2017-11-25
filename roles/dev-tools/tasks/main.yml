@@ -17,6 +17,8 @@
     - silversearcher-ag
     - redis-tools
     - lm-sensors
+    - pandoc
+    - silversearcher-ag
 
 - name: Install extra compression utils
   apt:

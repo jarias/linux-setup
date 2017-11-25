@@ -1,0 +1,10 @@
+---
+- name: Install mpd
+  apt:
+    name: mpd
+  become: yes
+
+- name: Install ncmcpp
+  apt:
+    name: ncmcpp
+  become: yes
