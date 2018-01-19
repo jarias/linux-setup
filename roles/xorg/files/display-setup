@@ -3,10 +3,19 @@
 IN="eDP1"
 EXT="HDMI1"
 
+pkill polybar
+
 if (xrandr | grep "$EXT disconnected"); then
   xrandr --output $EXT --off --output $IN --auto --primary
+  MONITOR=$IN polybar int &
 else
-  xrandr --output $IN --auto --output $EXT --primary --panning 3840x2160+3840+0 --scale 2x2 --right-of $IN
+  xrandr --output $IN --auto --output $EXT --primary --mode 1920x1080 --panning 3840x2160+3840+0 --scale 2x2 --right-of $IN
+  #xrandr --output $IN --off --output $EXT --primary --auto
+  MONITOR=$EXT polybar int &
 fi
 
-i3-msg restart
+pkill xcompmgr || true
+
+#compton --backend glx &
+
+/usr/bin/xcompmgr &
