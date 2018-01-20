@@ -16,6 +16,4 @@ fi
 
 pkill xcompmgr || true
 
-#compton --backend glx &
-
 /usr/bin/xcompmgr &
