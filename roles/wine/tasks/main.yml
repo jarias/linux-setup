@@ -1,10 +1,15 @@
 ---
-- name: Install wine ppa
+- name: Install wine repo key
+  apt_key:
+    url: https://dl.winehq.org/wine-builds/Release.key
+  become: yes
+
+- name: Install wine repo
   apt_repository:
-    repo: ppa:wine/wine-builds
+    repo: "deb https://dl.winehq.org/wine-builds/ubuntu {{ ansible_distribution_release }} main"
   become: yes
 
 - name: Install wine
   apt:
-    name: wine-staging-amd64
+    name: wine-staging
   become: yes

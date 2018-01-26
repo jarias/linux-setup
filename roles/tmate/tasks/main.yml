@@ -1,9 +1,4 @@
 ---
-- name: Install tmate PPA repo
-  apt_repository:
-    repo: ppa:tmate.io/archive
-  become: yes
-
 - name: Install tmate
   apt:
     name: tmate
