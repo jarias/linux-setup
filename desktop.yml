@@ -4,6 +4,7 @@
     - apt
     - polybar
     - chrome
+    - firefox
     - xorg
     - docker
     - slack

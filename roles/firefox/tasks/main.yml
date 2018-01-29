@@ -1,9 +1,4 @@
 ---
-- name: Install Firefox PPA
-  apt_repository:
-    repo: ppa:ubuntu-mozilla-daily/ppa
-  become: yes
-
 - name: Install Firefox
   apt:
     name: firefox
