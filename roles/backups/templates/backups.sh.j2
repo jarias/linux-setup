@@ -1,6 +1,6 @@
 #!/bin/sh
 
-CURENT_DATE=`date "+%Y-%m-%dT%H_%M_%S"`
+CURENT_DATE=$(date "+%Y-%m-%dT%H_%M_%S")
 
 NAS="{{ nas_username }}@{{ nas_hostname }}"
 
@@ -14,12 +14,14 @@ rsync -azP \
   --delete-excluded \
   --link-dest=../current \
   ${HOME}/Documents \
-  ${HOME}/go \
   ${HOME}/Pictures \
   ${HOME}/Projects \
   ${HOME}/.ssh \
-  ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} \
-  && ssh ${NAS} \
-  "mv Backups/incomplete_back-${CURENT_DATE} Backups/back-${CURENT_DATE} \
+  ${HOME}/.local/share/buku \
+  ${HOME}/.password-store \
+  ${HOME}/.homesick \
+  ${NAS}::home/Backups/incomplete_back-${CURENT_DATE} &&
+  ssh ${NAS} \
+    "mv Backups/incomplete_back-${CURENT_DATE} Backups/back-${CURENT_DATE} \
   && rm -f Backups/current \
   && ln -s back-${CURENT_DATE} Backups/current"

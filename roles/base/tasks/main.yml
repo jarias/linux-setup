@@ -1,0 +1,19 @@
+---
+- name: Install base packages
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - intel-microcode
+    - autofs
+    - nfs-common
+    - urlview
+    - isync
+    - aspell-es
+    - aspell-en
+    - mutt
+    - weechat
+    - lm-sensors
+    - powertop
+    - w3m
+    - ddgr
