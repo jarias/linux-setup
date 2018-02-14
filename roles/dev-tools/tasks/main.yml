@@ -13,9 +13,7 @@
     - htop
     - exuberant-ctags
     - cloud-utils
-    - silversearcher-ag
     - redis-tools
-    - lm-sensors
     - pandoc
     - silversearcher-ag
     - dos2unix
