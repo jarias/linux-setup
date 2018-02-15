@@ -3,17 +3,22 @@
 IN="eDP1"
 EXT="HDMI1"
 
-pkill polybar
+pkill polybar || true
+
+polybar int &
 
 if (xrandr | grep "$EXT disconnected"); then
   xrandr --output $EXT --off --output $IN --auto --primary
-  MONITOR=$IN polybar int &
 else
   xrandr --output $IN --auto --output $EXT --primary --mode 1920x1080 --panning 3840x2160+3840+0 --scale 2x2 --right-of $IN
-  #xrandr --output $IN --off --output $EXT --primary --auto
-  MONITOR=$EXT polybar int &
+  polybar ext &
+  i3-msg "workspace 1, move workspace to output ${EXT}"
+  i3-msg "workspace 2, move workspace to output ${EXT}"
+  i3-msg "workspace 3, move workspace to output ${EXT}"
+  i3-msg "workspace 10, move workspace to output ${IN}"
 fi
 
-pkill xcompmgr || true
+feh --bg-scale ~/Pictures/wallpaper.png
 
-/usr/bin/xcompmgr &
+pkill compton
+compton --xrender-sync-fence &
