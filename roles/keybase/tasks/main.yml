@@ -1,16 +1,6 @@
 ---
-- name: Install keybase repo key
-  apt_key:
-    url: "https://keybase.io/docs/server_security/code_signing_key.asc"
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install Keybase repo
-  apt_repository:
-    repo: "deb http://prerelease.keybase.io/deb stable main"
-    filename: "keybase"
-  become: yes
-
-- name: Install Keybase
-  apt:
-    name: keybase
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

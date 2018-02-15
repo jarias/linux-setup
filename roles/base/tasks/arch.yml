@@ -1,0 +1,23 @@
+---
+- name: Install base packages
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - firefox
+    - intel-ucode
+    - autofs
+    - isync
+    - nfs-utils
+    - aspell
+    - aspell-es
+    - aspell-en
+    - mutt
+    - weechat
+    - lm_sensors
+    - powertop
+    - w3m
+    - openssh
+    - zsh
+    - openvpn
+    - ranger

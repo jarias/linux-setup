@@ -1,23 +1,9 @@
 ---
-- name: Register the current Go version (if any)
-  shell: /usr/local/go/bin/go version | cut -d ' ' -f3 | sed 's/go\(.*\)/\1/' | tr -d '\n'
-  ignore_errors: yes
-  register: go_version
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Remove old installation of Go
-  file:
-    path: /usr/local/go
-    state: absent
-  become: yes
-  when: go_version|failed or go_version.stdout != go_version_target
-
-- name: Install Go
-  unarchive:
-    src: "https://storage.googleapis.com/golang/go{{ go_version_target }}.linux-amd64.tar.gz"
-    dest: /usr/local
-    remote_src: yes
-  become: yes
-  when: go_version|failed or go_version.stdout != go_version_target
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: Create GOPATH dir
   file:
@@ -45,4 +31,3 @@
     - { package: github.com/aarzilli/gdlv }
     - { package: github.com/uber/go-torch }
     - { package: github.com/golang/dep/cmd/dep }
-

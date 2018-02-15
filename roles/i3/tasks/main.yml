@@ -1,27 +1,6 @@
 ---
-- name: Install i3
-  apt:
-    name: i3
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install desktop enviroment extras
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - xautolock
-    - feh
-    - pavucontrol
-    - lxappearance
-    - vinagre
-    - rofi
-    - arc-theme
-    - numix-gtk-theme
-    - alsa-tools-gui
-    - xfce4-screenshooter
-    - xfce4-power-manager
-    - tilix
-    - buku
-    - udiskie
-    - scrot
-
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

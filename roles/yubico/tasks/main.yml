@@ -1,17 +1,7 @@
 ---
-- name: Install yubico PPA repo
-  apt_repository:
-    repo: "ppa:yubico/stable"
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install Yubico tools
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - yubikey-personalization-gui
-    - yubikey-personalization
-    - pcscd
-    - scdaemon
-    - pcsc-tools
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
 

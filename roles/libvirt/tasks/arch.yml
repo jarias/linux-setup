@@ -1,0 +1,9 @@
+---
+- name: Install libvirt
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - qemu
+    - libvirt
+    - virt-manager

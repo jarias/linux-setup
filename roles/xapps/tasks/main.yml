@@ -1,12 +1,6 @@
 ---
-- name: Install x-apps repo
-  apt_repository:
-    repo: "ppa:embrosyn/xapps"
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install x-apps
-  apt:
-    name: "{{ item }}"
-  with_items:
-    - xreader
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

@@ -1,0 +1,20 @@
+---
+- name: Install i3 and extras
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - i3
+    - xautolock
+    - feh
+    - pavucontrol
+    - lxappearance
+    - vinagre
+    - rofi
+    - arc-theme
+    - alsa-tools-gui
+    - xfce4-screenshooter
+    - xfce4-power-manager
+    - udiskie
+    - scrot
+

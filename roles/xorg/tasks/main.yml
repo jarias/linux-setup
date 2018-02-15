@@ -1,39 +1,6 @@
 ---
-- name: Install xorg
-  apt:
-    name: "{{ item }}"
-    install_recommends: yes
-  become: yes
-  with_items:
-    - dmz-cursor-theme
-    - bumblebee
-    - xinput
-    - xdotool
-    - rxvt-unicode-256color
-    - xbacklight
-    - gnome-session
-    - compton
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Sync xorg conf
-  copy:
-    src: files/xorg.conf.d
-    dest: /etc/X11
-    owner: root
-    group: root
-  become: yes
-
-- name: Copy bbswitch module configs
-  copy:
-    src: files/modprobe.d/
-    dest: /etc
-    owner: root
-    group: root
-  become: yes
-
-- name: Copy kernel /etc/modules file
-  copy:
-    src: files/modules
-    dest: /etc
-    owner: root
-    group: root
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

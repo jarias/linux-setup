@@ -1,0 +1,5 @@
+---
+- name: Install wine
+  pacman:
+    name: wine
+  become: yes

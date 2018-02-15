@@ -1,11 +1,9 @@
 ---
-- name: Install Ruby
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - ruby
-    - ruby-dev
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: Install default Ruby Gems
   gem:

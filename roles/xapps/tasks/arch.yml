@@ -1,0 +1,7 @@
+---
+- name: Install x-apps
+  pacman:
+    name: "{{ item }}"
+  with_items:
+    - xreader
+  become: yes

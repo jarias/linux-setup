@@ -1,5 +1,6 @@
 ---
-- name: Install Prey
-  apt:
-    name: prey
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

@@ -1,0 +1,12 @@
+---
+- name: Create gpg-agent systemd service file
+  copy:
+    src: files/gpg-agent.service
+    dest: ~/.config/systemd/user/gpg-agent.service
+
+- name: Enable gpg-agent systemd service
+  systemd:
+    name: gpg-agent.service
+    state: started
+    enabled: yes
+    user: yes

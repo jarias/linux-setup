@@ -1,0 +1,5 @@
+---
+- name: Install tarsnap
+  pacman:
+    name: tarsnap
+  become: yes

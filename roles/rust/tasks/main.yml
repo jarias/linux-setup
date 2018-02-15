@@ -1,3 +1,6 @@
 ---
-- name: Install rust via rustup
-  shell: "curl https://sh.rustup.rs -sSf | sh -s -- -y"
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

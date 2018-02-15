@@ -1,5 +1,0 @@
----
-- name: Install ZSH
-  apt:
-    name: zsh
-  become: yes

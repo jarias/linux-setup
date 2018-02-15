@@ -1,0 +1,20 @@
+---
+- name: Install i3 and extras
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - i3-wm
+    - xautolock
+    - feh
+    - pavucontrol
+    - lxappearance-gtk3
+    - vinagre
+    - rofi
+    - arc-gtk-theme
+    - alsa-tools
+    - xfce4-screenshooter
+    - xfce4-power-manager
+    - udiskie
+    - scrot
+

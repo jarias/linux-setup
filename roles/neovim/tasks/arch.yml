@@ -1,0 +1,22 @@
+---
+- name: Install NeoVim
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - neovim
+    - python-neovim
+    - python2-neovim
+    - xsel
+
+- name: Create .vim directory
+  file:
+    path: "~/.local/share/nvim/site/autoload"
+    state: directory
+    recurse: yes
+
+- name: Install Plug
+  get_url:
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    dest: "~/.local/share/nvim/site/autoload/plug.vim"
+

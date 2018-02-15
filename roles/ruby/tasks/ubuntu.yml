@@ -1,0 +1,8 @@
+---
+- name: Install Ruby
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - ruby
+    - ruby-dev

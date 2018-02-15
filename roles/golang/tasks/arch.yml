@@ -1,0 +1,5 @@
+---
+- name: Install Go
+  pacman:
+    name: go
+  become: yes

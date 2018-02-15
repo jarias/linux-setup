@@ -1,0 +1,5 @@
+---
+- name: Install Keybase
+  pacman:
+    name: keybase
+  become: yes

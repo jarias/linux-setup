@@ -6,4 +6,5 @@
     - mpv
     - mkvtoolnix-gui
     - handbrake
+
   become: yes

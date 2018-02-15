@@ -1,0 +1,27 @@
+---
+- name: Install extra dev tools
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - git
+    - jq
+    - curl
+    - tmux
+    - cloc
+    - direnv
+    - htop
+    - ctags
+    - pandoc
+    - the_silver_searcher
+    - dos2unix
+    - jdk9-openjdk
+    - jdk8-openjdk
+
+- name: Install extra compression utils
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - p7zip
+    - xz

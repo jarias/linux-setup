@@ -1,0 +1,12 @@
+---
+- name: Install x-apps repo
+  apt_repository:
+    repo: "ppa:embrosyn/xapps"
+  become: yes
+
+- name: Install x-apps
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - xreader
+  become: yes

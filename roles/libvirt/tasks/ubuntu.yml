@@ -1,0 +1,11 @@
+---
+- name: Install libvirt
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - qemu
+    - qemu-kvm
+    - libvirt-bin
+    - libvirt-dev
+    - virt-manager

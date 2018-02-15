@@ -1,12 +1,6 @@
 ---
-- name: Install Fonts
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - fonts-font-awesome
-    - fonts-hack-ttf
-    - fonts-noto
-    - fonts-noto-cjk
-    - fonts-noto-mono
-    - fonts-firacode
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

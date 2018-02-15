@@ -1,5 +1,0 @@
----
-- name: Install tmate
-  apt:
-    name: tmate
-  become: yes

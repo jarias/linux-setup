@@ -1,0 +1,5 @@
+---
+- name: Install pass
+  pacman:
+    name: pass
+  become: yes

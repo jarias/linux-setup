@@ -1,0 +1,17 @@
+---
+- name: Install NodeJS
+  pacman:
+    name: nodejs
+  become: yes
+
+- name: Creates local node_modules directory
+  file:
+    path: "~/.node_modules/lib"
+    state: directory
+    recurse: yes
+
+- name: Setup NPM prefix
+  command: "/usr/bin/npm config set prefix ~/.node_modules"
+  args:
+    creates: "~/.npmrc"
+

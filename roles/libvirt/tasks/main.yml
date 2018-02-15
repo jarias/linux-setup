@@ -1,11 +1,6 @@
 ---
-- name: Install libvirt
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - qemu
-    - qemu-kvm
-    - libvirt-bin
-    - libvirt-dev
-    - virt-manager
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

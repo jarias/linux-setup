@@ -1,0 +1,5 @@
+---
+- name: Install OBS
+  apt:
+    name: obs-studio
+  become: yes

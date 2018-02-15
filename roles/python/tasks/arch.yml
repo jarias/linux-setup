@@ -1,0 +1,14 @@
+---
+- name: Install python
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - python
+
+- name: Install pip packages dependencies
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - postgresql-libs

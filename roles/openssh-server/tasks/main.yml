@@ -1,5 +1,0 @@
----
-- name: Install OpenSSH Server
-  apt:
-    name: openssh-server
-  become: yes

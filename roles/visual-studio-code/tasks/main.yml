@@ -1,18 +1,6 @@
 ---
-- name: Install Visual Studio Code repo key
-  apt_key:
-    url: "https://packages.microsoft.com/keys/microsoft.asc"
-    validate_certs: False
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install Visual Studio Code repo
-  apt_repository:
-    repo: "deb [arch=amd64] http://packages.microsoft.com/repos/vscode stable main"
-    filename: "vscode"
-    validate_certs: False
-  become: yes
-
-- name: Install Visual Studio Code
-  apt:
-    name: code
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

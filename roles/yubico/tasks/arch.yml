@@ -1,0 +1,12 @@
+---
+- name: Install Yubico tools
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - yubikey-personalization-gui
+    - yubikey-personalization
+    - pcsc-tools
+    - ccid
+    - libusb-compat
+

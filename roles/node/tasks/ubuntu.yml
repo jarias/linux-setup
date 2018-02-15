@@ -1,0 +1,27 @@
+---
+- name: Install NodeJS repo key
+  apt_key:
+    url: "https://deb.nodesource.com/gpgkey/nodesource.gpg.key"
+  become: yes
+
+- name: Install NodeJS repo
+  apt_repository:
+    repo: "deb https://deb.nodesource.com/node_8.x {{ansible_distribution_release}} main"
+  become: yes
+
+- name: Install NodeJS
+  apt:
+    name: nodejs
+  become: yes
+
+- name: Creates local node_modules directory
+  file:
+    path: "~/.node_modules/lib"
+    state: directory
+    recurse: yes
+
+- name: Setup NPM prefix
+  command: "/usr/bin/npm config set prefix ~/.node_modules"
+  args:
+    creates: "~/.npmrc"
+

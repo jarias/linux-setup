@@ -1,12 +1,6 @@
 ---
-- name: Create gpg-agent systemd service file
-  copy:
-    src: files/gpg-agent.service
-    dest: ~/.config/systemd/user/gpg-agent.service
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Enable gpg-agent systemd service
-  systemd:
-    name: gpg-agent.service
-    state: started
-    enabled: yes
-    user: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

@@ -1,0 +1,22 @@
+---
+- name: Install xorg
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - xorg-server
+    - xf86-video-intel
+    - xcursor-vanilla-dmz
+    - bumblebee
+    - xorg-xinput
+    - xdotool
+    - xorg-xbacklight
+    - compton
+
+- name: Sync xorg conf
+  copy:
+    src: files/xorg.conf.d
+    dest: /etc/X11
+    owner: root
+    group: root
+  become: yes

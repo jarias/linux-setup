@@ -1,19 +1,6 @@
 ---
-- name: Install base packages
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - intel-microcode
-    - autofs
-    - nfs-common
-    - urlview
-    - isync
-    - aspell-es
-    - aspell-en
-    - mutt
-    - weechat
-    - lm-sensors
-    - powertop
-    - w3m
-    - ddgr
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

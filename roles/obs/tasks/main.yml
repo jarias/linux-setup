@@ -1,10 +1,6 @@
 ---
-- name: Install OBS ppa
-  apt_repository:
-    repo: ppa:obsproject/obs-studio
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install OBS
-  apt:
-    name: obs-studio
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

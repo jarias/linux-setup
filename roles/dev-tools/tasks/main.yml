@@ -1,27 +1,6 @@
 ---
-- name: Install extra dev tools
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - jq
-    - curl
-    - tmux
-    - cloc
-    - direnv
-    - rsync
-    - htop
-    - exuberant-ctags
-    - cloud-utils
-    - redis-tools
-    - pandoc
-    - silversearcher-ag
-    - dos2unix
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install extra compression utils
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - p7zip-full
-    - xz-utils
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

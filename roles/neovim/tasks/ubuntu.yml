@@ -1,0 +1,36 @@
+---
+- name: Install neovim PPA repo
+  apt_repository:
+    repo: ppa:neovim-ppa/unstable
+  become: yes
+
+- name: Install NeoVim deps
+  apt:
+    name: "{{ item }}"
+  with_items:
+    - python-dev
+    - python-pip
+    - python3-dev
+    - python3-pip
+    - python3-neovim
+    - python-neovim
+    - ruby-neovim
+    - xsel
+  become: yes
+
+- name: Install NeoVim
+  apt:
+    name: neovim
+  become: yes
+
+- name: Create .vim directory
+  file:
+    path: "~/.local/share/nvim/site/autoload"
+    state: directory
+    recurse: yes
+
+- name: Install Plug
+  get_url:
+    url: "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+    dest: "~/.local/share/nvim/site/autoload/plug.vim"
+

@@ -1,27 +1,16 @@
 ---
-- name: Install python
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - python
-    - python-dev
-    - python-setuptools
-    - python-pip
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
+
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
 
 - name: Update pip
   pip:
     name: "pip"
     extra_args: "--upgrade"
+    executable: pip3
   become: yes
-
-- name: Install pip packages dependencies
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - libpq-dev
-    - libssl-dev
 
 - name: Install Python pip default packages
   pip:
@@ -34,4 +23,5 @@
     - http-prompt
     - saws
     - autopep8
+    - buku
 

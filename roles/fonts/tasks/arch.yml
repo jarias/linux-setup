@@ -1,0 +1,12 @@
+---
+- name: Install Fonts
+  apt:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - ttf-font-awesome
+    - ttf-hack
+    - noto-fonts
+    - noto-fonts-cjk
+    - noto-fonts-emoji
+    - noto-fonts-extra

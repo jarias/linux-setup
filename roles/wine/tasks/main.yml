@@ -1,15 +1,6 @@
 ---
-- name: Install wine repo key
-  apt_key:
-    url: https://dl.winehq.org/wine-builds/Release.key
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install wine repo
-  apt_repository:
-    repo: "deb https://dl.winehq.org/wine-builds/ubuntu {{ ansible_distribution_release }} main"
-  become: yes
-
-- name: Install wine
-  apt:
-    name: wine-staging
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"
