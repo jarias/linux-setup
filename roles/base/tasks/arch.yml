@@ -22,6 +22,9 @@
 - name: Sync repos with packer
   command: packer -Syu
 
+- name: Install urlview
+  command: packer --noedit --noconfirm -S urlview
+
 - name: Install base packages
   pacman:
     name: "{{ item }}"
