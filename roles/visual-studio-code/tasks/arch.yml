@@ -1,1 +1,3 @@
 ---
+- name: Install slack
+  command: packer --noedit --noconfirm -S visual-studio-code-bin
