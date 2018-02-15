@@ -19,6 +19,9 @@
     mode: 0644
     become: yes
 
+- name: Sync repos with packer
+  command: packer -Syu
+
 - name: Install base packages
   pacman:
     name: "{{ item }}"
