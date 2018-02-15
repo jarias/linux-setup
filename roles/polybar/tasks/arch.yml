@@ -1,0 +1,3 @@
+---
+- name: Install polybar
+  command: packer --noedit --noconfirm -S polybar
