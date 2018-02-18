@@ -1,0 +1,5 @@
+---
+- name: Install vault
+  pacman:
+    name: vault
+  become: yes

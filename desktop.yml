@@ -1,6 +1,22 @@
 ---
 - hosts: all
   roles:
+    - base
+    - xorg
+    - mpd
+    - polybar
+    - chrome
+    - docker
+    - slack
+    - visual-studio-code
+    - prey
+    - dev-tools
+    - fonts
+    - libvirt
+    - keybase
+    - i3
+    - neovim
+    - golang
     - node
     - ruby
     - python
@@ -13,7 +29,7 @@
     - yarn
     - yubico
     - terraform
-      #- packer
+    - packer
     - vault
     - tarsnap
     - rust
@@ -21,4 +37,5 @@
     - rofi-pass
     - xapps
     - gnupg
+    - video
 

@@ -1,10 +1,6 @@
 ---
-- name: Install mpd
-  apt:
-    name: mpd
-  become: yes
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install ncmcpp
-  apt:
-    name: ncmcpp
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

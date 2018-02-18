@@ -1,14 +1,6 @@
 ---
-- name: Register the current Terraform version (if any)
-  shell: /usr/local/bin/terraform version | cut -d ' ' -f2 | sed 's/v\(.*\)/\1/' | tr -d '\n'
-  ignore_errors: yes
-  register: terraform_version
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install Terraform
-  unarchive:
-    src: "https://releases.hashicorp.com/terraform/{{ terraform_version_target }}/terraform_{{ terraform_version_target }}_linux_amd64.zip"
-    dest: /usr/local/bin
-    remote_src: True
-    validate_certs: False
-  become: yes
-  when: terraform_version|failed or terraform_version.stdout != terraform_version_target
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

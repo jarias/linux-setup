@@ -1,14 +1,6 @@
 ---
-- name: Register the current Vault version (if any)
-  shell: /usr/local/bin/vault version | cut -d ' ' -f2 | sed 's/v\(.*\)/\1/' | tr -d '\n'
-  ignore_errors: yes
-  register: vault_version
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-- name: Install Vault
-  unarchive:
-    src: "https://releases.hashicorp.com/vault/{{ vault_version_target }}/vault_{{ vault_version_target }}_linux_amd64.zip"
-    dest: /usr/local/bin
-    remote_src: True
-    validate_certs: False
-  become: yes
-  when: vault_version|failed or vault_version.stdout != vault_version_target
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

@@ -1,0 +1,14 @@
+---
+- name: Register the current Packer version (if any)
+  shell: /usr/local/bin/packer version | cut -d ' ' -f2 | sed 's/v\(.*\)/\1/' | tr -d '\n'
+  ignore_errors: yes
+  register: installed_packer_version
+
+- name: Install packer
+  unarchive:
+    src: "https://releases.hashicorp.com/packer/{{ packer_version_target }}/packer_{{ packer_version_target }}_linux_amd64.zip"
+    dest: /usr/local/bin
+    remote_src: True
+    validate_certs: False
+  become: yes
+  when: installed_packer_version|failed or installed_packer_version.stdout != packer_version_target

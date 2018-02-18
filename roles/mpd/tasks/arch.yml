@@ -1,0 +1,10 @@
+---
+- name: Install mpd
+  pacman:
+    name: mpd
+  become: yes
+
+- name: Install ncmcpp
+  pacman:
+    name: ncmcpp
+  become: yes

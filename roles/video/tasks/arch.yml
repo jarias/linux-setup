@@ -1,0 +1,10 @@
+---
+- name: Install video tools
+  pacman:
+    name: "{{ item }}"
+  with_items:
+    - mpv
+    - mkvtoolnix-gui
+    - handbrake
+    - ffmpeg
+  become: yes

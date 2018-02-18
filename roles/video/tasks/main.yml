@@ -1,10 +1,6 @@
 ---
-- name: Install video tools
-  apt:
-    name: "{{ item }}"
-  with_items:
-    - mpv
-    - mkvtoolnix-gui
-    - handbrake
+- include_tasks: ubuntu.yml
+  when: ansible_distribution == "Ubuntu"
 
-  become: yes
+- include_tasks: arch.yml
+  when: ansible_distribution == "Archlinux"

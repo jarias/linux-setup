@@ -1,0 +1,5 @@
+---
+- name: Install terraform
+  pacman:
+    name: terraform
+  become: yes
