@@ -1,7 +1,5 @@
 ---
 - name: Install Ruby
   pacman:
-    name: "{{ item }}"
+    name: ruby
   become: yes
-  with_items:
-    - ruby

@@ -1,5 +1,5 @@
 ---
 - name: Install OBS
-  apt:
+  pacman:
     name: obs-studio
   become: yes

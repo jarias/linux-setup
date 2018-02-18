@@ -1,10 +1,14 @@
 ---
+- name: Install i3ipc-glib for polybar
+  command: packer --noedit --noconfirm -S i3ipc-glib-git
+
 - name: Install i3 and extras
   pacman:
     name: "{{ item }}"
   become: yes
   with_items:
     - i3-wm
+    - i3lock
     - xautolock
     - feh
     - pavucontrol
@@ -18,3 +22,7 @@
     - udiskie
     - scrot
     - qutebrowser
+    - pulseaudio
+    - pulseaudio-alsa
+    - alsa-tools
+    - dunst

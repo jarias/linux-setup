@@ -1,13 +1,11 @@
 ---
 - name: Install python
   pacman:
-    name: "{{ item }}"
+    name: python
   become: yes
-  with_items:
-    - python
 
 - name: Install pip packages dependencies
-  apt:
+  pacman:
     name: "{{ item }}"
   become: yes
   with_items:

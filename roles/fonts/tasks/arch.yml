@@ -1,11 +1,14 @@
 ---
+- name: Install font awesome AUR
+  command: packer --noedit --noconfirm -S ttf-font-awesome-4
+
 - name: Install Fonts
-  apt:
+  pacman:
     name: "{{ item }}"
   become: yes
   with_items:
-    - ttf-font-awesome
     - ttf-hack
+    - ttf-liberation
     - noto-fonts
     - noto-fonts-cjk
     - noto-fonts-emoji

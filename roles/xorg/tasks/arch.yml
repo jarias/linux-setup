@@ -11,6 +11,7 @@
     - xorg-xinput
     - xdotool
     - xorg-xbacklight
+    - xorg-xinput
     - compton
 
 - name: Sync xorg conf

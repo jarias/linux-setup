@@ -9,7 +9,6 @@
     - curl
     - tmux
     - cloc
-    - direnv
     - htop
     - ctags
     - pandoc
@@ -17,11 +16,3 @@
     - dos2unix
     - jdk9-openjdk
     - jdk8-openjdk
-
-- name: Install extra compression utils
-  apt:
-    name: "{{ item }}"
-  become: yes
-  with_items:
-    - p7zip
-    - xz

@@ -1,3 +1,11 @@
 ---
+- name: Install polybar deps
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - wireless_tools
+    - jsoncpp
+
 - name: Install polybar
   command: packer --noedit --noconfirm -S polybar

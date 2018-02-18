@@ -1,35 +1,10 @@
 ---
-- name: Install packer
-  get_url:
-    url: https://raw.githubusercontent.com/keenerd/packer/master/packer
-    dest: /usr/local/bin
-    mode: 0755
-    become: yes
-
-- name: Ensure man8 folder in /usr/local/share/man
-  file:
-    path: /usr/local/share/man/man8
-    state: directory
-  become: yes
-
-- name: Install packer man
-  get_url:
-    url: https://raw.githubusercontent.com/keenerd/packer/master/packer.8
-    dest: /usr/local/share/man/man8
-    mode: 0644
-    become: yes
-
-- name: Sync repos with packer
-  command: packer -Syu
-
-- name: Install urlview
-  command: packer --noedit --noconfirm -S urlview
-
 - name: Install base packages
   pacman:
     name: "{{ item }}"
   become: yes
   with_items:
+    - base-devel
     - firefox
     - intel-ucode
     - autofs
@@ -47,3 +22,53 @@
     - zsh
     - openvpn
     - ranger
+    - networkmanager
+    - intel-ucode
+    - iw
+    - wpa_supplicant
+    - dialog
+    - sudo
+    - network-manager-applet
+    - bc
+    - imagemagick
+    - libreoffice-fresh
+    - cups
+
+- name: Install packer deps
+  pacman:
+    name: "{{ item }}"
+  become: yes
+  with_items:
+    - jshon
+
+- name: Install packer
+  get_url:
+    url: https://raw.githubusercontent.com/keenerd/packer/master/packer
+    dest: /usr/local/bin/packer
+    mode: 0755
+  become: yes
+
+- name: Ensure man8 folder in /usr/local/share/man
+  file:
+    path: /usr/local/share/man/man8
+    state: directory
+  become: yes
+
+- name: Install packer man
+  get_url:
+    url: https://raw.githubusercontent.com/keenerd/packer/master/packer.8
+    dest: /usr/local/share/man/man8
+    mode: 0644
+  become: yes
+
+- name: Sync repos with packer
+  command: packer -Syu
+
+- name: Install base aur packages
+  command: "packer --noedit --noconfirm -S {{ item }}"
+  with_items:
+    - urlview
+    - direnv
+    - networkmanager-dmenu-git
+
+

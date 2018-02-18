@@ -1,12 +1,10 @@
 ---
 - name: Install Yubico tools
-  apt:
+  pacman:
     name: "{{ item }}"
   become: yes
   with_items:
     - yubikey-personalization-gui
     - yubikey-personalization
-    - pcsc-tools
-    - ccid
     - libusb-compat
 

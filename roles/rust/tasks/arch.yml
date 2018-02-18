@@ -1,5 +1,5 @@
 ---
 - name: Install rustup
   pacman:
-    name: rustup
+    name: rust
   become: yes

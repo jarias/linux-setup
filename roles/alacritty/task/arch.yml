@@ -1,0 +1,3 @@
+---
+- name: Install alacritty from AUR
+  command: packer --noedit --noconfirm -S alacritty-git
