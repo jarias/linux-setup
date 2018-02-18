@@ -33,6 +33,7 @@
     - imagemagick
     - libreoffice-fresh
     - cups
+    - fwupd
 
 - name: Install packer deps
   pacman:
