@@ -8,3 +8,10 @@
   pacman:
     name: ncmcpp
   become: yes
+
+- name: Enable mpd service
+  systemd:
+    name: mpd
+    enabled: yes
+    state: started
+    user: yes

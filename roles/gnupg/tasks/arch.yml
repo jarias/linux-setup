@@ -1,1 +1,7 @@
 ---
+- name: enable gpg agent daemon
+  systemd:
+    name: gpg-agent
+    enabled: yes
+    state: started
+    user: yes

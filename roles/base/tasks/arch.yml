@@ -34,7 +34,9 @@
     - libreoffice-fresh
     - cups
     - fwupd
-
+    - avahi
+    - rsync
+    - nss-mdns
 - name: Install packer deps
   pacman:
     name: "{{ item }}"
@@ -72,4 +74,16 @@
     - direnv
     - networkmanager-dmenu-git
 
+- name: Enable avahi daemon
+  systemd:
+    name: avahi-daemon
+    enabled: yes
+    state: started
+  become: yes
 
+- name: Enable cups daemon
+  systemd:
+    name: cups-browsed
+    enabled: yes
+    state: started
+  become: yes

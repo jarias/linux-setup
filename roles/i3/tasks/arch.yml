@@ -16,7 +16,6 @@
     - vinagre
     - rofi
     - arc-gtk-theme
-    - alsa-tools
     - xfce4-screenshooter
     - xfce4-power-manager
     - udiskie
@@ -26,3 +25,10 @@
     - pulseaudio-alsa
     - alsa-tools
     - dunst
+
+- name: enable pulsaudio socket
+  systemd:
+    name: pulseaudio.socket
+    enabled: yes
+    state: started
+    user: yes
