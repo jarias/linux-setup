@@ -1,0 +1,11 @@
+---
+- name: Clone rofi-pass repo
+  git:
+    repo: "https://github.com/carnager/rofi-pass.git"
+    dest: /tmp/rofi-pass
+
+- name: Install rofi-pass
+  command: "make install"
+  args:
+    chdir: /tmp/rofi-pass
+  become: yes

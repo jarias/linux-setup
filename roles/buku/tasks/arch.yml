@@ -1,0 +1,6 @@
+---
+- name: Install buku and buku_run
+  command: "packer --noedit --noconfirm -S {{ item }}"
+  with_items:
+    - buku
+    - buku_run-git

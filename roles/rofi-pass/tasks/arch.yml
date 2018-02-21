@@ -1,0 +1,3 @@
+---
+- name: Install rofi-pass
+  command: packer --noedit --noconfirm -S rofi-pass
