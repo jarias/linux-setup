@@ -37,6 +37,7 @@
     - avahi
     - rsync
     - nss-mdns
+
 - name: Install packer deps
   pacman:
     name: "{{ item }}"
@@ -51,19 +52,6 @@
     mode: 0755
   become: yes
 
-- name: Ensure man8 folder in /usr/local/share/man
-  file:
-    path: /usr/local/share/man/man8
-    state: directory
-  become: yes
-
-- name: Install packer man
-  get_url:
-    url: https://raw.githubusercontent.com/keenerd/packer/master/packer.8
-    dest: /usr/local/share/man/man8
-    mode: 0644
-  become: yes
-
 - name: Sync repos with packer
   command: packer -Syu
 
@@ -73,6 +61,16 @@
     - urlview
     - direnv
     - networkmanager-dmenu-git
+    - cloud-utils
+    - yaourt
+    - mkpasswd
+    - packer
+
+- name: Remove temp packer script
+  file:
+    path: /usr/local/bin/packer
+    state: absent
+  become: yes
 
 - name: Enable avahi daemon
   systemd:
