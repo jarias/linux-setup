@@ -8,3 +8,6 @@
     - handbrake
     - ffmpeg
   become: yes
+
+- name: Install aur video packages
+  command: packer --noedit --noconfirm -S makemkv
