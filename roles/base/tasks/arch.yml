@@ -45,13 +45,6 @@
   with_items:
     - jshon
 
-- name: Install packer
-  get_url:
-    url: https://raw.githubusercontent.com/keenerd/packer/master/packer
-    dest: /usr/local/bin/packer
-    mode: 0755
-  become: yes
-
 - name: Sync repos with packer
   command: packer -Syu
 
@@ -62,15 +55,10 @@
     - direnv
     - networkmanager-dmenu-git
     - cloud-utils
-    - yaourt
     - mkpasswd
+    - sbupdate-git
+    - openvpn-update-systemd-resolved
     - packer
-
-- name: Remove temp packer script
-  file:
-    path: /usr/local/bin/packer
-    state: absent
-  become: yes
 
 - name: Enable avahi daemon
   systemd:

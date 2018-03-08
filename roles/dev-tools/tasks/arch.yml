@@ -16,3 +16,6 @@
     - dos2unix
     - jdk9-openjdk
     - jdk8-openjdk
+    - heroku-cli
+    - java-jce_ustrength
+    - ngrok
