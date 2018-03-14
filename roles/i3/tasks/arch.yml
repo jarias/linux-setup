@@ -9,6 +9,7 @@
   with_items:
     - i3-wm
     - i3lock
+    - perl-anyevent-i3
     - xautolock
     - feh
     - pavucontrol
