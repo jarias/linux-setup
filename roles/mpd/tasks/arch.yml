@@ -1,8 +1,11 @@
 ---
 - name: Install mpd
   pacman:
-    name: mpd
+    name: "{{ item }}"
   become: yes
+  with_items:
+    - mpd
+    - mpc
 
 - name: Install ncmcpp
   pacman:
