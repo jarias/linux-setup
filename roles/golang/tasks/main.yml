@@ -31,3 +31,4 @@
     - { package: github.com/aarzilli/gdlv }
     - { package: github.com/uber/go-torch }
     - { package: github.com/golang/dep/cmd/dep }
+    - { pacakge: mvdan.cc/sh/cmd/shfmt }

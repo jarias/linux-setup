@@ -16,3 +16,14 @@
   args:
     creates: "~/.npmrc"
 
+- name: Install global modules
+  npm: 
+    name: "{ item }}"
+    global: yes
+  with_items:
+    - prettier
+    - eslint
+    - create-react-app
+    - firebase-tools
+    - neovim
+    - javascript-typescript-langserver
