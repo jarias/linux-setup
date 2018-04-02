@@ -1,7 +1,7 @@
 #!/bin/sh
 
-IN="eDP-1"
-EXT="HDMI-1"
+IN="eDP1"
+EXT="HDMI1"
 
 pkill polybar || true
 
@@ -20,5 +20,5 @@ fi
 
 feh --bg-scale ~/Pictures/wallpaper.png
 
-#pkill compton
-#compton --xrender-sync-fence &
+pkill compton
+compton --xrender-sync-fence &
