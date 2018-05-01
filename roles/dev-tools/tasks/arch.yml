@@ -10,7 +10,6 @@
     - tmux
     - cloc
     - htop
-    - ctags
     - pandoc
     - the_silver_searcher
     - dos2unix
@@ -19,3 +18,9 @@
     - heroku-cli
     - java-jce_ustrength
     - ngrok
+
+- name: Install aur packages
+  command: "packer --noedit --noconfirm -S {{ item }}"
+  with_items:
+    - urlview
+    - universal-ctags

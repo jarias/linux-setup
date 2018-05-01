@@ -5,17 +5,6 @@
 - include_tasks: arch.yml
   when: ansible_distribution == "Archlinux"
 
-- name: Creates local node_modules directory
-  file:
-    path: "~/.node_modules/lib"
-    state: directory
-    recurse: yes
-
-- name: Setup NPM prefix
-  command: "/usr/bin/npm config set prefix ~/.node_modules"
-  args:
-    creates: "~/.npmrc"
-
 - name: Install global modules
   npm: 
     name: "{ item }}"
