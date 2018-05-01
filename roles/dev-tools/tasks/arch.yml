@@ -4,6 +4,7 @@
     name: "{{ item }}"
   become: yes
   with_items:
+    - base-devel
     - git
     - jq
     - curl
@@ -23,4 +24,4 @@
   command: "packer --noedit --noconfirm -S {{ item }}"
   with_items:
     - urlview
-    - universal-ctags
+    - universal-ctags-git
