@@ -37,6 +37,7 @@
     - avahi
     - rsync
     - nss-mdns
+    - vdirsyncer
 
 - name: Install packer deps
   pacman:

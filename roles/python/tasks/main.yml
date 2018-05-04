@@ -24,4 +24,8 @@
     - saws
     - autopep8
     - buku
+    - khard
+    - aws-google-auth[u2f]
+    - i3ipc
+    - python-language-server
 
